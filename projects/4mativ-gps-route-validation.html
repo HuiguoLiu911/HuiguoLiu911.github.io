@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Can you trust the GPS trail? – Huiguo Liu</title>
+<meta name="description" content="Built a Q1–Q5 scoring framework over 15K school-bus trips and 2.35M GPS records, finding 35% of trips unverifiable and five routes with severe data issues.">
+<meta property="og:title" content="Can you trust the GPS trail? – Huiguo Liu">
+<meta property="og:description" content="Built a Q1–Q5 scoring framework over 15K school-bus trips and 2.35M GPS records, finding 35% of trips unverifiable and five routes with severe data issues.">
+<meta property="og:type" content="website">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+<script>
+  // Apply the saved theme before first paint to avoid a flash.
+  (function () {
+    try {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body class="page-project tone-page-sand">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="topbar" id="topbar">
+  <nav class="nav-inner" aria-label="Primary">
+    <a class="brand" href="../index.html">Huiguo Liu</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">
+      <span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span>
+      <span class="visually-hidden">Menu</span>
+    </button>
+    <ul id="nav-links" class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../resume.html">Resume</a></li>
+      <li><a href="../data-analysis.html" class="active" aria-current="page">Data Analysis</a></li>
+      <li><a href="../ai-projects.html">AI Projects</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-tools">
+      <a class="tool" href="https://www.linkedin.com/in/huiguo-liu" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.73V1.73C24 .77 23.21 0 22.23 0z"/></svg>
+      </a>
+      <a class="tool" href="https://github.com/HuiguoLiu911" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
+        <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2.17c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.05.78 2.12v3.14c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+      </a>
+      <a class="tool" href="mailto:liu01959@umn.edu" aria-label="Email" title="Email">
+        <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+      </a>
+      <button class="tool theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main id="main" class="canvas article-canvas">
+<header class="project-header reveal">
+  <div class="project-header-copy">
+    <p class="kicker"><a href="../data-analysis.html">Data Analysis</a> · 02</p>
+    <h1>Can you trust the GPS trail?</h1>
+    <p class="project-subtitle">4MATIV Technologies · Trip-performance and data-quality scoring for school buses</p>
+    <ul class="tag-chips" aria-label="Topics"><li>geospatial</li><li>root-cause analysis</li><li>Python</li></ul>
+    <p class="project-lede">Built a Q1–Q5 scoring framework over 15K school-bus trips and 2.35M GPS records, finding 35% of trips unverifiable and five routes with severe data issues.</p>
+    <dl class="project-meta">
+<div><dt>Role</dt><dd>Spatial validation, stop-order compliance and root-cause analysis</dd></div><div><dt>Context</dt><dd>Carlson Analytics Lab live case, student team</dd></div>      <div><dt>When</dt><dd>Mar – May 2026</dd></div>
+<div><dt>Stack</dt><dd>Python · pandas · scikit-learn · DBSCAN · OSRM · folium · Haversine</dd></div>    </dl>
+  </div>
+  <div class="project-header-art tone-sand">
+    <img src="../assets/art/4mativ-gps-route-validation.svg" alt="" width="640" height="400">
+  </div>
+</header>
+
+<section class="result-strip" aria-label="Headline results">
+<div><span>school-bus trips</span><strong>15K</strong></div><div><span>GPS records</span><strong>2.35M</strong></div><div><span>trips not spatially verifiable</span><strong>35%</strong></div><div><span>routes with the most severe data issues</span><strong>5</strong></div></section>
+
+<div class="article-layout">
+  <article class="article-body">
+    <h2 id="the-question">The question</h2>
+<p>4MATIV Technologies runs student transportation for school districts through its TOMS platform and manages many vendors at once. Every trip leaves a GPS trail, but the trail is often incomplete or noisy, so a basic question was hard to answer: did the vehicle actually run the route as planned? Without a trustworthy answer, vendor performance cannot be judged fairly, and a missing signal is easily mistaken for a missed stop.</p>
+<p>This was a Carlson Analytics Lab live case (Mar 26 – May 1, 2026) done as a student team. I built the analysis line that became the spatial and stop-order parts of the framework and did the root-cause work on data quality.</p>
+<h2 id="data">Data</h2>
+<p>A PostgreSQL export of 4MATIV&rsquo;s TOMS database for two schools, Sep 2025 – Feb 2026: about 15K trips (14,859 rows), 2.35M GPS positions, 1,936 planned route stops, 823 stop locations, 433 vehicles and 16 vendors using five GPS providers that poll every 20 to 60 seconds. Schools and vendors were anonymized; stop coordinates are real and are not reproduced here. The quality problems were the point of the project: 27.3% of trips had zero GPS positions, 230 of 433 vehicles (53%) had no tracking device assigned, and only one trip out of 14,859 ended through the geofence that is supposed to confirm completion. The rest timed out.</p>
+<h2 id="method">Method</h2>
+<p>The team organized the work as five questions, each producing a score per trip: Q1 GPS health, Q2 stop coverage, Q3 route compliance, Q4 timing, and Q5 a combined confidence score with a GREEN / YELLOW / RED flag, aggregated to route, vendor and school level. Missing component scores are imputed as neutral and flagged.</p>
+<p>My part was the spatial reality check. I computed Haversine distances from each GPS trace to every planned stop (80 m radius for regular stops, 300 m for schools) and compared them with the geofencing logs, which split &ldquo;missed&rdquo; stops into genuinely missed, detected but far away, and reached but never detected. I built the stop-order compliance pipeline (did the bus visit stops in the planned sequence) and an early 0–100 per-trip confidence score combining GPS coverage, stop completion, on-time performance and spatial proximity, using Python, pandas, DBSCAN and folium maps.</p>
+<h2 id="results">Results</h2>
+<ul>
+<li>35% of trips (5,200 of 14,848) could not be spatially verified, mostly because of GPS gaps concentrated in specific providers.</li>
+<li>The overall stop miss rate was 16.3%, yet 94.6% of trips completed every planned stop; vendor miss rates ranged from 9.0% to 25.3%.</li>
+<li>Root-cause review of the stop-order results showed that morning routes looked 2.2 times worse than afternoon routes partly because the planned stop rank was reversed for morning trips in the pipeline. After the fix the gap was 1.5 times, and 24 routes still had planned sequences that did not match how drivers ran them. Five routes had the most severe data-quality issues and were flagged for investigation.</li>
+<li>Morning stop-order compliance improved every month from September to February, which argues for treating September as an onboarding period in vendor scoring.</li>
+</ul>
+<h2 id="what-it-changed">What it changed</h2>
+<p>The deliverable was a Python-based scoring framework, a Q1–Q5 methods report with code, vendor scorecards and a final presentation. The recommendations were concrete: assign tracking devices to the 53% of vehicles without one, use low-confidence trips as a daily dispatcher alert, audit the flagged routes before applying compliance scores to vendor contracts, and recalibrate geofence detection.</p>
+<h2 id="limitations-and-next-steps">Limitations and next steps</h2>
+<p>&ldquo;Unverifiable&rdquo; describes a data limitation, not a confirmed missed or late trip, and unscored trips probably skew toward worse-performing ones, so true vendor gaps may be larger than the scores show. Thresholds were calibrated on score distributions rather than ground truth, and component weights were set by judgment. Next steps: field-validate the flagged route sequences, run a sensitivity analysis on the weights, and rebuild the Q1 and Q2 notebooks from the methods report.</p>
+    <section class="article-code">
+      <p class="kicker">Code &amp; materials</p>
+      <p>The code lives in a private GitHub repository (HuiguoLiu911/4mativ-gps-route-validation). Access on request — <a href="mailto:liu01959@umn.edu?subject=Can%20you%20trust%20the%20GPS%20trail%3F">send me a note</a>.</p>
+    </section>
+  </article>
+  <aside class="article-aside">
+    <nav class="toc" aria-label="On this page">
+      <p class="toc-title">On this page</p>
+      <ol>
+<li><a href="#the-question">The question</a></li><li><a href="#data">Data</a></li><li><a href="#method">Method</a></li><li><a href="#results">Results</a></li><li><a href="#what-it-changed">What it changed</a></li><li><a href="#limitations-and-next-steps">Limitations and next steps</a></li>      </ol>
+    </nav>
+  </aside>
+</div>
+
+<nav class="project-nav" aria-label="More projects">
+<a class="project-nav-link prev" href="../projects/ymca-member-retention.html"><span>← Previous</span><strong>Find the members who will stay</strong></a><a class="project-nav-link next" href="../projects/santander-customer-satisfaction.html"><span>Next →</span><strong>Find the unhappy customers first</strong></a></nav>
+</main>
+
+<footer class="site-footer">
+  <span>Huiguo Liu</span>
+  <span class="footer-tagline">Data Analytics | Business Analytics | GenAI</span>
+  <span><a href="https://www.linkedin.com/in/huiguo-liu" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://github.com/HuiguoLiu911" target="_blank" rel="noopener">GitHub</a> · <a href="mailto:liu01959@umn.edu">Email</a></span>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>
