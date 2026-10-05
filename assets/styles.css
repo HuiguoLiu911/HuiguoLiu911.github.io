@@ -503,3 +503,8 @@ a.contact-detail:hover { color: var(--accent); }
   .timeline-row { padding: 0.6rem 0; grid-template-columns: 110px 1fr; gap: 1rem; break-inside: avoid; }
   a { color: #000; text-decoration: none; }
 }
+
+/* ---------- article figures ---------- */
+.article-body figure { margin: 2.2rem 0; padding: 0; }
+.article-body figure img { display: block; width: 100%; border-radius: 8px; border: 1px solid var(--line); background: #fff; }
+.article-body figcaption { padding-top: 0.7rem; color: var(--muted); font-size: 0.82rem; line-height: 1.5; }

@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tell drivers where demand is, and why – Huiguo Liu</title>
-<meta name="description" content="Spark/Delta Lake pipeline scoring NYC taxi zones by demand, with LLM nudges grounded in the ranked data; 44.8% of recommended zones were truly high-demand.">
+<meta name="description" content="11-stage PySpark and Delta Lake pipeline over 9.4M NYC taxi records that ranks zones by demand and turns them into grounded driver nudges with GPT-4o-mini; 100% hit rate across 8 time windows on March holdout data.">
 <meta property="og:title" content="Tell drivers where demand is, and why – Huiguo Liu">
-<meta property="og:description" content="Spark/Delta Lake pipeline scoring NYC taxi zones by demand, with LLM nudges grounded in the ranked data; 44.8% of recommended zones were truly high-demand.">
+<meta property="og:description" content="11-stage PySpark and Delta Lake pipeline over 9.4M NYC taxi records that ranks zones by demand and turns them into grounded driver nudges with GPT-4o-mini; 100% hit rate across 8 time windows on March holdout data.">
 <meta property="og:type" content="website">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,14 +62,14 @@
 <main id="main" class="canvas article-canvas">
 <header class="project-header reveal">
   <div class="project-header-copy">
-    <p class="kicker"><a href="../data-analysis.html">Data Analysis</a> · 04</p>
+    <p class="kicker"><a href="../data-analysis.html">Data Analysis</a> · 05</p>
     <h1>Tell drivers where demand is, and why</h1>
-    <p class="project-subtitle">Big Data Analytics course · Explainable LLM nudges from NYC taxi demand</p>
+    <p class="project-subtitle">Demand Sense · Explainable LLM nudges from 9.4M NYC taxi trips on Databricks</p>
     <ul class="tag-chips" aria-label="Topics"><li>PySpark</li><li>Delta Lake</li><li>LLM</li></ul>
-    <p class="project-lede">Spark/Delta Lake pipeline scoring NYC taxi zones by demand, with LLM nudges grounded in the ranked data; 44.8% of recommended zones were truly high-demand.</p>
+    <p class="project-lede">11-stage PySpark and Delta Lake pipeline over 9.4M NYC taxi records that ranks zones by demand and turns them into grounded driver nudges with GPT-4o-mini; 100% hit rate across 8 time windows on March holdout data.</p>
     <dl class="project-meta">
-<div><dt>Role</dt><dd>Owned Phase 5 (LLM nudge generation); co-owned Phase 6 evaluation</dd></div><div><dt>Context</dt><dd>Big Data Analytics course, Team 7, Carlson MSBA</dd></div>      <div><dt>When</dt><dd>Apr 2026</dd></div>
-<div><dt>Stack</dt><dd>Databricks · PySpark · Delta Lake · OpenAI API · gpt-4o-mini · Python · Spark SQL</dd></div>    </dl>
+<div><dt>Role</dt><dd>Owned Phase 5 (LLM nudge generation); co-owned the evaluation</dd></div><div><dt>Context</dt><dd>Big Data Analytics course, Team 7, Carlson MSBA</dd></div>      <div><dt>When</dt><dd>Spring 2026</dd></div>
+<div><dt>Stack</dt><dd>Databricks · PySpark · Delta Lake · OpenAI API · gpt-4o-mini · Python · Matplotlib</dd></div>    </dl>
   </div>
   <div class="project-header-art tone-mint">
     <img src="../assets/art/driver-nudge-system.svg" alt="" width="640" height="400">
@@ -77,28 +77,28 @@
 </header>
 
 <section class="result-strip" aria-label="Headline results">
-<div><span>sample taxi trips, 2,879 after cleaning</span><strong>3,024</strong></div><div><span>time windows, one grounded nudge each</span><strong>8</strong></div><div><span>recommended zones truly high-demand in March</span><strong>44.8%</strong></div><div><span>zone-window cells suppressed as low-confidence</span><strong>44.1%</strong></div></section>
+<div><span>NYC taxi trip records, Jan–Mar 2023</span><strong>9.4M</strong></div><div><span>pipeline stages, raw parquet to driver message</span><strong>11</strong></div><div><span>hit rate across all 8 time windows (March holdout)</span><strong>100%</strong></div><div><span>the 20% random baseline</span><strong>5x</strong></div></section>
 
 <div class="article-layout">
   <article class="article-body">
     <h2 id="the-question">The question</h2>
-<p>Ride-hailing platforms constantly mismatch where drivers are and where riders want to be picked up. Large platforms solve this with opaque dispatch systems that move drivers around. Our Big Data Analytics team (Team 7, Spring 2026) asked a different question: could historical trip data produce simple, explainable nudges that tell a driver where demand has been strong, and why, while leaving the decision with the driver? I owned Phase 5, the LLM nudge-generation layer, and co-owned the Phase 6 evaluation.</p>
+<p>Ride-hailing platforms constantly mismatch where drivers are and where riders want to be picked up. Large platforms solve this with opaque dispatch systems that move drivers around. Our Big Data Analytics team (Team 7, Spring 2026) asked a different question: could historical trip data produce simple, explainable nudges that tell a driver where demand has been strong, and why, while leaving the decision with the driver? Our framing was &ldquo;ride-hail apps tell drivers where to go; we tell them why, and let them decide.&rdquo; I owned Phase 5, the LLM nudge-generation layer, and co-owned the evaluation.</p>
 <h2 id="data">Data</h2>
-<p>NYC Taxi and Limousine Commission yellow-taxi trip records (public), used as a 3,024-row 2023 sample parquet for development, plus the 264-zone taxi-zone lookup table. Cleaning kept trips strictly in 2023, dropped invalid zone IDs (the valid range is 1–263), fares below the $2.50 minimum and implausible distances, removed duplicates and normalized timestamps, leaving 2,879 trips. The sample is small on purpose; the pipeline is written for the full dataset.</p>
+<p>NYC Taxi and Limousine Commission yellow-taxi trip records for January to March 2023: 9.4M trips in three monthly parquet files (about 145 MB compressed) plus the 265-zone taxi-zone lookup table. Cleaning kept trips inside the date range, dropped invalid zone IDs, fares below the $2.50 minimum and implausible distances, removed duplicates and normalized timestamps. We developed the pipeline on a 3,024-row sample notebook first, then ran it on the full three months.</p>
 <h2 id="method">Method</h2>
-<p>The pipeline runs in Databricks with PySpark and Delta Lake. Trips are joined to zone names, then aggregated by zone, four time buckets (morning rush, midday, evening rush, night) and weekday or weekend, giving 437 zone-window cells. A demand score is each cell&rsquo;s trip count divided by the average across zones in the same window, so 1.5 means 50% above average for that hour and day type. Cells with fewer than 3 trips, fewer than 2 observed days or a coefficient of variation above 2 are flagged low-confidence and never reach the LLM. January–February data ranks the top 5 zones per window; March is held out for validation.</p>
+<p>The pipeline has 11 stages and runs in Databricks with PySpark and Delta Lake: ingest the parquet files, clean, join to zone names, write cleaned trips to Delta, aggregate demand by zone, time bucket and day type, split January–February for ranking from March for validation, rank the top 5 high-confidence zones per window with PySpark window functions, write the ranked zones, generate one nudge per window, evaluate on the holdout, and plot five figures.</p>
+<p>The ranking is heuristic, not a forecasting model: a demand score is each zone-window cell&rsquo;s trip count divided by the average across zones in the same window, so 1.5 means 50% above average for that hour and day type. Cells with too few trips, too few observed days or a coefficient of variation above 2 are flagged low-confidence and never reach the LLM.</p>
 <p>My Phase 5 work started with two hand-written &ldquo;gold&rdquo; nudges to fix tone, length and grounding before any API call. The prompt feeds gpt-4o-mini (temperature 0.3) a structured summary of the five ranked zones (zone, score, trip count, days observed) and a tight set of rules: one phrasing style (&ldquo;about 4.6x busier than average&rdquo;), at most two zones, cautious wording when the data is thin, no real-time framing, and no reasoning beyond the provided numbers. Each nudge is written to a Delta table and passes four automated gates: the top zone must be cited, no forbidden or fabricated words, under 60 words, and no raw decimal score copied into the text.</p>
 <h2 id="results">Results</h2>
 <ul>
-<li>8 nudges generated, one per window, all passing the grounding, word-limit and language checks.</li>
-<li>Held-out evaluation: of 29 recommended zones found in the March validation data, 13 were in the top 20% of demand for their window, a 44.8% hit rate.</li>
-<li>The hit rate varied widely by window: 80% for weekday nights and 75% for weekday morning rush, 0% for weekend mornings and weekend midday where the sample was thin.</li>
-<li>44.1% of January–February cells were suppressed as low-confidence before ranking.</li>
+<li>On the full January–February data, the recommended zones for all 8 time windows (four time buckets by weekday or weekend) were top-demand zones in the March holdout: a 100% hit rate, five times the 20% random baseline.</li>
+<li>8 of 8 nudges passed every grounding check.</li>
+<li>Validation was temporal: rank on January–February, test on March, so the result measures whether historical demand patterns held into a month the pipeline had not seen.</li>
 </ul>
 <h2 id="what-it-changed">What it changed</h2>
 <p>Delivered a working end-to-end pipeline from raw parquet to driver message, a two-page handout, a flyer and poster, and an under-five-minute presentation. The design point we argued for is human-in-the-loop: the model explains where demand is historically strong instead of issuing directives, and every claim in a message traces back to a number in the ranked table.</p>
 <h2 id="limitations-and-next-steps">Limitations and next steps</h2>
-<p>A 3,024-trip sample makes zone-level scores noisy, which is why so many cells were suppressed and why weekend windows scored poorly. The confidence thresholds were set deliberately low for the sample and should be tightened on full data. The evaluation checks whether recommended zones were busy, not whether a driver who followed a nudge earned more. Next steps: run on full-year TLC data, add the Chicago taxi dataset as an external check, and test the nudges with drivers.</p>
+<p>Heuristic ranking on three months of data captures stable patterns such as rush-hour airports and nightlife zones; it does not forecast events, weather or new demand. The evaluation checks whether recommended zones were busy, not whether a driver who followed a nudge earned more. Next steps: run on full-year data, add the Chicago taxi dataset as an external check, and test the nudges with drivers.</p>
     <section class="article-code">
       <p class="kicker">Code &amp; materials</p>
       <p>The code lives in a private GitHub repository (HuiguoLiu911/bigdata-driver-nudge-system). Access on request — <a href="mailto:liu01959@umn.edu?subject=Tell%20drivers%20where%20demand%20is%2C%20and%20why">send me a note</a>.</p>
@@ -114,7 +114,7 @@
 </div>
 
 <nav class="project-nav" aria-label="More projects">
-<a class="project-nav-link prev" href="../projects/santander-customer-satisfaction.html"><span>← Previous</span><strong>Find the unhappy customers first</strong></a><a class="project-nav-link next" href="../projects/csi-bid-analysis.html"><span>Next →</span><strong>Where did the bids miss the mark?</strong></a></nav>
+<a class="project-nav-link prev" href="../projects/santander-customer-satisfaction.html"><span>← Previous</span><strong>Find the unhappy customers first</strong></a><a class="project-nav-link next" href="../projects/healthcare-burn-care-network.html"><span>Next →</span><strong>Where are the burn deserts?</strong></a></nav>
 </main>
 
 <footer class="site-footer">

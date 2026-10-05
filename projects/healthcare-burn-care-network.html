@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Where did the bids miss the mark? – Huiguo Liu</title>
-<meta name="description" content="Cleaned and classified 1,661 road-construction auction records across six Midwest states in Excel and Tableau; found grading and earthwork bids running about $1M over and Minnesota bids the most accurate baseline.">
-<meta property="og:title" content="Where did the bids miss the mark? – Huiguo Liu">
-<meta property="og:description" content="Cleaned and classified 1,661 road-construction auction records across six Midwest states in Excel and Tableau; found grading and earthwork bids running about $1M over and Minnesota bids the most accurate baseline.">
+<title>Where are the burn deserts? – Huiguo Liu</title>
+<meta name="description" content="Profiled 635 trauma-capable hospitals from the National Injury Resource Database, found eight states with no burn beds, and designed a hub–spoke–access referral network around 413 mid-size trauma centers.">
+<meta property="og:title" content="Where are the burn deserts? – Huiguo Liu">
+<meta property="og:description" content="Profiled 635 trauma-capable hospitals from the National Injury Resource Database, found eight states with no burn beds, and designed a hub–spoke–access referral network around 413 mid-size trauma centers.">
 <meta property="og:type" content="website">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,7 +25,7 @@
   })();
 </script>
 </head>
-<body class="page-project tone-page-peach">
+<body class="page-project tone-page-coral">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="topbar" id="topbar">
   <nav class="nav-inner" aria-label="Primary">
@@ -62,43 +62,47 @@
 <main id="main" class="canvas article-canvas">
 <header class="project-header reveal">
   <div class="project-header-copy">
-    <p class="kicker"><a href="../data-analysis.html">Data Analysis</a> · 03</p>
-    <h1>Where did the bids miss the mark?</h1>
-    <p class="project-subtitle">Central Specialties Inc · Construction-bidding strategy from two years of auction records</p>
-    <ul class="tag-chips" aria-label="Topics"><li>Tableau</li><li>Excel</li><li>segmentation</li></ul>
-    <p class="project-lede">Cleaned and classified 1,661 road-construction auction records across six Midwest states in Excel and Tableau; found grading and earthwork bids running about $1M over and Minnesota bids the most accurate baseline.</p>
+    <p class="kicker"><a href="../data-analysis.html">Data Analysis</a> · 06</p>
+    <h1>Where are the burn deserts?</h1>
+    <p class="project-subtitle">HeatMap Hackathon 2026 · Mapping U.S. burn-care capacity and a 3-tier telemedicine referral network</p>
+    <ul class="tag-chips" aria-label="Topics"><li>healthcare</li><li>Python</li><li>geospatial</li></ul>
+    <p class="project-lede">Profiled 635 trauma-capable hospitals from the National Injury Resource Database, found eight states with no burn beds, and designed a hub–spoke–access referral network around 413 mid-size trauma centers.</p>
     <dl class="project-meta">
-<div><dt>Role</dt><dd>Data cleaning, project-type classification and the Tableau dashboard, in a five-person team</dd></div><div><dt>Context</dt><dd>Carlson Analytics Lab live case, Fall 2025</dd></div>      <div><dt>When</dt><dd>Oct – Dec 2025</dd></div>
-<div><dt>Stack</dt><dd>Excel · Power Query · Pivot Tables · Tableau</dd></div>    </dl>
+<div><dt>Role</dt><dd>Data analysis and visualization in a five-person team</dd></div><div><dt>Context</dt><dd>HeatMap Hackathon 2026, presented by BData</dd></div>      <div><dt>When</dt><dd>Jan – Mar 2026</dd></div>
+<div><dt>Stack</dt><dd>Python · pandas · Plotly · Matplotlib · Seaborn</dd></div>    </dl>
   </div>
-  <div class="project-header-art tone-peach">
-    <img src="../assets/art/csi-bid-analysis.svg" alt="" width="640" height="400">
+  <div class="project-header-art tone-coral">
+    <img src="../assets/art/healthcare-burn-care-network.svg" alt="" width="640" height="400">
   </div>
 </header>
 
 <section class="result-strip" aria-label="Headline results">
-<div><span>auction records, Aug 2023 – Sep 2025</span><strong>1,661</strong></div><div><span>Midwest states</span><strong>6</strong></div><div><span>baseline win rate (114 of 608 bids)</span><strong>18.75%</strong></div><div><span>average overbid on grading and earthwork</span><strong>~$1M</strong></div></section>
+<div><span>trauma-capable hospitals profiled</span><strong>635</strong></div><div><span>states with zero dedicated burn beds</span><strong>8</strong></div><div><span>mid-size trauma centers in the spoke tier</span><strong>413</strong></div><div><span>avoided per helicopter transfer (projected)</span><strong>$12K–$25K</strong></div></section>
 
 <div class="article-layout">
   <article class="article-body">
     <h2 id="the-question">The question</h2>
-<p>Central Specialties Inc (CSI) is a Midwest road-construction contractor that bids on public highway lettings, mainly in Minnesota and North Dakota. It had two years of auction results and a direct question for our Carlson Analytics Lab team: where are our bids competitive, where are our estimates off, and how should that change what we bid on next?</p>
-<p>I was one of five students on the engagement. I cleaned and classified the records, and built the Tableau dashboard the recommendations were presented from.</p>
+<p>Severe burns are rare but time-critical, and burn-capable hospitals are concentrated in a few metropolitan areas. The hackathon brief asked a practical question: given the hospitals that exist today, where does burn care break down geographically, and what could close the gap without building new facilities?</p>
+<p>Our five-person team entered the HeatMap Hackathon 2026 (presented by BData) with the theme &ldquo;Bridging the Gap: Building a 3-Tier Burn Intervention &amp; Telemedicine Network&rdquo;. I worked on the data analysis and the visualizations.</p>
 <h2 id="data">Data</h2>
-<p>1,661 road-construction auction records from August 2023 to September 2025 across six states: Iowa, Minnesota, Montana, North Dakota, Nebraska and South Dakota. Each record lists the project, the letting, the bidders and their bid amounts. CSI itself bid 608 times and won 114, an 18.75% win rate. The records are public letting results, but the client&rsquo;s internal cost assumptions stayed with the client; nothing here reproduces them.</p>
+<p>The National Injury Resource Database (NIRD): 635 trauma-capable hospitals described by 23 fields, including trauma level, bed counts, adult and pediatric burn capability, American Burn Association (ABA) verification, and location. The dataset is public and contains no patient records; all analysis was at the hospital level.</p>
 <h2 id="method">Method</h2>
-<p>The work was descriptive analytics and segmentation, done in Excel and Tableau. Cleaning and reshaping happened in Excel with Power Query and Pivot Tables: bidders were re-ranked 1 to 15 within each project, and counties were estimated from project coordinates. Because the raw data had no usable project-type field, I built a six-category classification from the material composition of each job (the share of asphalt mix tonnage and grading tonnage): shoulder and maintenance, grading and earthwork, maintenance and reconstruction, grading-heavy preparation, resurfacing and overlay, and heavy asphalt paving. The Tableau dashboard then compared bid accuracy (CSI&rsquo;s bid against the winning bid), win rates by county and project type, and competitor patterns.</p>
+<p>In Python (pandas for the profiling, Plotly, Matplotlib and Seaborn for the maps and charts) I classified every hospital by its burn capability and rolled the counts up to the state level to find states with no dedicated burn beds. I then compared adult and pediatric capability side by side, and sized the hospitals that had trauma capacity but no burn program, because those were the candidates for a middle tier that could handle moderate burns with telemedicine support from a verified center.</p>
+<figure>
+  <img src="../assets/figures/healthcare-burn-care-network/pediatric_burn_crisis.png" alt="Bar chart of hospitals with adult versus pediatric burn and trauma capability, and a pie chart showing that only 14% of the 635 hospitals have pediatric burn capability" loading="lazy">
+  <figcaption>Adult versus pediatric capability across the 635 hospitals: 120 have adult burn capability and 89 pediatric, against 565 and 146 with trauma capability. Only 14% of hospitals can treat pediatric burns.</figcaption>
+</figure>
+
 <h2 id="results">Results</h2>
 <ul>
-<li>Project type was the strongest indicator of over- or under-bidding. Grading and earthwork and shoulder and maintenance projects carried the largest gaps, about $1M average overbid, while resurfacing and overlay bids were the most accurate.</li>
-<li>Minnesota bids were the most accurate; North Dakota and Iowa bids deviated more, so the Minnesota estimating approach became the benchmark for the other states.</li>
-<li>County-level win rates varied widely, from about a third to 60% in the counties where CSI bid most often, which pointed to where its cost structure was genuinely competitive.</li>
-<li>Some project types performed better in particular months, which suggested seasonal bidding windows.</li>
+<li>Of 635 trauma-capable hospitals, 120 have adult burn capability, 74 are ABA-verified burn centers, and 89 can treat pediatric burns, which is 25.8% fewer than the adult count.</li>
+<li>The country has about 2,080 dedicated burn beds, 0.72% of total beds, and eight states have none at all: the &ldquo;burn deserts&rdquo;.</li>
+<li>The proposed network has three tiers: 74 ABA-verified centers as hubs for severe and complex cases; 413 &ldquo;sweet spot&rdquo; trauma centers across 47 states (about 470 beds on average) as spokes that manage moderate burns with telemedicine guidance; and 148 community hospitals as access points for initial stabilization and transfer.</li>
 </ul>
 <h2 id="what-it-changed">What it changed</h2>
-<p>Three recommendations went to the client: align cost assumptions with project type instead of using one bidding formula, concentrate bids on the types and months that have historically won, and use the Minnesota framework to correct estimates in North Dakota and Iowa. Together they gave CSI a concrete starting point for lifting its 18.75% baseline win rate.</p>
+<p>The recommendation was deliberately infrastructure-light. Rather than proposing new burn units, it routes patients through hospitals that already exist and connects them to specialists through a telemedicine layer that scales at low marginal cost. For a moderate burn, keeping the patient at a spoke hospital instead of flying them to a hub avoids a projected $12K–$25K per helicopter transfer, and it shortens the time to first specialist contact in the states with no burn beds of their own.</p>
 <h2 id="limitations-and-next-steps">Limitations and next steps</h2>
-<p>The $1M figure is an observed average overbid, not a saving or a projected win-rate gain. The analysis is descriptive: it shows where bids missed, not why, because the records do not capture scope differences, subcontractor quotes or the client&rsquo;s margin targets. A natural next step is a bid-calibration model that predicts the winning bid per project type and lets the estimator choose a margin against it.</p>
+<p>This was a hackathon analysis on hospital-level capacity data, not outcomes data, so it says where capacity is missing rather than how patients fare. Travel times were approximated by state rather than road distance, and the sweet-spot tier was defined by bed count and trauma level, not by staffing or burn-specific training. A next step would be to overlay drive-time isochrones and burn-incidence rates to prioritize which spokes to equip first.</p>
     <section class="article-code">
       <p class="kicker">Code &amp; materials</p>
       <p>This work was delivered inside a client engagement; no public code is available. Happy to walk through the approach on a call.</p>
@@ -114,7 +118,7 @@
 </div>
 
 <nav class="project-nav" aria-label="More projects">
-<a class="project-nav-link prev" href="../projects/4mativ-gps-route-validation.html"><span>← Previous</span><strong>Can you trust the GPS trail?</strong></a><a class="project-nav-link next" href="../projects/santander-customer-satisfaction.html"><span>Next →</span><strong>Find the unhappy customers first</strong></a></nav>
+<a class="project-nav-link prev" href="../projects/driver-nudge-system.html"><span>← Previous</span><strong>Tell drivers where demand is, and why</strong></a><a class="project-nav-link next" href="../projects/analytics-for-good-hackathon.html"><span>Next →</span><strong>What does off-policy travel cost?</strong></a></nav>
 </main>
 
 <footer class="site-footer">
