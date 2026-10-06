@@ -73,6 +73,7 @@ a { color: inherit; }
 img { max-width: 100%; height: auto; }
 button { font: inherit; color: inherit; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.contact-form input.visually-hidden { width: 1px; height: 1px; padding: 0; border: 0; margin: -1px; }
 .skip-link { position: absolute; left: -999px; top: 8px; background: var(--ink); color: var(--paper); padding: 0.5rem 0.9rem; border-radius: 6px; z-index: 100; }
 .skip-link:focus { left: 8px; }
 
@@ -512,7 +513,8 @@ a.contact-detail:hover { color: var(--accent); }
   /* home: photo first as a compact landscape crop, greeting stays on one line */
   .home-intro { gap: 2rem; padding: 1.6rem 0 3rem; }
   .home-profile-panel { order: -1; max-width: none; }
-  .home-profile-photo img { aspect-ratio: 1 / 1; object-position: center 88%; }
+  .home-profile-photo img { aspect-ratio: 4 / 3; object-position: center 85%; }
+  .skill-tooltip { display: none; }
   .home-profile-photo figcaption { margin-top: 0.7rem; }
   .intro-greeting { font-size: clamp(2.3rem, 10.5vw, 3rem); margin-bottom: 1.3rem; }
   .intro-greeting .soft { display: block; }
