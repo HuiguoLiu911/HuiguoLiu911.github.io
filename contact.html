@@ -79,9 +79,10 @@
   <section class="contact-form-panel panel" aria-labelledby="note-heading">
     <div class="contact-panel-heading">
       <div><p class="kicker">Start a conversation</p><h2 id="note-heading">Send a note.</h2></div>
-      <span class="form-recipient">Opens in your email app</span>
+      <span class="form-recipient">Sent straight to my inbox</span>
     </div>
-    <form class="contact-form" id="contact-form" data-to="liu01959@umn.edu">
+    <form class="contact-form" id="contact-form" data-to="liu01959@umn.edu" data-key="d395fad7-fca1-460a-8e50-fcb1d386e175">
+      <input type="checkbox" name="botcheck" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
       <div class="contact-form-row">
         <label><span>Name</span><input type="text" name="name" autocomplete="name" required></label>
         <label><span>Email</span><input type="email" name="email" autocomplete="email" required></label>
@@ -89,6 +90,7 @@
       <label><span>Subject</span><input type="text" name="subject" placeholder="Data analyst role at …" required></label>
       <label><span>Message</span><textarea name="message" placeholder="A few lines about the role, the team, or the question." required></textarea></label>
       <button class="contact-submit" type="submit">Send message <span aria-hidden="true">↗</span></button>
+      <p class="form-status" role="status" aria-live="polite" hidden></p>
       <p class="form-fallback">Prefer email? Write to <a href="mailto:liu01959@umn.edu">liu01959@umn.edu</a>.</p>
     </form>
   </section>

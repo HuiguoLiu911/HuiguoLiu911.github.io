@@ -1,5 +1,5 @@
 /* Small, dependency-free behaviours: theme toggle, hide-on-scroll nav, mobile menu,
-   reveal-on-scroll, TOC highlighting, print button, mailto contact form. */
+   reveal-on-scroll, TOC highlighting, print button, Web3Forms contact form. */
 (function () {
   'use strict';
   var root = document.documentElement;
@@ -71,14 +71,49 @@
   // Print buttons ------------------------------------------------------------
   document.querySelectorAll('.print-action').forEach(function (b) { b.addEventListener('click', function () { window.print(); }); });
 
-  // Contact form -> mailto ---------------------------------------------------
+  // Contact form -> Web3Forms (falls back to mailto) -------------------------
   var form = document.getElementById('contact-form');
   if (form) form.addEventListener('submit', function (e) {
     e.preventDefault();
     var f = new FormData(form);
     var to = form.getAttribute('data-to');
-    var subject = encodeURIComponent(f.get('subject') || 'Hello from your website');
-    var body = encodeURIComponent((f.get('message') || '') + '\n\n— ' + (f.get('name') || '') + ' <' + (f.get('email') || '') + '>');
-    window.location.href = 'mailto:' + to + '?subject=' + subject + '&body=' + body;
+    var key = form.getAttribute('data-key');
+    var btn = form.querySelector('.contact-submit');
+    var status = form.querySelector('.form-status');
+    function mailto() {
+      var subject = encodeURIComponent(f.get('subject') || 'Hello from your website');
+      var body = encodeURIComponent((f.get('message') || '') + '\n\n— ' + (f.get('name') || '') + ' <' + (f.get('email') || '') + '>');
+      window.location.href = 'mailto:' + to + '?subject=' + subject + '&body=' + body;
+    }
+    function say(msg, ok) {
+      if (!status) return;
+      status.hidden = false; status.textContent = msg;
+      status.className = 'form-status ' + (ok ? 'is-ok' : 'is-error');
+    }
+    if (!key || !window.fetch) { mailto(); return; }
+    if (f.get('botcheck')) return;
+    var label = btn ? btn.innerHTML : '';
+    if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+    if (status) status.hidden = true;
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        access_key: key,
+        subject: 'Website note: ' + (f.get('subject') || ''),
+        from_name: (f.get('name') || 'Website visitor') + ' (via huiguoliu911.github.io)',
+        name: f.get('name'), email: f.get('email'), replyto: f.get('email'),
+        message: f.get('message'), botcheck: false
+      })
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      if (!d || !d.success) throw new Error((d && d.message) || 'failed');
+      form.reset();
+      say('Thanks — your note is on its way. I’ll reply by email soon.', true);
+    }).catch(function () {
+      say('That didn’t go through. Opening your email app instead…', false);
+      setTimeout(mailto, 900);
+    }).then(function () {
+      if (btn) { btn.disabled = false; btn.innerHTML = label; }
+    });
   });
 })();

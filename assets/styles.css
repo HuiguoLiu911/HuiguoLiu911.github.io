@@ -421,6 +421,10 @@ a.contact-detail:hover { color: var(--accent); }
 .contact-form input:focus, .contact-form textarea:focus { border-color: var(--accent); outline: 2px solid color-mix(in srgb, var(--accent) 25%, transparent); }
 .contact-submit { justify-self: start; padding: 0.8rem 1.15rem; border: 1px solid var(--ink); border-radius: 999px; color: var(--paper); background: var(--ink); font-weight: 600; cursor: pointer; transition: transform 0.2s, background 0.2s; }
 .contact-submit:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+.form-status { margin: 0; padding: 0.75rem 0.9rem; border-radius: 7px; font-size: 0.88rem; line-height: 1.5; }
+.form-status.is-ok { color: var(--ink); background: var(--mint-bg); }
+.form-status.is-error { color: var(--ink); background: var(--coral-bg); }
+.contact-submit:disabled { opacity: 0.6; cursor: progress; transform: none; }
 .form-fallback { margin: 0; font-size: 0.85rem; color: var(--muted); }
 .form-fallback a { color: var(--ink); }
 
