@@ -513,6 +513,7 @@ a.contact-detail:hover { color: var(--accent); }
   /* home: photo first as a compact landscape crop, greeting stays on one line */
   .home-intro { gap: 2rem; padding: 1.6rem 0 3rem; }
   .home-profile-panel { order: -1; max-width: none; }
+  .home-profile-photo img { aspect-ratio: 4 / 3; object-position: center 28%; }
   .skill-tooltip { display: none; }
   .home-profile-photo figcaption { margin-top: 0.7rem; }
   .intro-greeting { font-size: clamp(2.3rem, 10.5vw, 3rem); margin-bottom: 1.3rem; }
