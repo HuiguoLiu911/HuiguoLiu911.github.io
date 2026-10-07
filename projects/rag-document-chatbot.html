@@ -107,8 +107,12 @@
 </ul>
 <h2 id="what-it-changed">What it changed</h2>
 <p>This was an individual classroom exercise with no slides or report. Its value for me was a clean, modular RAG template for the two larger course projects that followed: the Resume–JD Copilot reuses the same document-processor, FAISS-indexer and chain module shapes with guardrails added, and the Sponsor Intake Copilot uses a simpler weighted-cosine variant of the same retrieval idea.</p>
-<h2 id="limitations-and-next-steps">Limitations and next steps</h2>
-<p>It requires a live Azure key and has no local-model fallback. The index lives in memory per session; the save and load helpers are not wired into the UI. Only one PDF or TXT at a time. Splitting on newlines means very long paragraphs can exceed 1500 characters. Chat history is stored but not fed back into the prompt, so each question is answered independently. There are no automated tests. Natural next steps are a recursive splitter, conversational memory in the chain, and a small retrieval-quality check set.</p>
+<h2 id="next-steps">Next steps</h2>
+<ul>
+<li>Switch to a recursive text splitter.</li>
+<li>Feed chat history back into the chain for follow-up questions.</li>
+<li>Build a small retrieval-quality check set.</li>
+</ul>
     <section class="article-code">
       <p class="kicker">Code &amp; materials</p>
       <p>The code lives in a private GitHub repository (HuiguoLiu911/msba6155-rag-chatbot). Access on request — <a href="mailto:liu01959@umn.edu?subject=Ask%20questions%20of%20a%20document%2C%20not%20the%20model">send me a note</a>.</p>
@@ -118,7 +122,7 @@
     <nav class="toc" aria-label="On this page">
       <p class="toc-title">On this page</p>
       <ol>
-<li><a href="#the-question">The question</a></li><li><a href="#data">Data</a></li><li><a href="#method">Method</a></li><li><a href="#results">Results</a></li><li><a href="#what-it-changed">What it changed</a></li><li><a href="#limitations-and-next-steps">Limitations and next steps</a></li>      </ol>
+<li><a href="#the-question">The question</a></li><li><a href="#data">Data</a></li><li><a href="#method">Method</a></li><li><a href="#results">Results</a></li><li><a href="#what-it-changed">What it changed</a></li><li><a href="#next-steps">Next steps</a></li>      </ol>
     </nav>
   </aside>
 </div>

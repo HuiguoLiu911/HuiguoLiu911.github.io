@@ -106,8 +106,12 @@
 </ul>
 <h2 id="what-it-changed">What it changed</h2>
 <p>The deliverables were the working Streamlit app, a project memo covering hypothesis, pilot, quality, cost, scale and risk, three demo scripts, and a 16-slide class presentation. The design decision that mattered most was treating the model as advisory: the copilot proposes, the candidate edits.</p>
-<h2 id="limitations-and-next-steps">Limitations and next steps</h2>
-<p>Match scores are directional, not deterministic, and rule-based guardrails cannot guarantee zero hallucinations. PDF extraction quality depends on résumé formatting. The pilot metrics above are targets; the class timeline did not allow a formal user study. Next steps would be prompt and chunking tuning driven by the feedback log, keying the vector cache by content hash rather than file name, and moving retrieval to Azure AI Search if multi-user document management is needed.</p>
+<h2 id="next-steps">Next steps</h2>
+<ul>
+<li>Tune prompts and chunking from the feedback log.</li>
+<li>Key the vector cache by content hash instead of file name.</li>
+<li>Move retrieval to Azure AI Search if multi-user document management is needed.</li>
+</ul>
     <section class="article-code">
       <p class="kicker">Code &amp; materials</p>
       <p>The code lives in a private GitHub repository (HuiguoLiu911/resume-jd-copilot). Access on request — <a href="mailto:liu01959@umn.edu?subject=Tailor%20a%20r%C3%A9sum%C3%A9%20without%20inventing%20anything">send me a note</a>.</p>
@@ -117,7 +121,7 @@
     <nav class="toc" aria-label="On this page">
       <p class="toc-title">On this page</p>
       <ol>
-<li><a href="#the-question">The question</a></li><li><a href="#data">Data</a></li><li><a href="#method">Method</a></li><li><a href="#results">Results</a></li><li><a href="#what-it-changed">What it changed</a></li><li><a href="#limitations-and-next-steps">Limitations and next steps</a></li>      </ol>
+<li><a href="#the-question">The question</a></li><li><a href="#data">Data</a></li><li><a href="#method">Method</a></li><li><a href="#results">Results</a></li><li><a href="#what-it-changed">What it changed</a></li><li><a href="#next-steps">Next steps</a></li>      </ol>
     </nav>
   </aside>
 </div>

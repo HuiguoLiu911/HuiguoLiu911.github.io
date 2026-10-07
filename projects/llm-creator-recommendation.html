@@ -103,8 +103,11 @@
 </ul>
 <h2 id="what-it-changed">What it changed</h2>
 <p>The report reframed the client&rsquo;s sourcing problem from &ldquo;scrape more&rdquo; to &ldquo;measure recall, derive thresholds from your own approved set, and treat review decisions as training data&rdquo;. The measured thresholds replaced the intuition-based ones, and the contaminated gold set became a cleanup task with a &ldquo;most suspicious first&rdquo; sort in the review UI. The prototype runs end to end offline on fixtures with 167 passing tests.</p>
-<h2 id="limitations-and-next-steps">Limitations and next steps</h2>
-<p>Precision@K and lift are not yet measurable because the only labelled creators are the all-positive gold set, so the reported 100% precision is circular. The gold set itself is about 35% contaminated, so every similarity number is measured against a partly wrong target. The system is metadata-first with no visual understanding. The experiments cannot be reproduced by a third party because the input data is proprietary. The immediate next step is cleaning the gold set and reviewing candidates so lift can be measured honestly.</p>
+<h2 id="next-steps">Next steps</h2>
+<ul>
+<li>Clean the gold set and review new candidates.</li>
+<li>Measure precision@K and lift against the cleaned labels.</li>
+</ul>
     <section class="article-code">
       <p class="kicker">Code &amp; materials</p>
       <p>The code lives in a private GitHub repository (HuiguoLiu911/llm-creator-recommendation). Access on request — <a href="mailto:liu01959@umn.edu?subject=Find%20the%20creators%20keyword%20search%20missed">send me a note</a>.</p>
@@ -114,7 +117,7 @@
     <nav class="toc" aria-label="On this page">
       <p class="toc-title">On this page</p>
       <ol>
-<li><a href="#the-question">The question</a></li><li><a href="#data">Data</a></li><li><a href="#method">Method</a></li><li><a href="#results">Results</a></li><li><a href="#what-it-changed">What it changed</a></li><li><a href="#limitations-and-next-steps">Limitations and next steps</a></li>      </ol>
+<li><a href="#the-question">The question</a></li><li><a href="#data">Data</a></li><li><a href="#method">Method</a></li><li><a href="#results">Results</a></li><li><a href="#what-it-changed">What it changed</a></li><li><a href="#next-steps">Next steps</a></li>      </ol>
     </nav>
   </aside>
 </div>
