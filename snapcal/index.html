@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SnapCal · photo calorie tracker</title>
+<meta name="description" content="SnapCal: snap a meal, get an itemized calorie and macro estimate from Claude vision, and track your day against a goal built from your own numbers.">
+<meta name="theme-color" content="#fffefa">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23111214'/%3E%3Ccircle cx='32' cy='34' r='16' fill='none' stroke='%23ff775c' stroke-width='6'/%3E%3Ccircle cx='46' cy='16' r='6' fill='%2354ad82'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand"><span class="logo" aria-hidden="true"></span>SnapCal</div>
+    <div class="day-nav">
+      <button class="icon-btn" id="prev-day" aria-label="Previous day">‹</button>
+      <button class="day-label" id="day-label" aria-label="Jump to today">Today</button>
+      <button class="icon-btn" id="next-day" aria-label="Next day">›</button>
+    </div>
+    <button class="icon-btn" id="open-settings" aria-label="Settings">⚙</button>
+  </header>
+
+  <main>
+    <section class="view" id="view-today">
+      <div class="summary card">
+        <div class="ring-wrap">
+          <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
+            <circle class="ring-track" cx="60" cy="60" r="52"/>
+            <circle class="ring-fill" id="ring-fill" cx="60" cy="60" r="52"/>
+          </svg>
+          <div class="ring-center">
+            <strong id="kcal-left">0</strong>
+            <span id="kcal-left-label">kcal left</span>
+          </div>
+        </div>
+        <div class="summary-side">
+          <div class="stat"><span>Goal</span><strong id="kcal-goal">–</strong></div>
+          <div class="stat"><span>Eaten</span><strong id="kcal-eaten">0</strong></div>
+          <div class="macros">
+            <div class="macro" data-m="protein"><div class="macro-top"><span>Protein</span><b id="m-protein">0 / 0 g</b></div><div class="bar"><i id="b-protein"></i></div></div>
+            <div class="macro" data-m="carbs"><div class="macro-top"><span>Carbs</span><b id="m-carbs">0 / 0 g</b></div><div class="bar"><i id="b-carbs"></i></div></div>
+            <div class="macro" data-m="fat"><div class="macro-top"><span>Fat</span><b id="m-fat">0 / 0 g</b></div><div class="bar"><i id="b-fat"></i></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="add-row">
+        <label class="add-btn primary" for="photo-input">
+          <span aria-hidden="true">📷</span> Snap a meal
+          <input id="photo-input" type="file" accept="image/*" capture="environment" hidden>
+        </label>
+        <button class="add-btn" id="btn-describe"><span aria-hidden="true">✍️</span> Describe</button>
+        <button class="add-btn" id="btn-search"><span aria-hidden="true">🔎</span> Search</button>
+      </div>
+      <button class="sample-link" id="btn-sample">No API key? Try a sample meal →</button>
+
+      <div id="meals"></div>
+    </section>
+
+    <section class="view" id="view-progress" hidden>
+      <div class="card">
+        <div class="card-head"><h2>Weight</h2><span class="muted" id="weight-delta"></span></div>
+        <form class="weight-form" id="weight-form">
+          <input type="number" step="0.1" min="20" max="400" id="weight-input" placeholder="Today's weight" required>
+          <span class="unit" id="weight-unit">kg</span>
+          <button class="btn small" type="submit">Log</button>
+        </form>
+        <div class="chart" id="weight-chart"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Last 7 days</h2><span class="muted" id="week-avg"></span></div>
+        <div class="chart" id="week-chart"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Data</h2></div>
+        <p class="muted small-text">Everything is stored in this browser only. Photos are never stored; they are sent to the AI only when you analyze one with your own key.</p>
+        <div class="row-actions"><button class="btn ghost small" id="export-csv">Export CSV</button><button class="btn ghost small danger" id="clear-data">Clear all data</button></div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="tabs" aria-label="Sections">
+    <button class="tab active" data-view="today"><span aria-hidden="true">◎</span>Today</button>
+    <button class="tab" data-view="progress"><span aria-hidden="true">↗</span>Progress</button>
+  </nav>
+</div>
+
+<!-- Review sheet -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="review-sheet" hidden aria-labelledby="review-title" role="dialog" aria-modal="true">
+  <div class="sheet-grip"></div>
+  <div class="sheet-head">
+    <h2 id="review-title">Review meal</h2>
+    <button class="icon-btn" data-close aria-label="Close">✕</button>
+  </div>
+  <div class="review-body">
+    <img id="review-photo" alt="" hidden>
+    <div class="analyzing" id="analyzing" hidden><span class="spinner"></span><span id="analyzing-text">Analyzing your plate…</span></div>
+    <p class="note" id="review-note" hidden></p>
+    <div id="review-items"></div>
+    <button class="sample-link left" id="add-item">+ Add an item</button>
+    <div class="review-total" id="review-total"></div>
+    <div class="review-foot">
+      <select id="meal-type" aria-label="Meal">
+        <option value="breakfast">Breakfast</option><option value="lunch">Lunch</option><option value="dinner">Dinner</option><option value="snack">Snack</option>
+      </select>
+      <button class="btn" id="save-meal">Save meal</button>
+    </div>
+  </div>
+</section>
+
+<!-- Describe sheet -->
+<section class="sheet" id="describe-sheet" hidden role="dialog" aria-modal="true" aria-labelledby="describe-title">
+  <div class="sheet-grip"></div>
+  <div class="sheet-head"><h2 id="describe-title">Describe your meal</h2><button class="icon-btn" data-close aria-label="Close">✕</button></div>
+  <textarea id="describe-text" rows="4" placeholder="e.g. two scrambled eggs, a slice of sourdough toast with butter, and a latte with oat milk"></textarea>
+  <button class="btn wide" id="describe-go">Estimate</button>
+</section>
+
+<!-- Search sheet -->
+<section class="sheet" id="search-sheet" hidden role="dialog" aria-modal="true" aria-labelledby="search-title">
+  <div class="sheet-grip"></div>
+  <div class="sheet-head"><h2 id="search-title">Add a food</h2><button class="icon-btn" data-close aria-label="Close">✕</button></div>
+  <input type="search" id="search-input" placeholder="Search common foods (works offline)" autocomplete="off">
+  <ul class="search-results" id="search-results"></ul>
+</section>
+
+<!-- Settings sheet -->
+<section class="sheet tall" id="settings-sheet" hidden role="dialog" aria-modal="true" aria-labelledby="settings-title">
+  <div class="sheet-grip"></div>
+  <div class="sheet-head"><h2 id="settings-title">Your goal</h2><button class="icon-btn" data-close aria-label="Close">✕</button></div>
+  <form id="profile-form" class="form-grid">
+    <label>Units<select name="units"><option value="metric">Metric (kg, cm)</option><option value="imperial">Imperial (lb, in)</option></select></label>
+    <label>Sex<select name="sex"><option value="male">Male</option><option value="female">Female</option></select></label>
+    <label>Age<input name="age" type="number" min="14" max="100" required></label>
+    <label><span id="h-label">Height (cm)</span><input name="height" type="number" step="0.1" required></label>
+    <label><span id="w-label">Weight (kg)</span><input name="weight" type="number" step="0.1" required></label>
+    <label>Activity<select name="activity">
+      <option value="1.2">Mostly sitting</option><option value="1.375">Light (1–3 workouts/wk)</option><option value="1.55">Moderate (3–5/wk)</option><option value="1.725">Very active (6–7/wk)</option>
+    </select></label>
+    <label class="span2">Goal<select name="goal">
+      <option value="-0.75">Lose 0.75 kg / 1.5 lb per week</option><option value="-0.5">Lose 0.5 kg / 1 lb per week</option><option value="-0.25">Lose 0.25 kg / 0.5 lb per week</option><option value="0">Maintain</option><option value="0.25">Gain 0.25 kg / 0.5 lb per week</option>
+    </select></label>
+    <div class="span2 goal-preview" id="goal-preview"></div>
+    <button class="btn span2" type="submit">Save goal</button>
+  </form>
+  <hr>
+  <h3>AI analysis</h3>
+  <p class="muted small-text">Photo and text estimates use Claude vision through your own Anthropic API key. The key stays in this browser's storage and is sent only to api.anthropic.com. Without a key you can still search foods and try the sample meal.</p>
+  <form id="key-form" class="key-form">
+    <input type="password" id="api-key" placeholder="sk-ant-…" autocomplete="off" spellcheck="false">
+    <button class="btn small" type="submit">Save</button>
+    <button class="btn ghost small" type="button" id="forget-key">Forget</button>
+  </form>
+  <p class="muted small-text">Estimates are approximate and not medical advice. Very low intakes need a clinician's guidance.</p>
+</section>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

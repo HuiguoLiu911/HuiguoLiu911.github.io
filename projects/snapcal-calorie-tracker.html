@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Turn messy kickoff notes into a project charter – Huiguo Liu</title>
-<meta name="description" content="Streamlit copilot that turns sponsor meeting notes into a charter, KPI matrix, data checklist, email and sprint board, with guardrails and a repair pass.">
-<meta property="og:title" content="Turn messy kickoff notes into a project charter – Huiguo Liu">
-<meta property="og:description" content="Streamlit copilot that turns sponsor meeting notes into a charter, KPI matrix, data checklist, email and sprint board, with guardrails and a repair pass.">
+<title>Snap a plate, see the calories – Huiguo Liu</title>
+<meta name="description" content="A mobile web app: photograph a meal, get an itemized calorie and macro estimate you can correct by the gram, and track the day against a goal computed from your own numbers.">
+<meta property="og:title" content="Snap a plate, see the calories – Huiguo Liu">
+<meta property="og:description" content="A mobile web app: photograph a meal, get an itemized calorie and macro estimate you can correct by the gram, and track the day against a goal computed from your own numbers.">
 <meta property="og:type" content="website">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,7 +25,7 @@
   })();
 </script>
 </head>
-<body class="page-project tone-page-blue">
+<body class="page-project tone-page-coral">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="topbar" id="topbar">
   <nav class="nav-inner" aria-label="Primary">
@@ -65,50 +65,58 @@
 <main id="main" class="canvas article-canvas">
 <header class="project-header reveal">
   <div class="project-header-copy">
-    <p class="kicker"><a href="../ai-projects.html">AI Projects</a> · 09</p>
-    <h1>Turn messy kickoff notes into a project charter</h1>
-    <p class="project-subtitle">GenAI course PoC · sponsor-meeting intake copilot for analytics teams</p>
-    <ul class="tag-chips" aria-label="Topics"><li>RAG</li><li>guardrails</li><li>Streamlit</li></ul>
-    <p class="project-lede">Streamlit copilot that turns sponsor meeting notes into a charter, KPI matrix, data checklist, email and sprint board, with guardrails and a repair pass.</p>
+    <p class="kicker"><a href="../ai-projects.html">AI Projects</a> · 02</p>
+    <h1>Snap a plate, see the calories</h1>
+    <p class="project-subtitle">SnapCal · A Cal AI–style photo calorie tracker built on Claude vision</p>
+    <ul class="tag-chips" aria-label="Topics"><li>Claude vision</li><li>structured output</li><li>web app</li></ul>
+    <p class="project-lede">A mobile web app: photograph a meal, get an itemized calorie and macro estimate you can correct by the gram, and track the day against a goal computed from your own numbers.</p>
     <dl class="project-meta">
-<div><dt>Role</dt><dd>Solo developer</dd></div><div><dt>Context</dt><dd>Generative AI course proof of concept</dd></div>      <div><dt>When</dt><dd>Jun 2026</dd></div>
-<div><dt>Stack</dt><dd>Python · Streamlit · Azure OpenAI chat + embeddings · numpy · weighted cosine retrieval</dd></div>    </dl>
+<div><dt>Role</dt><dd>Solo project, built with Claude Code</dd></div><div><dt>Context</dt><dd>Personal project inspired by Cal AI</dd></div>      <div><dt>When</dt><dd>Oct 2026</dd></div>
+<div><dt>Stack</dt><dd>JavaScript · Anthropic SDK · Claude Opus 5.5 · JSON schema output · localStorage · SVG</dd></div>    </dl>
   </div>
-  <div class="project-header-art tone-blue">
-    <img src="../assets/art/sponsor-intake-copilot.svg" alt="" width="640" height="400">
+  <div class="project-header-art tone-coral">
+    <img src="../assets/art/snapcal-calorie-tracker.svg" alt="" width="640" height="400">
   </div>
 </header>
 
 <section class="result-strip" aria-label="Headline results">
-<div><span>kickoff artifacts generated from one set of notes</span><strong>7</strong></div><div><span>target charter time, down from 45–60</span><strong>&lt; 10 min</strong></div><div><span>guardrail repair pass before output is shown</span><strong>1</strong></div><div><span>synthetic sample inputs; no client data</span><strong>3</strong></div></section>
+<div><span>ways to log: photo, plain-English description, food search</span><strong>3</strong></div><div><span>common foods searchable offline</span><strong>50</strong></div><div><span>servers: runs entirely in the browser</span><strong>0</strong></div></section>
 
 <div class="article-layout">
   <article class="article-body">
-    <h2 id="the-question">The question</h2>
-<p>Analytics student teams, and client-facing analytics teams generally, leave first sponsor meetings with messy notes, unclear KPIs, vague data requests and ambiguous next steps. Having just been through a sponsor kickoff at the Carlson Analytics Lab, I wanted to know whether a GenAI copilot could turn that ambiguity into a structured kickoff package in minutes, without inventing commitments the sponsor never made.</p>
+    <p><strong><a href="../snapcal/">Open the live app →</a></strong> It works without a key through the sample meal and the food search. Photo analysis needs your own Anthropic API key, entered in Settings.</p>
+<h2 id="the-question">The question</h2>
+<p>Apps like Cal AI made calorie tracking feel effortless: point the camera at a plate and the numbers appear. I wanted to see how much of that experience I could rebuild myself, and where it breaks. Three questions shaped the design. How do you keep an AI estimate honest when portions are guesswork? How do you let people fix it in seconds? And can the whole thing run without a backend that stores anyone&rsquo;s photos?</p>
 <h2 id="data">Data</h2>
-<p>The app takes current meeting notes or a transcript, optional previous meeting notes, and optional anonymized or synthetic project data. The repository contains only three synthetic sample inputs and one sample output report. No client notes or data were used; the memo&rsquo;s position is that project data context should be anonymized or synthetic, never raw client datasets.</p>
+<p>There is no training data. The app has three inputs:</p>
+<ul>
+<li>A meal photo, downscaled in the browser to at most 1,024 pixels before it is sent.</li>
+<li>A plain-English description such as &ldquo;two scrambled eggs and a latte&rdquo;.</li>
+<li>A small offline list of 50 common foods with approximate nutrition per serving, for manual logging.</li>
+</ul>
+<p>Meals, weights and the goal live in the browser&rsquo;s local storage. Photos are never stored; the app keeps only a 96-pixel thumbnail.</p>
 <h2 id="method">Method</h2>
-<p>I built the proof of concept in Streamlit over Azure AI Foundry / Azure OpenAI chat and embedding deployments:</p>
-<ol>
-<li>Chunk the three context sources and embed them. Retrieval is a weighted cosine similarity over the chunks: current notes are authoritative, previous notes get a lower weight as historical context, and synthetic data gets a lower weight as directional only.</li>
-<li>Several short structured-JSON chat calls generate the package: a business problem summary, a project charter with in-scope and out-of-scope sections and open questions, a KPI priority matrix on an urgency-by-feasibility grid with four quadrants, a traffic-light data request checklist, one sponsor follow-up email using the user&rsquo;s sender, tone and meeting-date settings, multiple action plan options, and a Jira-style sprint board of action items plus a next-meeting agenda.</li>
-<li>Rule-based guardrails check for invalid evidence citations, overpromising language, missing required sections, a missing email and missing action plan options. If anything fires, the warnings and the draft go back to the model for one conservative repair rewrite; remaining warnings are still shown to the user.</li>
-<li>The result is exported as a markdown intake report.</li>
-</ol>
+<p><strong>The estimate.</strong> The photo or description goes to Claude (Opus 5.5 at low effort) with a JSON schema that constrains the answer to a list of items. Each item has a name, a portion description, grams, calories, protein, carbohydrate, fat and a confidence level, plus one note about the biggest uncertainty. A schema-constrained answer means the app never has to scrape numbers out of prose. The prompt asks the model to list cooking oil, sauces and dressings as separate items, because those are where most estimates go wrong. It also asks for an empty list when the image doesn&rsquo;t show food.</p>
+<p><strong>The correction loop.</strong> Every item stores its original per-gram values, so editing the grams rescales calories and macros instantly. Items can be renamed, removed, or added from the food list before the meal is saved. Low-confidence items are flagged in color, so the user knows which number to check.</p>
+<p><strong>The goal.</strong> Daily targets come from the Mifflin–St Jeor equation, multiplied by an activity factor and adjusted for the chosen weekly change (7,700 kcal per kilogram). The target never drops below a conservative floor. Protein is set from body weight, fat from a share of calories, and carbohydrate fills the rest.</p>
+<p><strong>Tracking.</strong> A ring shows calories left, bars show the three macros, a weight log draws a trend line, and a seven-day bar chart compares intake with the goal. Everything can be exported to CSV.</p>
 <h2 id="results">Results</h2>
 <ul>
-<li>One click on the sample notes produces the full seven-part package across five review tabs (Summary, Charter, KPI &amp; Data, Email &amp; Actions, Guardrails &amp; Export).</li>
-<li>The guardrail and repair design means unsupported commitments are flagged or rewritten rather than silently passed through, and requested data that may not exist is marked as a question, not an asset.</li>
-<li>The project memo sets pilot targets for 5–10 teams: charter drafting under 10 minutes instead of 45–60, at least 80% of action items usable without major edits, at least 75% of KPI placements and data rankings judged relevant, and zero invented sponsor commitments or data assets.</li>
+<li>The full logging flow works end to end in a phone-sized browser: set a goal, log a meal by photo, description or search, adjust the grams, save, and see the day update.</li>
+<li>Calling the API with an invalid key returns the error to the screen as a plain message, which shows the browser-to-API path is wired up. A sample meal lets anyone try the review-and-correct flow without a key.</li>
+<li>I have not yet measured accuracy against weighed meals, so I make no claim about how close the estimates are.</li>
 </ul>
 <h2 id="what-it-changed">What it changed</h2>
-<p>The deliverable was the running app, the project memo (hypothesis, pilot, quality, cost, scale, risks, assumptions) and the sample report.</p>
+<p>Building it made the hard part obvious. The model call is a few lines of code. The product work is in the correction step: showing uncertainty, making the portion editable, and keeping the numbers consistent when the user changes them. A tracker that is fast to correct beats one that is occasionally more accurate but painful to fix.</p>
 <h2 id="limitations-and-next-steps">Limitations and next steps</h2>
-<p>The pilot metrics are targets, not measured results; no user study was run. Retrieval is a simple weighted cosine over chunks rather than a vector database, which is fine for a few pages of notes but not for long transcript histories. Meeting notes can contain sensitive client information, so a real deployment needs authentication, no server-side storage by default and redaction. Next steps: run the pilot with student teams, add project workspaces with persistent sponsor history, and integrate with Teams or a project management tool.</p>
+<ul>
+<li>The API key sits in the user&rsquo;s own browser. That is fine for a personal tool, but a public product would need a small server to hold the key and enforce rate limits.</li>
+<li>Portion size from a single photo is the largest source of error, and a reference object or a second angle would help.</li>
+<li>Next: a small accuracy test against weighed home meals, a barcode scanner for packaged food, and installable offline support.</li>
+</ul>
     <section class="article-code">
       <p class="kicker">Code &amp; materials</p>
-      <p>The code lives in a private GitHub repository (HuiguoLiu911/sponsor-intake-copilot). Access on request — <a href="mailto:liu01959@umn.edu?subject=Turn%20messy%20kickoff%20notes%20into%20a%20project%20charter">send me a note</a>.</p>
+      <p>This work was delivered inside a client engagement; no public code is available. Happy to walk through the approach on a call.</p>
     </section>
   </article>
   <aside class="article-aside">
@@ -121,7 +129,7 @@
 </div>
 
 <nav class="project-nav" aria-label="More projects">
-<a class="project-nav-link prev" href="../projects/autogen-newsroom.html"><span>← Previous</span><strong>Run a newsroom with five agents and one human</strong></a><a class="project-nav-link next" href="../projects/tiktok-creator-scanner.html"><span>Next →</span><strong>Scan TikTok for creators without an API</strong></a></nav>
+<a class="project-nav-link prev" href="../projects/crypto-ai-radar.html"><span>← Previous</span><strong>Do the signals actually predict anything?</strong></a><a class="project-nav-link next" href="../projects/resume-jd-copilot.html"><span>Next →</span><strong>Tailor a résumé without inventing anything</strong></a></nav>
 </main>
 
 <footer class="site-footer">
