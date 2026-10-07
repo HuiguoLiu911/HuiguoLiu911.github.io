@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Run a newsroom with five agents and one human – Huiguo Liu</title>
-<meta name="description" content="Five-role SelectorGroupChat in AutoGen Studio 0.4.2.2 that turns a fictional bank-outage prompt into an editor-approved AP-style article, with one human pause.">
-<meta property="og:title" content="Run a newsroom with five agents and one human – Huiguo Liu">
-<meta property="og:description" content="Five-role SelectorGroupChat in AutoGen Studio 0.4.2.2 that turns a fictional bank-outage prompt into an editor-approved AP-style article, with one human pause.">
+<title>An AI copilot for my own job search – Huiguo Liu</title>
+<meta name="description" content="A personal workflow run inside Claude Code: paste a posting, get red-flag checks and a fit score, then a one-page tailored résumé PDF with a wording audit.">
+<meta property="og:title" content="An AI copilot for my own job search – Huiguo Liu">
+<meta property="og:description" content="A personal workflow run inside Claude Code: paste a posting, get red-flag checks and a fit score, then a one-page tailored résumé PDF with a wording audit.">
 <meta property="og:type" content="website">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,7 +25,7 @@
   })();
 </script>
 </head>
-<body class="page-project tone-page-sand">
+<body class="page-project tone-page-mint">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="topbar" id="topbar">
   <nav class="nav-inner" aria-label="Primary">
@@ -65,52 +65,52 @@
 <main id="main" class="canvas article-canvas">
 <header class="project-header reveal">
   <div class="project-header-copy">
-    <p class="kicker"><a href="../ai-projects.html">AI Projects</a> · 07</p>
-    <h1>Run a newsroom with five agents and one human</h1>
-    <p class="project-subtitle">MSBA 6155 Generative AI · AutoGen Studio multi-agent newsroom</p>
-    <ul class="tag-chips" aria-label="Topics"><li>AutoGen</li><li>multi-agent</li><li>Azure OpenAI</li></ul>
-    <p class="project-lede">Five-role SelectorGroupChat in AutoGen Studio 0.4.2.2 that turns a fictional bank-outage prompt into an editor-approved AP-style article, with one human pause.</p>
+    <p class="kicker"><a href="../ai-projects.html">AI Projects</a> · 11</p>
+    <h1>An AI copilot for my own job search</h1>
+    <p class="project-subtitle">A Claude Code workflow that screens postings, tailors a résumé, logs the result</p>
+    <ul class="tag-chips" aria-label="Topics"><li>Claude Code</li><li>Python</li><li>SQLite</li></ul>
+    <p class="project-lede">A personal workflow run inside Claude Code: paste a posting, get red-flag checks and a fit score, then a one-page tailored résumé PDF with a wording audit.</p>
     <dl class="project-meta">
-<div><dt>Role</dt><dd>Sole author</dd></div><div><dt>Context</dt><dd>MSBA 6155 individual assignment</dd></div>      <div><dt>When</dt><dd>Jul 2026</dd></div>
-<div><dt>Stack</dt><dd>AutoGen Studio 0.4.2.2 · SelectorGroupChat · Azure OpenAI gpt-4o-mini · MultimodalWebSurfer · Playwright · Python</dd></div>    </dl>
+<div><dt>Role</dt><dd>Solo developer and only user</dd></div><div><dt>Context</dt><dd>Personal tool for my own analytics job search</dd></div>      <div><dt>When</dt><dd>Sep – Oct 2026</dd></div>
+<div><dt>Stack</dt><dd>Claude Code · Python · SQLite · reportlab · Workday / Greenhouse / Lever / Ashby APIs</dd></div>    </dl>
   </div>
-  <div class="project-header-art tone-sand">
-    <img src="../assets/art/autogen-newsroom.svg" alt="" width="640" height="400">
+  <div class="project-header-art tone-mint">
+    <img src="../assets/art/ai-job-search-workflow.svg" alt="" width="640" height="400">
   </div>
 </header>
 
 <section class="result-strip" aria-label="Headline results">
-<div><span>agent roles in one SelectorGroupChat</span><strong>5</strong></div><div><span>human checkpoint, via UserProxyAgent</span><strong>1</strong></div><div><span>max messages before forced termination</span><strong>20</strong></div><div><span>deliverables: screenshots, transcript, team JSON, reflection</span><strong>4</strong></div></section>
+<div><span>slash commands: /jd, /tailor, /jobs, /discover</span><strong>4</strong></div><div><span>weighted dimensions in the fit score</span><strong>6</strong></div><div><span>public job-board sources for discovery (4 ATS platforms + Amazon)</span><strong>5</strong></div><div><span>review gates before a résumé PDF is delivered</span><strong>3</strong></div></section>
 
 <div class="article-layout">
   <article class="article-body">
     <h2 id="the-question">The question</h2>
-<p>The second MSBA 6155 assignment moved from one model to several. The task: build a multi-agent team in AutoGen Studio that behaves like a breaking newsroom, give it a crisis prompt, and show that the agents hand off to each other in the right order, pause for a human editor, and stop when the piece is approved. The scenario was fictional: thousands of users of an &ldquo;OmniBank&rdquo; mobile app report that a morning patch wiped their visible balances to $0.00, support lines show a four-hour wait, and no automated channel is giving updates.</p>
+<p>Searching for an analytics role means doing the same three things over and over: reading a posting to see whether I am even eligible, deciding whether it is worth applying, and adjusting my résumé without overstating anything. A general chatbot forgets my rules between conversations and will happily add a skill or a number.</p>
+<p>I wanted to know whether I could turn those steps into a repeatable workflow, with fixed rules, that runs entirely inside Claude Code: no model API calls of my own and no website.</p>
 <h2 id="data">Data</h2>
-<p>No dataset. The only inputs are the crisis prompt and the editorial direction typed at the human pause. The Reporter agent browses the live web through a headless Playwright Chromium. The Studio run database and an unredacted team export are excluded from the repo; the published team JSON has the API key replaced with a placeholder.</p>
+<p>Everything is local. Postings come in two ways: pasted by me, or pulled from public applicant-tracking endpoints (Workday, Greenhouse, Lever, Ashby, and Amazon&rsquo;s job search), never from LinkedIn. A SQLite database holds jobs, fit analyses, tailored drafts and applications, and mirrors a CSV tracker that stays the single source of truth. Résumé content lives as structured JSON: a locked base version and a pool of approved bullets.</p>
 <h2 id="method">Method</h2>
-<p>I built the team as a <code>SelectorGroupChat</code> in AutoGen Studio 0.4.2.2 with a single Azure OpenAI gpt-4o-mini client and five roles:</p>
-<ul>
-<li>Topic_Generator (AssistantAgent): speaks once, turns raw complaints into a story angle with what to verify and suggested queries.</li>
-<li>Reporter (MultimodalWebSurfer): verifies the angle on the web and produces a brief.</li>
-<li>User (UserProxyAgent): the human Editor-in-Chief; the run pauses here for direction.</li>
-<li>Writer (AssistantAgent): drafts an AP-style article from the brief and the human direction, separating confirmed facts from unresolved claims, and is forbidden from using the word APPROVED.</li>
-<li>Editor (AssistantAgent): reviews against the brief, the direction and AP objectivity, and either returns targeted feedback (routing back to Writer) or outputs exactly APPROVED.</li>
-</ul>
-<p>The key design rule was to put routing logic in each agent&rsquo;s description, which the selector prompt reads, and behavior rules in the system message. Termination is <code>TextMentionTermination("APPROVED")</code> OR <code>MaxMessageTermination(20)</code>. I iterated the team definition through four Python setup scripts before locking the final version in Studio, because the assignment required evidence from the Studio Playground and Team Builder, not from code alone.</p>
+<p>The interface is four slash commands, and a SessionStart hook loads the written scoring rules into every session.</p>
+<ol>
+<li><strong>/jd</strong>: extract the posting&rsquo;s basics, store it, then run a red-flag scan that quotes any sentence about sponsorship, citizenship or security clearance at the top of the output. An explicit blocker means Skip.</li>
+<li><strong>Fit score</strong>: six weighted dimensions (skills 25, responsibilities 25, evidence 20, seniority 15, domain 10, education 5), rounded to the nearest 5 so it never looks falsely precise. Evidence is weighted by type, and caps apply when a core skill is missing. A separate priority (High / Medium / Low / Skip) captures eligibility and practical risk.</li>
+<li><strong>/tailor</strong>: assemble a one-page résumé from the bullet pool, run a wording audit, render the PDF, and self-review before delivery.</li>
+<li><strong>/jobs</strong> and <strong>/discover</strong>: a daily dashboard, status updates that write back to the tracker, and a discovery run that deduplicates postings with one shared key definition and writes a markdown digest.</li>
+</ol>
+<p>The guardrails are in code, not in prompts. The renderer lets the AI change only the text field of a bullet; layout, section order, company names, titles, dates and education are fixed. Rewording may not add numbers or tools, may not use words on a not-allowed list, and must stay within ±15% of the original length. The automatic screening score is labelled a mechanical approximation and always shows its reasons so I can overrule it.</p>
 <h2 id="results">Results</h2>
 <ul>
-<li>The run followed the intended order: Topic_Generator, Reporter, User, Writer, Editor, with all five agents speaking and the session ending on APPROVED.</li>
-<li>At the human pause I steered the story toward the communication failure rather than the app bug itself, and the Writer incorporated that direction without the session losing history.</li>
-<li>The Editor&rsquo;s revision loop worked as designed: it asked for revision twice, each time the selector routed the turn back to the Writer, and the run stopped on APPROVED through TextMentionTermination.</li>
+<li>One conversation now covers the path from pasted posting to a reviewed PDF and an updated tracker row.</li>
+<li>A résumé is delivered only after three checks pass: an automated review checklist, a visual check of the rendered preview, and a re-read from the hiring manager&rsquo;s point of view.</li>
+<li>Red-flag sentences appear verbatim at the top, so eligibility problems surface before any tailoring effort.</li>
 </ul>
 <h2 id="what-it-changed">What it changed</h2>
-<p>Delivered the four required artifacts: workflow screenshots of the Playground session, the full session transcript as a Word document, the redacted team JSON export, and a two-paragraph analytical reflection. The reflection&rsquo;s main point was that the UserProxyAgent is what makes the workflow realistic: a human can review evidence and inject judgment mid-run without cancelling and restarting, which is the pattern production multi-agent systems need.</p>
+<p>I stopped rewriting résumés from scratch and re-explaining my criteria. The bigger change was where trust sits: the model proposes wording, while facts, structure and scoring rules are fixed in files and code that I can read and edit. When I skip a role I record the reason, which feeds back into the screening criteria.</p>
 <h2 id="limitations-and-next-steps">Limitations and next steps</h2>
-<p>This is a single scripted scenario, not a benchmark; routing quality depends heavily on how precisely the descriptions are written, and a Reporter that does not clearly finish can confuse the selector. The web-browsing agent is slow and sometimes rate-limited. Next steps would be adding a fact-check agent with explicit source citations and running the same team on several prompts to measure how often routing deviates.</p>
+<p>The fit score is a structured judgement, not a measure of interview odds, and the automatic screen only approximates the dimensions that require actually reading the posting. Discovery depends on public endpoints that change or go down without notice. The workflow is built around one person&rsquo;s rules and materials. The tracker can already compare résumé versions by outcome, but reports nothing below 30 outcomes; reading it is next.</p>
     <section class="article-code">
       <p class="kicker">Code &amp; materials</p>
-      <p>The code lives in a private GitHub repository (HuiguoLiu911/msba6155-autogen-newsroom). Access on request — <a href="mailto:liu01959@umn.edu?subject=Run%20a%20newsroom%20with%20five%20agents%20and%20one%20human">send me a note</a>.</p>
+      <p>This work was delivered inside a client engagement; no public code is available. Happy to walk through the approach on a call.</p>
     </section>
   </article>
   <aside class="article-aside">
@@ -123,7 +123,7 @@
 </div>
 
 <nav class="project-nav" aria-label="More projects">
-<a class="project-nav-link prev" href="../projects/ymca-multiagent-delivery.html"><span>← Previous</span><strong>Three agents, one client brief</strong></a><a class="project-nav-link next" href="../projects/sponsor-intake-copilot.html"><span>Next →</span><strong>Turn messy kickoff notes into a project charter</strong></a></nav>
+<a class="project-nav-link prev" href="../projects/mochi-ai-video-playbook.html"><span>← Previous</span><strong>An AI cat that clocks in every day</strong></a><a class="project-nav-link next" href="../projects/fitgenius.html"><span>Next →</span><strong>Log workouts, ask the coach</strong></a></nav>
 </main>
 
 <footer class="site-footer">

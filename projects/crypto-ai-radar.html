@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Run a newsroom with five agents and one human – Huiguo Liu</title>
-<meta name="description" content="Five-role SelectorGroupChat in AutoGen Studio 0.4.2.2 that turns a fictional bank-outage prompt into an editor-approved AP-style article, with one human pause.">
-<meta property="og:title" content="Run a newsroom with five agents and one human – Huiguo Liu">
-<meta property="og:description" content="Five-role SelectorGroupChat in AutoGen Studio 0.4.2.2 that turns a fictional bank-outage prompt into an editor-approved AP-style article, with one human pause.">
+<title>Do the signals actually predict anything? – Huiguo Liu</title>
+<meta name="description" content="Hourly research system that collects market, derivatives and news data, tests rules and XGBoost with purged walk-forward splits, and reports a candid verdict: no repeatable edge yet.">
+<meta property="og:title" content="Do the signals actually predict anything? – Huiguo Liu">
+<meta property="og:description" content="Hourly research system that collects market, derivatives and news data, tests rules and XGBoost with purged walk-forward splits, and reports a candid verdict: no repeatable edge yet.">
 <meta property="og:type" content="website">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,7 +25,7 @@
   })();
 </script>
 </head>
-<body class="page-project tone-page-sand">
+<body class="page-project tone-page-lilac">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="topbar" id="topbar">
   <nav class="nav-inner" aria-label="Primary">
@@ -65,52 +65,59 @@
 <main id="main" class="canvas article-canvas">
 <header class="project-header reveal">
   <div class="project-header-copy">
-    <p class="kicker"><a href="../ai-projects.html">AI Projects</a> · 07</p>
-    <h1>Run a newsroom with five agents and one human</h1>
-    <p class="project-subtitle">MSBA 6155 Generative AI · AutoGen Studio multi-agent newsroom</p>
-    <ul class="tag-chips" aria-label="Topics"><li>AutoGen</li><li>multi-agent</li><li>Azure OpenAI</li></ul>
-    <p class="project-lede">Five-role SelectorGroupChat in AutoGen Studio 0.4.2.2 that turns a fictional bank-outage prompt into an editor-approved AP-style article, with one human pause.</p>
+    <p class="kicker"><a href="../ai-projects.html">AI Projects</a> · 01</p>
+    <h1>Do the signals actually predict anything?</h1>
+    <p class="project-subtitle">Crypto AI Radar · An honest research pipeline for BTC, ETH and SOL hourly signals</p>
+    <ul class="tag-chips" aria-label="Topics"><li>walk-forward</li><li>XGBoost</li><li>DuckDB</li></ul>
+    <p class="project-lede">Hourly research system that collects market, derivatives and news data, tests rules and XGBoost with purged walk-forward splits, and reports a candid verdict: no repeatable edge yet.</p>
     <dl class="project-meta">
-<div><dt>Role</dt><dd>Sole author</dd></div><div><dt>Context</dt><dd>MSBA 6155 individual assignment</dd></div>      <div><dt>When</dt><dd>Jul 2026</dd></div>
-<div><dt>Stack</dt><dd>AutoGen Studio 0.4.2.2 · SelectorGroupChat · Azure OpenAI gpt-4o-mini · MultimodalWebSurfer · Playwright · Python</dd></div>    </dl>
+<div><dt>Role</dt><dd>Solo project, built with Claude Code</dd></div><div><dt>Context</dt><dd>Personal research project</dd></div>      <div><dt>When</dt><dd>Oct 2026</dd></div>
+<div><dt>Stack</dt><dd>Python · DuckDB · pandas · XGBoost · Streamlit · pytest · Binance / OKX public APIs</dd></div>    </dl>
   </div>
-  <div class="project-header-art tone-sand">
-    <img src="../assets/art/autogen-newsroom.svg" alt="" width="640" height="400">
+  <div class="project-header-art tone-lilac">
+    <img src="../assets/art/crypto-ai-radar.svg" alt="" width="640" height="400">
   </div>
 </header>
 
 <section class="result-strip" aria-label="Headline results">
-<div><span>agent roles in one SelectorGroupChat</span><strong>5</strong></div><div><span>human checkpoint, via UserProxyAgent</span><strong>1</strong></div><div><span>max messages before forced termination</span><strong>20</strong></div><div><span>deliverables: screenshots, transcript, team JSON, reflection</span><strong>4</strong></div></section>
+<div><span>hourly candles per asset, 12 months, zero gaps</span><strong>8,761</strong></div><div><span>automated tests (pytest)</span><strong>94</strong></div><div><span>buy-and-hold baseline the rules had to beat (240-day walk-forward)</span><strong>-21.4%</strong></div><div><span>verdict: not enough evidence to pay for data</span><strong>MAYBE</strong></div></section>
 
 <div class="article-layout">
   <article class="article-body">
     <h2 id="the-question">The question</h2>
-<p>The second MSBA 6155 assignment moved from one model to several. The task: build a multi-agent team in AutoGen Studio that behaves like a breaking newsroom, give it a crisis prompt, and show that the agents hand off to each other in the right order, pause for a human editor, and stop when the piece is approved. The scenario was fictional: thousands of users of an &ldquo;OmniBank&rdquo; mobile app report that a morning patch wiped their visible balances to $0.00, support lines show a four-hour wait, and no automated channel is giving updates.</p>
+<p>Crypto dashboards are full of &ldquo;signals&rdquo;: momentum, volume spikes, open interest, funding rates, news sentiment. Paid data vendors sell more of them. Before paying for any of it, I wanted a straight answer to one question: do these signals predict BTC, ETH and SOL returns well enough, out of sample and after costs, to be worth acting on?</p>
+<p>So I built a research system rather than a trading bot. It never places real orders and never touches exchange account keys.</p>
 <h2 id="data">Data</h2>
-<p>No dataset. The only inputs are the crisis prompt and the editorial direction typed at the human pause. The Reporter agent browses the live web through a headless Playwright Chromium. The Studio run database and an unredacted team export are excluded from the repo; the published team JSON has the API key replaced with a placeholder.</p>
-<h2 id="method">Method</h2>
-<p>I built the team as a <code>SelectorGroupChat</code> in AutoGen Studio 0.4.2.2 with a single Azure OpenAI gpt-4o-mini client and five roles:</p>
 <ul>
-<li>Topic_Generator (AssistantAgent): speaks once, turns raw complaints into a story angle with what to verify and suggested queries.</li>
-<li>Reporter (MultimodalWebSurfer): verifies the angle on the web and produces a brief.</li>
-<li>User (UserProxyAgent): the human Editor-in-Chief; the run pauses here for direction.</li>
-<li>Writer (AssistantAgent): drafts an AP-style article from the brief and the human direction, separating confirmed facts from unresolved claims, and is forbidden from using the word APPROVED.</li>
-<li>Editor (AssistantAgent): reviews against the brief, the direction and AP objectivity, and either returns targeted feedback (routing back to Writer) or outputs exactly APPROVED.</li>
+<li><strong>Price and volume:</strong> 12 months of hourly Binance spot candles for each asset, 8,761 rows per asset with zero missing hours, zero duplicates and no misaligned timestamps. CoinGecko is a degraded fallback that can never overwrite Binance rows.</li>
+<li><strong>Derivatives:</strong> about 60 days of OKX open interest and about 100 days of funding-rate settlements, all from free public endpoints.</li>
+<li><strong>News:</strong> RSS headlines with publication time and first-seen time stored separately, so a headline cannot be used before the system actually saw it.</li>
 </ul>
-<p>The key design rule was to put routing logic in each agent&rsquo;s description, which the selector prompt reads, and behavior rules in the system message. Termination is <code>TextMentionTermination("APPROVED")</code> OR <code>MaxMessageTermination(20)</code>. I iterated the team definition through four Python setup scripts before locking the final version in Studio, because the assignment required evidence from the Studio Playground and Team Builder, not from code alone.</p>
+<p>Everything lands in DuckDB with one rule that never bends: a candle&rsquo;s timestamp is its open time in UTC, only closed candles are stored, and missing hours stay missing instead of being interpolated.</p>
+<h2 id="method">Method</h2>
+<p>The pipeline runs collection, features, labels, signal research, backtesting, model validation, transparent scoring, forward paper trading and a Chinese-language Streamlit dashboard.</p>
+<p>Most of the work went into making the evaluation hard to fool:</p>
+<ul>
+<li>Features use only data available at decision time; labels live in a separate module and never enter a feature frame.</li>
+<li>Model training uses expanding windows with <strong>purged walk-forward</strong> splits, so no training label overlaps the validation period; imputation and scaling are fit on training data only.</li>
+<li>The backtest enters at the next hour&rsquo;s open with adverse slippage and fees on both sides, one position per asset, and compares every rule against buy-and-hold, always-long, momentum and 20 seeded random-entry baselines.</li>
+<li>Ablations add one source at a time (price only, then volume, open interest, funding) to see whether each new input earns its place.</li>
+<li>A second-pass integrity review checked timestamps, leakage, fills and paper-trade ordering, and 94 automated tests cover the edge cases.</li>
+</ul>
 <h2 id="results">Results</h2>
 <ul>
-<li>The run followed the intended order: Topic_Generator, Reporter, User, Writer, Editor, with all five agents speaking and the session ending on APPROVED.</li>
-<li>At the human pause I steered the story toward the communication failure rather than the app bug itself, and the Writer incorporated that direction without the session losing history.</li>
-<li>The Editor&rsquo;s revision loop worked as designed: it asked for revision twice, each time the selector routed the turn back to the Writer, and the run stopped on APPROVED through TextMentionTermination.</li>
+<li>Over the 12-month price and volume panel (240-day walk-forward), momentum-plus-volume returned -33.7% and the price-only XGBoost model -43.9%, against -21.4% for simply holding the three assets.</li>
+<li>On the shorter panel where derivatives data exists (28-day walk-forward), the best rule used volume only (+7.2%) and adding funding to the model gave +5.4%, both close to buy-and-hold at +7.6%.</li>
+<li>Adding open interest and funding did not improve probability calibration consistently.</li>
 </ul>
+<p>The verdict the system writes for itself is <strong>MAYBE</strong>: free data is enough to test the idea, not enough to justify buying paid data.</p>
 <h2 id="what-it-changed">What it changed</h2>
-<p>Delivered the four required artifacts: workflow screenshots of the Playground session, the full session transcript as a Word document, the redacted team JSON export, and a two-paragraph analytical reflection. The reflection&rsquo;s main point was that the UserProxyAgent is what makes the workflow realistic: a human can review evidence and inject judgment mid-run without cancelling and restarting, which is the pattern production multi-agent systems need.</p>
+<p>The answer was &ldquo;don&rsquo;t spend money yet&rdquo;, and the project says so in its first line. Instead of a paid-API upgrade, the next step is a prespecified evidence plan: collect 120 more days of continuous open interest to reach 180 days, and paper-trade one fixed rule for at least 90 days or 100 closed trades before revisiting the decision.</p>
 <h2 id="limitations-and-next-steps">Limitations and next steps</h2>
-<p>This is a single scripted scenario, not a benchmark; routing quality depends heavily on how precisely the descriptions are written, and a Reporter that does not clearly finish can confuse the selector. The web-browsing agent is slow and sometimes rate-limited. Next steps would be adding a fact-check agent with explicit source citations and running the same team on several prompts to measure how often routing deviates.</p>
+<p>Only about two months of derivatives history overlap the price data, so the derivatives results rest on a short window. The forward paper account had no completed trades at the time of the report. Best-rule rankings come from many comparisons and are descriptive, not a locked strategy. The opportunity score on the dashboard is a transparent heuristic, not a calibrated probability, and nothing here is investment advice.</p>
     <section class="article-code">
       <p class="kicker">Code &amp; materials</p>
-      <p>The code lives in a private GitHub repository (HuiguoLiu911/msba6155-autogen-newsroom). Access on request — <a href="mailto:liu01959@umn.edu?subject=Run%20a%20newsroom%20with%20five%20agents%20and%20one%20human">send me a note</a>.</p>
+      <p>This work was delivered inside a client engagement; no public code is available. Happy to walk through the approach on a call.</p>
     </section>
   </article>
   <aside class="article-aside">
@@ -123,7 +130,7 @@
 </div>
 
 <nav class="project-nav" aria-label="More projects">
-<a class="project-nav-link prev" href="../projects/ymca-multiagent-delivery.html"><span>← Previous</span><strong>Three agents, one client brief</strong></a><a class="project-nav-link next" href="../projects/sponsor-intake-copilot.html"><span>Next →</span><strong>Turn messy kickoff notes into a project charter</strong></a></nav>
+<span></span><a class="project-nav-link next" href="../projects/resume-jd-copilot.html"><span>Next →</span><strong>Tailor a résumé without inventing anything</strong></a></nav>
 </main>
 
 <footer class="site-footer">

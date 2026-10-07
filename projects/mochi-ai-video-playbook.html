@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Run a newsroom with five agents and one human – Huiguo Liu</title>
-<meta name="description" content="Five-role SelectorGroupChat in AutoGen Studio 0.4.2.2 that turns a fictional bank-outage prompt into an editor-approved AP-style article, with one human pause.">
-<meta property="og:title" content="Run a newsroom with five agents and one human – Huiguo Liu">
-<meta property="og:description" content="Five-role SelectorGroupChat in AutoGen Studio 0.4.2.2 that turns a fictional bank-outage prompt into an editor-approved AP-style article, with one human pause.">
+<title>An AI cat that clocks in every day – Huiguo Liu</title>
+<meta name="description" content="Built a locked character, style blocks, a slot-based prompt engine and 20 ready prompts for an AI short-video series about an orange cat with a new job each day.">
+<meta property="og:title" content="An AI cat that clocks in every day – Huiguo Liu">
+<meta property="og:description" content="Built a locked character, style blocks, a slot-based prompt engine and 20 ready prompts for an AI short-video series about an orange cat with a new job each day.">
 <meta property="og:type" content="website">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,7 +25,7 @@
   })();
 </script>
 </head>
-<body class="page-project tone-page-sand">
+<body class="page-project tone-page-peach">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="topbar" id="topbar">
   <nav class="nav-inner" aria-label="Primary">
@@ -65,52 +65,40 @@
 <main id="main" class="canvas article-canvas">
 <header class="project-header reveal">
   <div class="project-header-copy">
-    <p class="kicker"><a href="../ai-projects.html">AI Projects</a> · 07</p>
-    <h1>Run a newsroom with five agents and one human</h1>
-    <p class="project-subtitle">MSBA 6155 Generative AI · AutoGen Studio multi-agent newsroom</p>
-    <ul class="tag-chips" aria-label="Topics"><li>AutoGen</li><li>multi-agent</li><li>Azure OpenAI</li></ul>
-    <p class="project-lede">Five-role SelectorGroupChat in AutoGen Studio 0.4.2.2 that turns a fictional bank-outage prompt into an editor-approved AP-style article, with one human pause.</p>
+    <p class="kicker"><a href="../ai-projects.html">AI Projects</a> · 10</p>
+    <h1>An AI cat that clocks in every day</h1>
+    <p class="project-subtitle">Personal project · a prompt system for one consistent AI-video character</p>
+    <ul class="tag-chips" aria-label="Topics"><li>prompt engineering</li><li>AI video</li><li>content strategy</li></ul>
+    <p class="project-lede">Built a locked character, style blocks, a slot-based prompt engine and 20 ready prompts for an AI short-video series about an orange cat with a new job each day.</p>
     <dl class="project-meta">
-<div><dt>Role</dt><dd>Sole author</dd></div><div><dt>Context</dt><dd>MSBA 6155 individual assignment</dd></div>      <div><dt>When</dt><dd>Jul 2026</dd></div>
-<div><dt>Stack</dt><dd>AutoGen Studio 0.4.2.2 · SelectorGroupChat · Azure OpenAI gpt-4o-mini · MultimodalWebSurfer · Playwright · Python</dd></div>    </dl>
+<div><dt>Role</dt><dd>Solo creator</dd></div><div><dt>Context</dt><dd>Personal content project, 打工橘 / Mochi on Shift</dd></div>      <div><dt>When</dt><dd>Aug 2026</dd></div>
+<div><dt>Stack</dt><dd>Seedance · AI image model · LLM assistants · Markdown</dd></div>    </dl>
   </div>
-  <div class="project-header-art tone-sand">
-    <img src="../assets/art/autogen-newsroom.svg" alt="" width="640" height="400">
+  <div class="project-header-art tone-peach">
+    <img src="../assets/art/mochi-ai-video-playbook.svg" alt="" width="640" height="400">
   </div>
 </header>
 
 <section class="result-strip" aria-label="Headline results">
-<div><span>agent roles in one SelectorGroupChat</span><strong>5</strong></div><div><span>human checkpoint, via UserProxyAgent</span><strong>1</strong></div><div><span>max messages before forced termination</span><strong>20</strong></div><div><span>deliverables: screenshots, transcript, team JSON, reflection</span><strong>4</strong></div></section>
+<div><span>production-ready prompts in Batch 02 v4</span><strong>20</strong></div><div><span>compressed 150-word prompts that failed to generate</span><strong>20/20</strong></div><div><span>reference-strength band set in the character lock</span><strong>70–80%</strong></div><div><span>clip target for the 7-day sprint</span><strong>120</strong></div></section>
 
 <div class="article-layout">
   <article class="article-body">
     <h2 id="the-question">The question</h2>
-<p>The second MSBA 6155 assignment moved from one model to several. The task: build a multi-agent team in AutoGen Studio that behaves like a breaking newsroom, give it a crisis prompt, and show that the agents hand off to each other in the right order, pause for a human editor, and stop when the piece is approved. The scenario was fictional: thousands of users of an &ldquo;OmniBank&rdquo; mobile app report that a morning patch wiped their visible balances to $0.00, support lines show a four-hour wait, and no automated channel is giving updates.</p>
+<p>AI-cat videos were everywhere in August 2026, and most leaned into exaggerated, obviously fake clips. I wanted to know whether a prompt system could keep one character consistent across many 10-second clips while looking like ordinary phone footage.</p>
 <h2 id="data">Data</h2>
-<p>No dataset. The only inputs are the crisis prompt and the editorial direction typed at the human pause. The Reporter agent browses the live web through a headless Playwright Chromium. The Studio run database and an unredacted team export are excluded from the repo; the published team JSON has the API key replaced with a placeholder.</p>
+<p>No dataset. My inputs were market research notes, a generated character sheet, and the Seedance production spec: 720p, 9:16, fixed 10 seconds, batches of 20.</p>
 <h2 id="method">Method</h2>
-<p>I built the team as a <code>SelectorGroupChat</code> in AutoGen Studio 0.4.2.2 with a single Azure OpenAI gpt-4o-mini client and five roles:</p>
-<ul>
-<li>Topic_Generator (AssistantAgent): speaks once, turns raw complaints into a story angle with what to verify and suggested queries.</li>
-<li>Reporter (MultimodalWebSurfer): verifies the angle on the web and produces a brief.</li>
-<li>User (UserProxyAgent): the human Editor-in-Chief; the run pauses here for direction.</li>
-<li>Writer (AssistantAgent): drafts an AP-style article from the brief and the human direction, separating confirmed facts from unresolved claims, and is forbidden from using the word APPROVED.</li>
-<li>Editor (AssistantAgent): reviews against the brief, the direction and AP objectivity, and either returns targeted feedback (routing back to Writer) or outputs exactly APPROVED.</li>
-</ul>
-<p>The key design rule was to put routing logic in each agent&rsquo;s description, which the selector prompt reads, and behavior rules in the system message. Termination is <code>TextMentionTermination("APPROVED")</code> OR <code>MaxMessageTermination(20)</code>. I iterated the team definition through four Python setup scripts before locking the final version in Studio, because the assignment required evidence from the Studio Playground and Team Builder, not from code alone.</p>
+<p>I wrote a character lock (one orange-and-white cat, only the right front paw white, a faded red collar with a blank tag) and pasted it word for word into every prompt. A style lock added realism and negative blocks. A prompt engine combines job, payoff and camera slots into a nine-section template. A 7-day sprint plan sets out the order of work.</p>
 <h2 id="results">Results</h2>
-<ul>
-<li>The run followed the intended order: Topic_Generator, Reporter, User, Writer, Editor, with all five agents speaking and the session ending on APPROVED.</li>
-<li>At the human pause I steered the story toward the communication failure rather than the app bug itself, and the Writer incorporated that direction without the session losing history.</li>
-<li>The Editor&rsquo;s revision loop worked as designed: it asked for revision twice, each time the selector routed the turn back to the Writer, and the run stopped on APPROVED through TextMentionTermination.</li>
-</ul>
+<p>Batch 02 v4 holds 20 ready prompts. An earlier compressed 150-word format failed on all 20 prompts. The cause was that it dropped the character-motion, background and physics sections.</p>
 <h2 id="what-it-changed">What it changed</h2>
-<p>Delivered the four required artifacts: workflow screenshots of the Playground session, the full session transcript as a Word document, the redacted team JSON export, and a two-paragraph analytical reflection. The reflection&rsquo;s main point was that the UserProxyAgent is what makes the workflow realistic: a human can review evidence and inject judgment mid-run without cancelling and restarting, which is the pattern production multi-agent systems need.</p>
+<p>The rule became &ldquo;prompts can be long, but no section can be skipped.&rdquo;</p>
 <h2 id="limitations-and-next-steps">Limitations and next steps</h2>
-<p>This is a single scripted scenario, not a benchmark; routing quality depends heavily on how precisely the descriptions are written, and a Reporter that does not clearly finish can confuse the selector. The web-browsing agent is slow and sometimes rate-limited. Next steps would be adding a fact-check agent with explicit source citations and running the same team on several prompts to measure how often routing deviates.</p>
+<p>The results log is still all &ldquo;pending,&rdquo; so I have no per-clip quality data yet. The next step is style validation on three low-risk scenes.</p>
     <section class="article-code">
       <p class="kicker">Code &amp; materials</p>
-      <p>The code lives in a private GitHub repository (HuiguoLiu911/msba6155-autogen-newsroom). Access on request — <a href="mailto:liu01959@umn.edu?subject=Run%20a%20newsroom%20with%20five%20agents%20and%20one%20human">send me a note</a>.</p>
+      <p>This work was delivered inside a client engagement; no public code is available. Happy to walk through the approach on a call.</p>
     </section>
   </article>
   <aside class="article-aside">
@@ -123,7 +111,7 @@
 </div>
 
 <nav class="project-nav" aria-label="More projects">
-<a class="project-nav-link prev" href="../projects/ymca-multiagent-delivery.html"><span>← Previous</span><strong>Three agents, one client brief</strong></a><a class="project-nav-link next" href="../projects/sponsor-intake-copilot.html"><span>Next →</span><strong>Turn messy kickoff notes into a project charter</strong></a></nav>
+<a class="project-nav-link prev" href="../projects/tiktok-creator-scanner.html"><span>← Previous</span><strong>Scan TikTok for creators without an API</strong></a><a class="project-nav-link next" href="../projects/ai-job-search-workflow.html"><span>Next →</span><strong>An AI copilot for my own job search</strong></a></nav>
 </main>
 
 <footer class="site-footer">
