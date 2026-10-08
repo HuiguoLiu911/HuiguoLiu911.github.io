@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Three agents, one client brief – Huiguo Liu</title>
-<meta name="description" content="A one-day experiment where a project-manager agent, a technical agent and a business agent turned a client brief into labelled evidence, a dashboard and a deck.">
-<meta property="og:title" content="Three agents, one client brief – Huiguo Liu">
-<meta property="og:description" content="A one-day experiment where a project-manager agent, a technical agent and a business agent turned a client brief into labelled evidence, a dashboard and a deck.">
+<title>Turn messy kickoff notes into a project charter – Huiguo Liu</title>
+<meta name="description" content="Streamlit copilot that turns sponsor meeting notes into a charter, KPI matrix, data checklist, email and sprint board, with guardrails and a repair pass.">
+<meta property="og:title" content="Turn messy kickoff notes into a project charter – Huiguo Liu">
+<meta property="og:description" content="Streamlit copilot that turns sponsor meeting notes into a charter, KPI matrix, data checklist, email and sprint board, with guardrails and a repair pass.">
 <meta property="og:type" content="website">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,7 +25,7 @@
   })();
 </script>
 </head>
-<body class="page-project tone-page-blue">
+<body class="page-project tone-page-coral">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="topbar" id="topbar">
   <nav class="nav-inner" aria-label="Primary">
@@ -65,56 +65,54 @@
 <main id="main" class="canvas article-canvas">
 <header class="project-header reveal">
   <div class="project-header-copy">
-    <p class="kicker"><a href="../ai-projects.html">AI Projects</a> · 07</p>
-    <h1>Three agents, one client brief</h1>
-    <p class="project-subtitle">Re-running a YMCA retention engagement as a Claude Code multi-agent team</p>
-    <ul class="tag-chips" aria-label="Topics"><li>multi-agent</li><li>Claude Code</li><li>evidence tracking</li></ul>
-    <p class="project-lede">A one-day experiment where a project-manager agent, a technical agent and a business agent turned a client brief into labelled evidence, a dashboard and a deck.</p>
+    <p class="kicker"><a href="../ai-projects.html">AI Projects</a> · 09</p>
+    <h1>Turn messy kickoff notes into a project charter</h1>
+    <p class="project-subtitle">GenAI course PoC · sponsor-meeting intake copilot for analytics teams</p>
+    <ul class="tag-chips" aria-label="Topics"><li>RAG</li><li>guardrails</li><li>Streamlit</li></ul>
+    <p class="project-lede">Streamlit copilot that turns sponsor meeting notes into a charter, KPI matrix, data checklist, email and sprint board, with guardrails and a repair pass.</p>
     <dl class="project-meta">
-<div><dt>Role</dt><dd>Designed the agent system and played the client</dd></div><div><dt>Context</dt><dd>Personal experiment on a Carlson Analytics Lab engagement</dd></div>      <div><dt>When</dt><dd>Jul 2026 (one working day)</dd></div>
-<div><dt>Stack</dt><dd>Claude Code · Claude Opus · Claude Sonnet · Python · pandas · HTML/CSS · PowerPoint</dd></div>    </dl>
+<div><dt>Role</dt><dd>Solo developer</dd></div><div><dt>Context</dt><dd>Generative AI course proof of concept</dd></div>      <div><dt>When</dt><dd>Jun 2026</dd></div>
+<div><dt>Stack</dt><dd>Python · Streamlit · Azure OpenAI chat + embeddings · numpy · weighted cosine retrieval</dd></div>    </dl>
   </div>
-  <div class="project-header-art tone-blue">
-    <img src="../assets/art/ymca-multiagent-delivery.svg" alt="" width="640" height="400">
+  <div class="project-header-art tone-coral">
+    <img src="../assets/art/sponsor-intake-copilot.svg" alt="" width="640" height="400">
   </div>
 </header>
 
 <section class="result-strip" aria-label="Headline results">
-<div><span>client-approved decisions in the decision log</span><strong>22</strong></div><div><span>numbered claims in the evidence register, each labelled</span><strong>23</strong></div><div><span>category-level program churn, replacing a misleading 80%</span><strong>35.5%</strong></div><div><span>slides in the leadership deck</span><strong>8</strong></div></section>
+<div><span>kickoff artifacts generated from one set of notes</span><strong>7</strong></div><div><span>target charter time, down from 45–60</span><strong>&lt; 10 min</strong></div><div><span>guardrail repair pass before output is shown</span><strong>1</strong></div><div><span>synthetic sample inputs; no client data</span><strong>3</strong></div></section>
 
 <div class="article-layout">
   <article class="article-body">
     <h2 id="the-question">The question</h2>
-<p>In summer 2026 my Carlson Analytics Lab team worked on member retention for a YMCA client. Afterwards I wanted to test a narrow question: if I split a consulting engagement into roles, can agents carry a client request from raw idea to a leadership recommendation without the story drifting away from the numbers?</p>
-<p>I gave myself one day, played the client, and re-ran it in Claude Code.</p>
+<p>Analytics student teams, and client-facing analytics teams generally, leave first sponsor meetings with messy notes, unclear KPIs, vague data requests and ambiguous next steps. Having just been through a sponsor kickoff at the Carlson Analytics Lab, I wanted to know whether a GenAI copilot could turn that ambiguity into a structured kickoff package in minutes, without inventing commitments the sponsor never made.</p>
 <h2 id="data">Data</h2>
-<p>The agents worked from the de-identified extracts and the analytic tables my team had already built: facility visits and program/membership records for 2022–2025, rolled up to 403,337 members with a membership flag. Raw files with personal data were never read by any agent. The only data that ships with the project is six small aggregate CSVs (about 1 KB) that feed the dashboard.</p>
+<p>The app takes current meeting notes or a transcript, optional previous meeting notes, and optional anonymized or synthetic project data. The repository contains only three synthetic sample inputs and one sample output report. No client notes or data were used; the memo&rsquo;s position is that project data context should be anonymized or synthetic, never raw client datasets.</p>
 <h2 id="method">Method</h2>
-<p>I designed three subagents and wrote their prompts and a shared project memory:</p>
-<ul>
-<li><strong>project-manager</strong> (Opus) runs as the main session and is the only agent allowed to delegate. It writes the brief, asks only questions that would change the deliverable, and reviews every return.</li>
-<li><strong>technical-agent</strong> (Opus) does the data work and may not say something &ldquo;works&rdquo; unless it ran the check. Every verified claim cites a file, command or output.</li>
-<li><strong>business-agent</strong> (Sonnet) translates only verified findings into impact, options, risks and decisions. It may not add technical claims or turn an estimate into a promise.</li>
-</ul>
-<p>Because subagents have isolated context, the project manager is the memory between them. It maintains three files: a client brief (scope and 6 open questions), a decision log (only decisions I approved as client), and an evidence register. Every load-bearing statement gets one label: VERIFIED, CLIENT-CONFIRMED, INFERENCE, ASSUMPTION or UNKNOWN. I seeded the first 18 decisions from the real client meetings so settled points were not re-argued.</p>
+<p>I built the proof of concept in Streamlit over Azure AI Foundry / Azure OpenAI chat and embedding deployments:</p>
+<ol>
+<li>Chunk the three context sources and embed them. Retrieval is a weighted cosine similarity over the chunks: current notes are authoritative, previous notes get a lower weight as historical context, and synthetic data gets a lower weight as directional only.</li>
+<li>Several short structured-JSON chat calls generate the package: a business problem summary, a project charter with in-scope and out-of-scope sections and open questions, a KPI priority matrix on an urgency-by-feasibility grid with four quadrants, a traffic-light data request checklist, one sponsor follow-up email using the user&rsquo;s sender, tone and meeting-date settings, multiple action plan options, and a Jira-style sprint board of action items plus a next-meeting agenda.</li>
+<li>Rule-based guardrails check for invalid evidence citations, overpromising language, missing required sections, a missing email and missing action plan options. If anything fires, the warnings and the draft go back to the model for one conservative repair rewrite; remaining warnings are still shown to the user.</li>
+<li>The result is exported as a markdown intake report.</li>
+</ol>
 <h2 id="results">Results</h2>
 <ul>
-<li>First-year membership churn re-verified at 71.38% (287,908 of 403,337 members).</li>
-<li>The &ldquo;about 80% program churn&rdquo; turned out to be a granularity artifact: 80.35% at the exact-program level versus 35.53% at the category level for the same 172,892 participants. This closed an open question.</li>
-<li>Early visits are protective and monotonic: churn falls from 81.4% with zero visits in the first 60 days to 67.9% with six or more.</li>
-<li>The lower 2025 churn (59.6%) was flagged as right-censoring, not improvement.</li>
-<li>Outputs: a decision log with 22 decisions, an evidence register with 23 labelled claims, a self-contained HTML dashboard, and an 8-slide leadership deck.</li>
+<li>One click on the sample notes produces the full seven-part package across five review tabs (Summary, Charter, KPI &amp; Data, Email &amp; Actions, Guardrails &amp; Export).</li>
+<li>The guardrail and repair design means unsupported commitments are flagged or rewritten rather than silently passed through, and requested data that may not exist is marked as a question, not an asset.</li>
+<li>The project memo sets pilot targets for 5–10 teams: charter drafting under 10 minutes instead of 45–60, at least 80% of action items usable without major edits, at least 75% of KPI placements and data rankings judged relevant, and zero invented sponsor commitments or data assets.</li>
 </ul>
 <h2 id="what-it-changed">What it changed</h2>
-<p>The reconciliation step earned its place. The business agent wanted a 90-day headline because it separated best (14.8 points versus 13.6 for 60 days). The project manager logged that as drift, since the edge was marginal and 60 days was the client&rsquo;s standard, and escalated it. As client I kept 60 days, recorded as decision #20. Without the role split, that choice would have been made quietly inside a slide. One rule also proved useful: the churn flag&rsquo;s exact definition stayed labelled UNKNOWN on every deliverable instead of being guessed.</p>
+<p>The deliverable was the running app, the project memo (hypothesis, pilot, quality, cost, scale, risks, assumptions) and the sample report.</p>
 <h2 id="next-steps">Next steps</h2>
 <ul>
-<li>Make the technical agent save every script in the project folder.</li>
-<li>Add a check that every number in a deliverable maps to an evidence-register row.</li>
+<li>Run the pilot with student teams.</li>
+<li>Add project workspaces that keep each sponsor&rsquo;s history.</li>
+<li>Integrate with Teams or a project-management tool.</li>
 </ul>
     <section class="article-code">
       <p class="kicker">Code &amp; materials</p>
-      <p>This work was delivered inside a client engagement; no public code is available. Happy to walk through the approach on a call.</p>
+      <p>The code lives in a private GitHub repository (HuiguoLiu911/sponsor-intake-copilot). Access on request — <a href="mailto:liu01959@umn.edu?subject=Turn%20messy%20kickoff%20notes%20into%20a%20project%20charter">send me a note</a>.</p>
     </section>
   </article>
   <aside class="article-aside">
@@ -127,7 +125,7 @@
 </div>
 
 <nav class="project-nav" aria-label="More projects">
-<a class="project-nav-link prev" href="../projects/rag-document-chatbot.html"><span>← Previous</span><strong>Ask questions of a document, not the model</strong></a><a class="project-nav-link next" href="../projects/autogen-newsroom.html"><span>Next →</span><strong>Run a newsroom with five agents and one human</strong></a></nav>
+<a class="project-nav-link prev" href="../projects/autogen-newsroom.html"><span>← Previous</span><strong>Run a newsroom with five agents and one human</strong></a><a class="project-nav-link next" href="../projects/tiktok-creator-scanner.html"><span>Next →</span><strong>Scan TikTok for creators without an API</strong></a></nav>
 </main>
 
 <footer class="site-footer">

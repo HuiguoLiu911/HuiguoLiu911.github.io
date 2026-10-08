@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Three agents, one client brief – Huiguo Liu</title>
-<meta name="description" content="A one-day experiment where a project-manager agent, a technical agent and a business agent turned a client brief into labelled evidence, a dashboard and a deck.">
-<meta property="og:title" content="Three agents, one client brief – Huiguo Liu">
-<meta property="og:description" content="A one-day experiment where a project-manager agent, a technical agent and a business agent turned a client brief into labelled evidence, a dashboard and a deck.">
+<title>Ask questions of a document, not the model – Huiguo Liu</title>
+<meta name="description" content="Streamlit RAG chatbot: upload a PDF or TXT, chunk 1500/300, embed into FAISS with text-embedding-ada-002, answer with gpt-4o-mini from the top 5 chunks.">
+<meta property="og:title" content="Ask questions of a document, not the model – Huiguo Liu">
+<meta property="og:description" content="Streamlit RAG chatbot: upload a PDF or TXT, chunk 1500/300, embed into FAISS with text-embedding-ada-002, answer with gpt-4o-mini from the top 5 chunks.">
 <meta property="og:type" content="website">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,7 +25,7 @@
   })();
 </script>
 </head>
-<body class="page-project tone-page-blue">
+<body class="page-project tone-page-peach">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="topbar" id="topbar">
   <nav class="nav-inner" aria-label="Primary">
@@ -65,56 +65,57 @@
 <main id="main" class="canvas article-canvas">
 <header class="project-header reveal">
   <div class="project-header-copy">
-    <p class="kicker"><a href="../ai-projects.html">AI Projects</a> · 07</p>
-    <h1>Three agents, one client brief</h1>
-    <p class="project-subtitle">Re-running a YMCA retention engagement as a Claude Code multi-agent team</p>
-    <ul class="tag-chips" aria-label="Topics"><li>multi-agent</li><li>Claude Code</li><li>evidence tracking</li></ul>
-    <p class="project-lede">A one-day experiment where a project-manager agent, a technical agent and a business agent turned a client brief into labelled evidence, a dashboard and a deck.</p>
+    <p class="kicker"><a href="../ai-projects.html">AI Projects</a> · 06</p>
+    <h1>Ask questions of a document, not the model</h1>
+    <p class="project-subtitle">MSBA 6155 Generative AI · RAG chatbot on Azure OpenAI with FAISS</p>
+    <ul class="tag-chips" aria-label="Topics"><li>RAG</li><li>FAISS</li><li>LangChain</li></ul>
+    <p class="project-lede">Streamlit RAG chatbot: upload a PDF or TXT, chunk 1500/300, embed into FAISS with text-embedding-ada-002, answer with gpt-4o-mini from the top 5 chunks.</p>
     <dl class="project-meta">
-<div><dt>Role</dt><dd>Designed the agent system and played the client</dd></div><div><dt>Context</dt><dd>Personal experiment on a Carlson Analytics Lab engagement</dd></div>      <div><dt>When</dt><dd>Jul 2026 (one working day)</dd></div>
-<div><dt>Stack</dt><dd>Claude Code · Claude Opus · Claude Sonnet · Python · pandas · HTML/CSS · PowerPoint</dd></div>    </dl>
+<div><dt>Role</dt><dd>Sole author</dd></div><div><dt>Context</dt><dd>MSBA 6155 classroom demo, Azure AI Foundry week</dd></div>      <div><dt>When</dt><dd>Jun 2026</dd></div>
+<div><dt>Stack</dt><dd>Python · Streamlit · LangChain (LCEL) · FAISS · Azure OpenAI gpt-4o-mini · text-embedding-ada-002</dd></div>    </dl>
   </div>
-  <div class="project-header-art tone-blue">
-    <img src="../assets/art/ymca-multiagent-delivery.svg" alt="" width="640" height="400">
+  <div class="project-header-art tone-peach">
+    <img src="../assets/art/rag-document-chatbot.svg" alt="" width="640" height="400">
   </div>
 </header>
 
 <section class="result-strip" aria-label="Headline results">
-<div><span>client-approved decisions in the decision log</span><strong>22</strong></div><div><span>numbered claims in the evidence register, each labelled</span><strong>23</strong></div><div><span>category-level program churn, replacing a misleading 80%</span><strong>35.5%</strong></div><div><span>slides in the leadership deck</span><strong>8</strong></div></section>
+<div><span>chunk size and overlap in characters</span><strong>1500 / 300</strong></div><div><span>retrieved chunks per question</span><strong>k = 5</strong></div><div><span>temperature, with an explicit &#39;I don&#39;t know&#39; instruction</span><strong>0</strong></div></section>
 
 <div class="article-layout">
   <article class="article-body">
     <h2 id="the-question">The question</h2>
-<p>In summer 2026 my Carlson Analytics Lab team worked on member retention for a YMCA client. Afterwards I wanted to test a narrow question: if I split a consulting engagement into roles, can agents carry a client request from raw idea to a leadership recommendation without the story drifting away from the numbers?</p>
-<p>I gave myself one day, played the client, and re-ran it in Claude Code.</p>
+<p>The first hands-on exercise in MSBA 6155 (Generative AI) was to wire a chat model to a document so that answers come from the document rather than from the model&rsquo;s memory. The point was less the chatbot and more the plumbing: how retrieval-augmented generation is assembled from loaders, splitters, embeddings, a vector index and a chain, and how a classroom Azure AI Foundry deployment is called from code without leaking credentials.</p>
 <h2 id="data">Data</h2>
-<p>The agents worked from the de-identified extracts and the analytic tables my team had already built: facility visits and program/membership records for 2022–2025, rolled up to 403,337 members with a membership flag. Raw files with personal data were never read by any agent. The only data that ships with the project is six small aggregate CSVs (about 1 KB) that feed the dashboard.</p>
+<p>There is no dataset. The repository tracks a 436-byte synthetic sample text written for the class so the app can be demoed immediately, and any other PDF or TXT dropped into the data folder is ignored by git. Generated FAISS indexes are also ignored.</p>
 <h2 id="method">Method</h2>
-<p>I designed three subagents and wrote their prompts and a shared project memory:</p>
+<p>I wrote the app as five small modules so each stage can be swapped independently:</p>
 <ul>
-<li><strong>project-manager</strong> (Opus) runs as the main session and is the only agent allowed to delegate. It writes the brief, asks only questions that would change the deliverable, and reviews every return.</li>
-<li><strong>technical-agent</strong> (Opus) does the data work and may not say something &ldquo;works&rdquo; unless it ran the check. Every verified claim cites a file, command or output.</li>
-<li><strong>business-agent</strong> (Sonnet) translates only verified findings into impact, options, risks and decisions. It may not add technical claims or turn an estimate into a promise.</li>
+<li><code>document_processor.py</code> loads PDF or TXT with PyPDFLoader / TextLoader and splits on newlines with <code>CharacterTextSplitter(chunk_size=1500, chunk_overlap=300)</code>.</li>
+<li><code>embedding_indexer.py</code> embeds chunks with <code>AzureOpenAIEmbeddings</code> (text-embedding-ada-002) and builds an in-memory FAISS index, with save and load helpers.</li>
+<li><code>rag_chain.py</code> is an LCEL chain: retriever with k=5, a formatter that concatenates the chunks, a prompt that tells the model to answer only from context and to say &ldquo;I don&rsquo;t know&rdquo; otherwise, and <code>gpt-4o-mini</code> at temperature 0 with a 2000-token cap.</li>
+<li><code>chatbot.py</code> wraps the chain and keeps conversation history.</li>
+<li><code>ragapp.py</code> is the Streamlit UI: file uploader, a cached chatbot keyed on the file bytes so repeat questions do not re-embed, a chat-message loop and a clear-history button.</li>
 </ul>
-<p>Because subagents have isolated context, the project manager is the memory between them. It maintains three files: a client brief (scope and 6 open questions), a decision log (only decisions I approved as client), and an evidence register. Every load-bearing statement gets one label: VERIFIED, CLIENT-CONFIRMED, INFERENCE, ASSUMPTION or UNKNOWN. I seeded the first 18 decisions from the real client meetings so settled points were not re-argued.</p>
+<p>Two details took the most debugging. The chat model is reached through the OpenAI-compatible <code>/openai/v1</code> base URL while the embedding model needs the native Azure endpoint, so the indexer strips the suffix. And all four configuration values (key, base URL, chat deployment, embedding deployment) are read from environment variables via python-dotenv; the repo ships only a placeholder <code>.env.example</code>. Two standalone smoke tests check the Azure connection for a chat completion and a multimodal image-description call.</p>
 <h2 id="results">Results</h2>
 <ul>
-<li>First-year membership churn re-verified at 71.38% (287,908 of 403,337 members).</li>
-<li>The &ldquo;about 80% program churn&rdquo; turned out to be a granularity artifact: 80.35% at the exact-program level versus 35.53% at the category level for the same 172,892 participants. This closed an open question.</li>
-<li>Early visits are protective and monotonic: churn falls from 81.4% with zero visits in the first 60 days to 67.9% with six or more.</li>
-<li>The lower 2025 churn (59.6%) was flagged as right-censoring, not improvement.</li>
-<li>Outputs: a decision log with 22 decisions, an evidence register with 23 labelled claims, a self-contained HTML dashboard, and an 8-slide leadership deck.</li>
+<li>A working end-to-end RAG app: upload, chunk, embed, index, retrieve top 5, generate, chat UI with persistent history.</li>
+<li>Grounding by design: temperature 0 and a context-only prompt that instructs the model to say &ldquo;I don&rsquo;t know&rdquo; when the document does not cover a question.</li>
+<li>Cost per question is a few hundred gpt-4o-mini tokens plus one embedding pass per uploaded document.</li>
+<li>No quantitative evaluation of retrieval accuracy or latency was part of the assignment, so none is claimed.</li>
 </ul>
 <h2 id="what-it-changed">What it changed</h2>
-<p>The reconciliation step earned its place. The business agent wanted a 90-day headline because it separated best (14.8 points versus 13.6 for 60 days). The project manager logged that as drift, since the edge was marginal and 60 days was the client&rsquo;s standard, and escalated it. As client I kept 60 days, recorded as decision #20. Without the role split, that choice would have been made quietly inside a slide. One rule also proved useful: the churn flag&rsquo;s exact definition stayed labelled UNKNOWN on every deliverable instead of being guessed.</p>
+<p>This was an individual classroom exercise with no slides or report. Its value for me was a clean, modular RAG template for the two larger course projects that followed: the Resume–JD Copilot reuses the same document-processor, FAISS-indexer and chain module shapes with guardrails added, and the Sponsor Intake Copilot uses a simpler weighted-cosine variant of the same retrieval idea.</p>
 <h2 id="next-steps">Next steps</h2>
 <ul>
-<li>Make the technical agent save every script in the project folder.</li>
-<li>Add a check that every number in a deliverable maps to an evidence-register row.</li>
+<li>Switch to a recursive text splitter.</li>
+<li>Feed chat history back into the chain for follow-up questions.</li>
+<li>Build a small retrieval-quality check set.</li>
 </ul>
     <section class="article-code">
       <p class="kicker">Code &amp; materials</p>
-      <p>This work was delivered inside a client engagement; no public code is available. Happy to walk through the approach on a call.</p>
+      <p>The code lives in a private GitHub repository (HuiguoLiu911/msba6155-rag-chatbot). Access on request — <a href="mailto:liu01959@umn.edu?subject=Ask%20questions%20of%20a%20document%2C%20not%20the%20model">send me a note</a>.</p>
     </section>
   </article>
   <aside class="article-aside">
@@ -127,7 +128,7 @@
 </div>
 
 <nav class="project-nav" aria-label="More projects">
-<a class="project-nav-link prev" href="../projects/rag-document-chatbot.html"><span>← Previous</span><strong>Ask questions of a document, not the model</strong></a><a class="project-nav-link next" href="../projects/autogen-newsroom.html"><span>Next →</span><strong>Run a newsroom with five agents and one human</strong></a></nav>
+<a class="project-nav-link prev" href="../projects/yesand-creator-sourcing.html"><span>← Previous</span><strong>Tier 8,562 TikTok creators into KOL, KOC, UGC</strong></a><a class="project-nav-link next" href="../projects/ymca-multiagent-delivery.html"><span>Next →</span><strong>Three agents, one client brief</strong></a></nav>
 </main>
 
 <footer class="site-footer">

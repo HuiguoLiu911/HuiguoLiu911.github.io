@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Where are the burn deserts? – Huiguo Liu</title>
-<meta name="description" content="Profiled 635 trauma-capable hospitals from the National Injury Resource Database, found eight states with no burn beds, and designed a hub–spoke–access referral network around 413 mid-size trauma centers.">
-<meta property="og:title" content="Where are the burn deserts? – Huiguo Liu">
-<meta property="og:description" content="Profiled 635 trauma-capable hospitals from the National Injury Resource Database, found eight states with no burn beds, and designed a hub–spoke–access referral network around 413 mid-size trauma centers.">
+<title>Can you trust the GPS trail? – Huiguo Liu</title>
+<meta name="description" content="Built a Q1–Q5 scoring framework over 15K school-bus trips and 2.35M GPS records, finding 35% of trips unverifiable and five routes with severe data issues.">
+<meta property="og:title" content="Can you trust the GPS trail? – Huiguo Liu">
+<meta property="og:description" content="Built a Q1–Q5 scoring framework over 15K school-bus trips and 2.35M GPS records, finding 35% of trips unverifiable and five routes with severe data issues.">
 <meta property="og:type" content="website">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,7 +25,7 @@
   })();
 </script>
 </head>
-<body class="page-project tone-page-coral">
+<body class="page-project tone-page-sand">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="topbar" id="topbar">
   <nav class="nav-inner" aria-label="Primary">
@@ -65,50 +65,47 @@
 <main id="main" class="canvas article-canvas">
 <header class="project-header reveal">
   <div class="project-header-copy">
-    <p class="kicker"><a href="../data-analysis.html">Data Analysis</a> · 06</p>
-    <h1>Where are the burn deserts?</h1>
-    <p class="project-subtitle">HeatMap Hackathon 2026 · Mapping U.S. burn-care capacity and a 3-tier telemedicine referral network</p>
-    <ul class="tag-chips" aria-label="Topics"><li>healthcare</li><li>Python</li><li>geospatial</li></ul>
-    <p class="project-lede">Profiled 635 trauma-capable hospitals from the National Injury Resource Database, found eight states with no burn beds, and designed a hub–spoke–access referral network around 413 mid-size trauma centers.</p>
+    <p class="kicker"><a href="../data-analysis.html">Data Analysis</a> · 02</p>
+    <h1>Can you trust the GPS trail?</h1>
+    <p class="project-subtitle">4MATIV Technologies · Trip-performance and data-quality scoring for school buses</p>
+    <ul class="tag-chips" aria-label="Topics"><li>geospatial</li><li>root-cause analysis</li><li>Python</li></ul>
+    <p class="project-lede">Built a Q1–Q5 scoring framework over 15K school-bus trips and 2.35M GPS records, finding 35% of trips unverifiable and five routes with severe data issues.</p>
     <dl class="project-meta">
-<div><dt>Role</dt><dd>Data analysis and visualization in a five-person team</dd></div><div><dt>Context</dt><dd>HeatMap Hackathon 2026, presented by BData</dd></div>      <div><dt>When</dt><dd>Jan – Mar 2026</dd></div>
-<div><dt>Stack</dt><dd>Python · pandas · Plotly · Matplotlib · Seaborn</dd></div>    </dl>
+<div><dt>Role</dt><dd>Spatial validation, stop-order compliance and root-cause analysis</dd></div><div><dt>Context</dt><dd>Carlson Analytics Lab live case, student team</dd></div>      <div><dt>When</dt><dd>Mar – May 2026</dd></div>
+<div><dt>Stack</dt><dd>Python · pandas · scikit-learn · DBSCAN · OSRM · folium · Haversine</dd></div>    </dl>
   </div>
-  <div class="project-header-art tone-coral">
-    <img src="../assets/art/healthcare-burn-care-network.svg" alt="" width="640" height="400">
+  <div class="project-header-art tone-sand">
+    <img src="../assets/art/4mativ-gps-route-validation.svg" alt="" width="640" height="400">
   </div>
 </header>
 
 <section class="result-strip" aria-label="Headline results">
-<div><span>trauma-capable hospitals profiled</span><strong>635</strong></div><div><span>states with zero dedicated burn beds</span><strong>8</strong></div><div><span>mid-size trauma centers in the spoke tier</span><strong>413</strong></div><div><span>avoided per helicopter transfer (projected)</span><strong>$12K–$25K</strong></div></section>
+<div><span>school-bus trips</span><strong>15K</strong></div><div><span>GPS records</span><strong>2.35M</strong></div><div><span>trips not spatially verifiable</span><strong>35%</strong></div><div><span>routes with the most severe data issues</span><strong>5</strong></div></section>
 
 <div class="article-layout">
   <article class="article-body">
     <h2 id="the-question">The question</h2>
-<p>Severe burns are rare but time-critical, and burn-capable hospitals are concentrated in a few metropolitan areas. The hackathon brief asked a practical question: given the hospitals that exist today, where does burn care break down geographically, and what could close the gap without building new facilities?</p>
-<p>Our five-person team entered the HeatMap Hackathon 2026 (presented by BData) with the theme &ldquo;Bridging the Gap: Building a 3-Tier Burn Intervention &amp; Telemedicine Network&rdquo;. I worked on the data analysis and the visualizations.</p>
+<p>4MATIV Technologies runs student transportation for school districts through its TOMS platform and manages many vendors at once. Every trip leaves a GPS trail, but the trail is often incomplete or noisy, so a basic question was hard to answer: did the vehicle actually run the route as planned? Without a trustworthy answer, vendor performance cannot be judged fairly, and a missing signal is easily mistaken for a missed stop.</p>
+<p>This was a Carlson Analytics Lab live case (Mar 26 – May 1, 2026) done as a student team. I built the analysis line that became the spatial and stop-order parts of the framework and did the root-cause work on data quality.</p>
 <h2 id="data">Data</h2>
-<p>The National Injury Resource Database (NIRD): 635 trauma-capable hospitals described by 23 fields, including trauma level, bed counts, adult and pediatric burn capability, American Burn Association (ABA) verification, and location. The dataset is public and contains no patient records; all analysis was at the hospital level.</p>
+<p>A PostgreSQL export of 4MATIV&rsquo;s TOMS database for two schools, Sep 2025 – Feb 2026: about 15K trips (14,859 rows), 2.35M GPS positions, 1,936 planned route stops, 823 stop locations, 433 vehicles and 16 vendors using five GPS providers that poll every 20 to 60 seconds. Schools and vendors were anonymized; stop coordinates are real and are not reproduced here. The quality problems were the point of the project: 27.3% of trips had zero GPS positions, 230 of 433 vehicles (53%) had no tracking device assigned, and only one trip out of 14,859 ended through the geofence that is supposed to confirm completion. The rest timed out.</p>
 <h2 id="method">Method</h2>
-<p>In Python (pandas for the profiling, Plotly, Matplotlib and Seaborn for the maps and charts) I classified every hospital by its burn capability and rolled the counts up to the state level to find states with no dedicated burn beds. I then compared adult and pediatric capability side by side, and sized the hospitals that had trauma capacity but no burn program, because those were the candidates for a middle tier that could handle moderate burns with telemedicine support from a verified center.</p>
-<figure>
-  <img src="../assets/figures/healthcare-burn-care-network/pediatric_burn_crisis.png" alt="Bar chart of hospitals with adult versus pediatric burn and trauma capability, and a pie chart showing that only 14% of the 635 hospitals have pediatric burn capability" loading="lazy">
-  <figcaption>Adult versus pediatric capability across the 635 hospitals: 120 have adult burn capability and 89 pediatric, against 565 and 146 with trauma capability. Only 14% of hospitals can treat pediatric burns.</figcaption>
-</figure>
-
+<p>The team organized the work as five questions, each producing a score per trip: Q1 GPS health, Q2 stop coverage, Q3 route compliance, Q4 timing, and Q5 a combined confidence score with a GREEN / YELLOW / RED flag, aggregated to route, vendor and school level. Missing component scores are imputed as neutral and flagged.</p>
+<p>My part was the spatial reality check. I computed Haversine distances from each GPS trace to every planned stop (80 m radius for regular stops, 300 m for schools) and compared them with the geofencing logs, which split &ldquo;missed&rdquo; stops into genuinely missed, detected but far away, and reached but never detected. I built the stop-order compliance pipeline (did the bus visit stops in the planned sequence) and an early 0–100 per-trip confidence score combining GPS coverage, stop completion, on-time performance and spatial proximity, using Python, pandas, DBSCAN and folium maps.</p>
 <h2 id="results">Results</h2>
 <ul>
-<li>Of 635 trauma-capable hospitals, 120 have adult burn capability, 74 are ABA-verified burn centers, and 89 can treat pediatric burns, which is 25.8% fewer than the adult count.</li>
-<li>The country has about 2,080 dedicated burn beds, 0.72% of total beds, and eight states have none at all: the &ldquo;burn deserts&rdquo;.</li>
-<li>The proposed network has three tiers: 74 ABA-verified centers as hubs for severe and complex cases; 413 &ldquo;sweet spot&rdquo; trauma centers across 47 states (about 470 beds on average) as spokes that manage moderate burns with telemedicine guidance; and 148 community hospitals as access points for initial stabilization and transfer.</li>
+<li>35% of trips (5,200 of 14,848) could not be spatially verified, mostly because of GPS gaps concentrated in specific providers.</li>
+<li>The overall stop miss rate was 16.3%, yet 94.6% of trips completed every planned stop; vendor miss rates ranged from 9.0% to 25.3%.</li>
+<li>Root-cause review of the stop-order results showed that morning routes looked 2.2 times worse than afternoon routes partly because the planned stop rank was reversed for morning trips in the pipeline. After the fix the gap was 1.5 times, and 24 routes still had planned sequences that did not match how drivers ran them. Five routes had the most severe data-quality issues and were flagged for investigation.</li>
+<li>Morning stop-order compliance improved every month from September to February, which argues for treating September as an onboarding period in vendor scoring.</li>
 </ul>
 <h2 id="what-it-changed">What it changed</h2>
-<p>The recommendation was deliberately infrastructure-light. Rather than proposing new burn units, it routes patients through hospitals that already exist and connects them to specialists through a telemedicine layer that scales at low marginal cost. For a moderate burn, keeping the patient at a spoke hospital instead of flying them to a hub avoids a projected $12K–$25K per helicopter transfer, and it shortens the time to first specialist contact in the states with no burn beds of their own.</p>
+<p>The deliverable was a Python-based scoring framework, a Q1–Q5 methods report with code, vendor scorecards and a final presentation. The recommendations were concrete: assign tracking devices to the 53% of vehicles without one, use low-confidence trips as a daily dispatcher alert, audit the flagged routes before applying compliance scores to vendor contracts, and recalibrate geofence detection.</p>
 <h2 id="limitations-and-next-steps">Limitations and next steps</h2>
-<p>This was a hackathon analysis on hospital-level capacity data, not outcomes data, so it says where capacity is missing rather than how patients fare. Travel times were approximated by state rather than road distance, and the sweet-spot tier was defined by bed count and trauma level, not by staffing or burn-specific training. A next step would be to overlay drive-time isochrones and burn-incidence rates to prioritize which spokes to equip first.</p>
+<p>&ldquo;Unverifiable&rdquo; describes a data limitation, not a confirmed missed or late trip, and unscored trips probably skew toward worse-performing ones, so true vendor gaps may be larger than the scores show. Thresholds were calibrated on score distributions rather than ground truth, and component weights were set by judgment. Next steps: field-validate the flagged route sequences, run a sensitivity analysis on the weights, and rebuild the Q1 and Q2 notebooks from the methods report.</p>
     <section class="article-code">
       <p class="kicker">Code &amp; materials</p>
-      <p>This work was delivered inside a client engagement; no public code is available. Happy to walk through the approach on a call.</p>
+      <p>The code lives in a private GitHub repository (HuiguoLiu911/4mativ-gps-route-validation). Access on request — <a href="mailto:liu01959@umn.edu?subject=Can%20you%20trust%20the%20GPS%20trail%3F">send me a note</a>.</p>
     </section>
   </article>
   <aside class="article-aside">
@@ -121,7 +118,7 @@
 </div>
 
 <nav class="project-nav" aria-label="More projects">
-<a class="project-nav-link prev" href="../projects/driver-nudge-system.html"><span>← Previous</span><strong>Tell drivers where demand is, and why</strong></a><a class="project-nav-link next" href="../projects/analytics-for-good-hackathon.html"><span>Next →</span><strong>What does off-policy travel cost?</strong></a></nav>
+<a class="project-nav-link prev" href="../projects/ymca-member-retention.html"><span>← Previous</span><strong>Find the members who will stay</strong></a><a class="project-nav-link next" href="../projects/csi-bid-analysis.html"><span>Next →</span><strong>Where did the bids miss the mark?</strong></a></nav>
 </main>
 
 <footer class="site-footer">

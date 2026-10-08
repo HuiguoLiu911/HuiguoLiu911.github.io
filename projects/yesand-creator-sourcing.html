@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Three agents, one client brief – Huiguo Liu</title>
-<meta name="description" content="A one-day experiment where a project-manager agent, a technical agent and a business agent turned a client brief into labelled evidence, a dashboard and a deck.">
-<meta property="og:title" content="Three agents, one client brief – Huiguo Liu">
-<meta property="og:description" content="A one-day experiment where a project-manager agent, a technical agent and a business agent turned a client brief into labelled evidence, a dashboard and a deck.">
+<title>Tier 8,562 TikTok creators into KOL, KOC, UGC – Huiguo Liu</title>
+<meta name="description" content="Apify-driven pipeline with a store of 2,791 profiles and 49,197 videos; tiered an 8,562-creator long list and passed 96 KOL, 25 KOC and 240 UGC candidates.">
+<meta property="og:title" content="Tier 8,562 TikTok creators into KOL, KOC, UGC – Huiguo Liu">
+<meta property="og:description" content="Apify-driven pipeline with a store of 2,791 profiles and 49,197 videos; tiered an 8,562-creator long list and passed 96 KOL, 25 KOC and 240 UGC candidates.">
 <meta property="og:type" content="website">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,7 +25,7 @@
   })();
 </script>
 </head>
-<body class="page-project tone-page-blue">
+<body class="page-project tone-page-mint">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="topbar" id="topbar">
   <nav class="nav-inner" aria-label="Primary">
@@ -65,56 +65,56 @@
 <main id="main" class="canvas article-canvas">
 <header class="project-header reveal">
   <div class="project-header-copy">
-    <p class="kicker"><a href="../ai-projects.html">AI Projects</a> · 07</p>
-    <h1>Three agents, one client brief</h1>
-    <p class="project-subtitle">Re-running a YMCA retention engagement as a Claude Code multi-agent team</p>
-    <ul class="tag-chips" aria-label="Topics"><li>multi-agent</li><li>Claude Code</li><li>evidence tracking</li></ul>
-    <p class="project-lede">A one-day experiment where a project-manager agent, a technical agent and a business agent turned a client brief into labelled evidence, a dashboard and a deck.</p>
+    <p class="kicker"><a href="../ai-projects.html">AI Projects</a> · 05</p>
+    <h1>Tier 8,562 TikTok creators into KOL, KOC, UGC</h1>
+    <p class="project-subtitle">yes&amp; (yesand.ai) · TikTok creator sourcing and tiering pipeline</p>
+    <ul class="tag-chips" aria-label="Topics"><li>Apify</li><li>pandas</li><li>Streamlit</li></ul>
+    <p class="project-lede">Apify-driven pipeline with a store of 2,791 profiles and 49,197 videos; tiered an 8,562-creator long list and passed 96 KOL, 25 KOC and 240 UGC candidates.</p>
     <dl class="project-meta">
-<div><dt>Role</dt><dd>Designed the agent system and played the client</dd></div><div><dt>Context</dt><dd>Personal experiment on a Carlson Analytics Lab engagement</dd></div>      <div><dt>When</dt><dd>Jul 2026 (one working day)</dd></div>
-<div><dt>Stack</dt><dd>Claude Code · Claude Opus · Claude Sonnet · Python · pandas · HTML/CSS · PowerPoint</dd></div>    </dl>
+<div><dt>Role</dt><dd>Sole builder of the sourcing pipeline</dd></div><div><dt>Context</dt><dd>yes&amp; (yesand.ai), an AI camera / creative app · client work</dd></div>      <div><dt>When</dt><dd>Aug 2026</dd></div>
+<div><dt>Stack</dt><dd>Python · pandas · pyarrow · Apify · Streamlit · altair · pytest · YAML config</dd></div>    </dl>
   </div>
-  <div class="project-header-art tone-blue">
-    <img src="../assets/art/ymca-multiagent-delivery.svg" alt="" width="640" height="400">
+  <div class="project-header-art tone-mint">
+    <img src="../assets/art/yesand-creator-sourcing.svg" alt="" width="640" height="400">
   </div>
 </header>
 
 <section class="result-strip" aria-label="Headline results">
-<div><span>client-approved decisions in the decision log</span><strong>22</strong></div><div><span>numbered claims in the evidence register, each labelled</span><strong>23</strong></div><div><span>category-level program churn, replacing a misleading 80%</span><strong>35.5%</strong></div><div><span>slides in the leadership deck</span><strong>8</strong></div></section>
+<div><span>creator profiles in the reusable store</span><strong>2,791</strong></div><div><span>videos with view counts</span><strong>49,197</strong></div><div><span>creators on the tiered long list</span><strong>8,562</strong></div><div><span>KOL / KOC / UGC candidates passed</span><strong>96 / 25 / 240</strong></div></section>
 
 <div class="article-layout">
   <article class="article-body">
     <h2 id="the-question">The question</h2>
-<p>In summer 2026 my Carlson Analytics Lab team worked on member retention for a YMCA client. Afterwards I wanted to test a narrow question: if I split a consulting engagement into roles, can agents carry a client request from raw idea to a leadership recommendation without the story drifting away from the numbers?</p>
-<p>I gave myself one day, played the client, and re-ran it in Claude Code.</p>
+<p>yes&amp; is an AI camera and creative app that wanted to grow on TikTok through three kinds of creators: KOLs for paid reach, KOCs who already make AI content and would promote for credits, and small UGC creators who could post daily on dedicated accounts. The brief asked for a repeatable way to go from keywords to tiered creator tables with view metrics the team could act on, and to know which keywords were worth the money.</p>
 <h2 id="data">Data</h2>
-<p>The agents worked from the de-identified extracts and the analytic tables my team had already built: facility visits and program/membership records for 2022–2025, rolled up to 403,337 members with a membership flag. Raw files with personal data were never read by any agent. The only data that ships with the project is six small aggregate CSVs (about 1 KB) that feed the dashboard.</p>
+<p>Everything came from Apify TikTok actors: keyword searches returning videos with author bios, and profile pulls returning each creator&rsquo;s recent 30 videos. Over three pipeline generations in August 2026 I accumulated a store of 2,791 creator profiles and 49,197 videos, plus five legacy long lists from earlier runs. The data is noisy in predictable ways: search hits carry only one or two videos per creator (biased toward viral posts), public emails appear in only a small share of bios, and the profile actor&rsquo;s date parameters behave inversely to their names. Creator contact details are kept out of version control.</p>
 <h2 id="method">Method</h2>
-<p>I designed three subagents and wrote their prompts and a shared project memory:</p>
-<ul>
-<li><strong>project-manager</strong> (Opus) runs as the main session and is the only agent allowed to delegate. It writes the brief, asks only questions that would change the deliverable, and reviews every return.</li>
-<li><strong>technical-agent</strong> (Opus) does the data work and may not say something &ldquo;works&rdquo; unless it ran the check. Every verified claim cites a file, command or output.</li>
-<li><strong>business-agent</strong> (Sonnet) translates only verified findings into impact, options, risks and decisions. It may not add technical claims or turn an estimate into a promise.</li>
-</ul>
-<p>Because subagents have isolated context, the project manager is the memory between them. It maintains three files: a client brief (scope and 6 open questions), a decision log (only decisions I approved as client), and an evidence register. Every load-bearing statement gets one label: VERIFIED, CLIENT-CONFIRMED, INFERENCE, ASSUMPTION or UNKNOWN. I seeded the first 18 decisions from the real client meetings so settled points were not re-argued.</p>
+<p>The final pipeline (the third generation) is a four-step CLI plus a Streamlit browser:</p>
+<ol>
+<li>Search: keywords to a long list, with two hard conditions, at least 1,000 followers and a public email extracted from the bio by regex, including de-obfuscated &ldquo;(at)/(dot)&rdquo; forms. Everyone seen is kept in a second file with the reason they failed, so nothing is silently dropped.</li>
+<li>Tier by followers: KOL at 10,000 and above, KOC 3,000–10,000, UGC 1,000–3,000.</li>
+<li>Pull view counts, store first. Any step that costs money prints an estimate and stops unless explicitly confirmed; creators already in the store cost nothing.</li>
+<li>Tables per tier with two specified metrics, locked by tests: average views after removing videos above Q3 + 3×IQR, and the floor-5 average (mean of the five lowest). A creator with fewer than five videos pulled (when the account has more) is marked &ldquo;insufficient data&rdquo; rather than judged. KOC adds a views-to-followers ratio and an AI-content signal from bios and hashtags; UGC adds a viral flag.</li>
+</ol>
+<p>The first generation had been a keyword-to-email list builder with a permanent master list so the same creator is never sold twice; the second measured creators on recent performance rather than follower count. I imported all of their data into the final store so no scrape had to be repeated.</p>
 <h2 id="results">Results</h2>
 <ul>
-<li>First-year membership churn re-verified at 71.38% (287,908 of 403,337 members).</li>
-<li>The &ldquo;about 80% program churn&rdquo; turned out to be a granularity artifact: 80.35% at the exact-program level versus 35.53% at the category level for the same 172,892 participants. This closed an open question.</li>
-<li>Early visits are protective and monotonic: churn falls from 81.4% with zero visits in the first 60 days to 67.9% with six or more.</li>
-<li>The lower 2025 churn (59.6%) was flagged as right-censoring, not improvement.</li>
-<li>Outputs: a decision log with 22 decisions, an evidence register with 23 labelled claims, a self-contained HTML dashboard, and an 8-slide leadership deck.</li>
+<li>Long list of 8,562 creators meeting the hard conditions, from 16,181 seen; tiering of a 7,947-creator run gave KOL 4,347, KOC 1,653, UGC 1,947.</li>
+<li>Passed candidates: 96 KOL, 25 KOC, 240 UGC, each with an all-candidates file explaining rejections.</li>
+<li>Keyword yield: public-email rates by search keyword ranged from 1.4% to 19%, which answered the client&rsquo;s key question about whether email could be a hard filter.</li>
+<li>Pilot pull of 50 creators succeeded for 48 with 0 failures; the KOC tier passed none because the legacy lists lacked AI-content signals, which showed KOC candidates must come from AI-specific keywords.</li>
+<li>Streamlit app lets a reviewer filter by tier, email, AI signal, follower band and views, see per-creator view distributions, and export the current selection.</li>
 </ul>
 <h2 id="what-it-changed">What it changed</h2>
-<p>The reconciliation step earned its place. The business agent wanted a 90-day headline because it separated best (14.8 points versus 13.6 for 60 days). The project manager logged that as drift, since the edge was marginal and 60 days was the client&rsquo;s standard, and escalated it. As client I kept 60 days, recorded as decision #20. Without the role split, that choice would have been made quietly inside a slide. One rule also proved useful: the churn flag&rsquo;s exact definition stayed labelled UNKNOWN on every deliverable instead of being guessed.</p>
+<p>The tables and app became the team&rsquo;s working list for outreach, and the keyword-yield file replaced guesswork about where to spend search budget. The pilot result redirected KOC sourcing toward AI and app keywords instead of the existing fashion and lifestyle lists.</p>
 <h2 id="next-steps">Next steps</h2>
 <ul>
-<li>Make the technical agent save every script in the project folder.</li>
-<li>Add a check that every number in a deliverable maps to an evidence-register row.</li>
+<li>Run the full KOC and UGC pull.</li>
+<li>Test a social-media finder on a small sample to recover missing emails.</li>
 </ul>
     <section class="article-code">
       <p class="kicker">Code &amp; materials</p>
-      <p>This work was delivered inside a client engagement; no public code is available. Happy to walk through the approach on a call.</p>
+      <p>The code lives in a private GitHub repository (HuiguoLiu911/yesand-creator-sourcing). Access on request — <a href="mailto:liu01959@umn.edu?subject=Tier%208%2C562%20TikTok%20creators%20into%20KOL%2C%20KOC%2C%20UGC">send me a note</a>.</p>
     </section>
   </article>
   <aside class="article-aside">
@@ -127,7 +127,7 @@
 </div>
 
 <nav class="project-nav" aria-label="More projects">
-<a class="project-nav-link prev" href="../projects/rag-document-chatbot.html"><span>← Previous</span><strong>Ask questions of a document, not the model</strong></a><a class="project-nav-link next" href="../projects/autogen-newsroom.html"><span>Next →</span><strong>Run a newsroom with five agents and one human</strong></a></nav>
+<a class="project-nav-link prev" href="../projects/llm-creator-recommendation.html"><span>← Previous</span><strong>Find the creators keyword search missed</strong></a><a class="project-nav-link next" href="../projects/rag-document-chatbot.html"><span>Next →</span><strong>Ask questions of a document, not the model</strong></a></nav>
 </main>
 
 <footer class="site-footer">

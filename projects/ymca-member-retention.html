@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Where are the burn deserts? – Huiguo Liu</title>
-<meta name="description" content="Profiled 635 trauma-capable hospitals from the National Injury Resource Database, found eight states with no burn beds, and designed a hub–spoke–access referral network around 413 mid-size trauma centers.">
-<meta property="og:title" content="Where are the burn deserts? – Huiguo Liu">
-<meta property="og:description" content="Profiled 635 trauma-capable hospitals from the National Injury Resource Database, found eight states with no burn beds, and designed a hub–spoke–access referral network around 413 mid-size trauma centers.">
+<title>Find the members who will stay – Huiguo Liu</title>
+<meta name="description" content="Consolidated 33 extracts into a DuckDB pipeline covering 539K members, lifted ID matching from 50% to 79%, and segmented 336K members by behavior.">
+<meta property="og:title" content="Find the members who will stay – Huiguo Liu">
+<meta property="og:description" content="Consolidated 33 extracts into a DuckDB pipeline covering 539K members, lifted ID matching from 50% to 79%, and segmented 336K members by behavior.">
 <meta property="og:type" content="website">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,7 +25,7 @@
   })();
 </script>
 </head>
-<body class="page-project tone-page-coral">
+<body class="page-project tone-page-sky">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="topbar" id="topbar">
   <nav class="nav-inner" aria-label="Primary">
@@ -65,50 +65,48 @@
 <main id="main" class="canvas article-canvas">
 <header class="project-header reveal">
   <div class="project-header-copy">
-    <p class="kicker"><a href="../data-analysis.html">Data Analysis</a> · 06</p>
-    <h1>Where are the burn deserts?</h1>
-    <p class="project-subtitle">HeatMap Hackathon 2026 · Mapping U.S. burn-care capacity and a 3-tier telemedicine referral network</p>
-    <ul class="tag-chips" aria-label="Topics"><li>healthcare</li><li>Python</li><li>geospatial</li></ul>
-    <p class="project-lede">Profiled 635 trauma-capable hospitals from the National Injury Resource Database, found eight states with no burn beds, and designed a hub–spoke–access referral network around 413 mid-size trauma centers.</p>
+    <p class="kicker"><a href="../data-analysis.html">Data Analysis</a> · 01</p>
+    <h1>Find the members who will stay</h1>
+    <p class="project-subtitle">YMCA of the North · Member retention pipeline, segmentation and churn QA</p>
+    <ul class="tag-chips" aria-label="Topics"><li>DuckDB</li><li>segmentation</li><li>Power BI</li></ul>
+    <p class="project-lede">Consolidated 33 extracts into a DuckDB pipeline covering 539K members, lifted ID matching from 50% to 79%, and segmented 336K members by behavior.</p>
     <dl class="project-meta">
-<div><dt>Role</dt><dd>Data analysis and visualization in a five-person team</dd></div><div><dt>Context</dt><dd>HeatMap Hackathon 2026, presented by BData</dd></div>      <div><dt>When</dt><dd>Jan – Mar 2026</dd></div>
-<div><dt>Stack</dt><dd>Python · pandas · Plotly · Matplotlib · Seaborn</dd></div>    </dl>
+<div><dt>Role</dt><dd>Visuals / Deliverable Lead; churn-model evaluation and QA; pipeline work</dd></div><div><dt>Context</dt><dd>Carlson Analytics Lab client project, team of five</dd></div>      <div><dt>When</dt><dd>May – Aug 2026</dd></div>
+<div><dt>Stack</dt><dd>Python · DuckDB · pandas · scikit-learn · Power BI · Parquet</dd></div>    </dl>
   </div>
-  <div class="project-header-art tone-coral">
-    <img src="../assets/art/healthcare-burn-care-network.svg" alt="" width="640" height="400">
+  <div class="project-header-art tone-sky">
+    <img src="../assets/art/ymca-member-retention.svg" alt="" width="640" height="400">
   </div>
 </header>
 
 <section class="result-strip" aria-label="Headline results">
-<div><span>trauma-capable hospitals profiled</span><strong>635</strong></div><div><span>states with zero dedicated burn beds</span><strong>8</strong></div><div><span>mid-size trauma centers in the spoke tier</span><strong>413</strong></div><div><span>avoided per helicopter transfer (projected)</span><strong>$12K–$25K</strong></div></section>
+<div><span>members consolidated</span><strong>539K</strong></div><div><span>engagement records</span><strong>9.4M</strong></div><div><span>cross-system ID match rate</span><strong>50% → 79%</strong></div><div><span>annual retention, minimal to loyal segment</span><strong>60% → 89%</strong></div></section>
 
 <div class="article-layout">
   <article class="article-body">
     <h2 id="the-question">The question</h2>
-<p>Severe burns are rare but time-critical, and burn-capable hospitals are concentrated in a few metropolitan areas. The hackathon brief asked a practical question: given the hospitals that exist today, where does burn care break down geographically, and what could close the gap without building new facilities?</p>
-<p>Our five-person team entered the HeatMap Hackathon 2026 (presented by BData) with the theme &ldquo;Bridging the Gap: Building a 3-Tier Burn Intervention &amp; Telemedicine Network&rdquo;. I worked on the data analysis and the visualizations.</p>
+<p>YMCA of the North wanted to know which early behaviors predict whether a new member is still there a year later, and which groups of members deserve attention first. Membership history from 2022 to 2025 lived in two systems, Personify and Salesforce, and the migration between them meant one person could appear under two IDs. Until those records were reconciled, retention could not be measured reliably, let alone predicted.</p>
+<p>I worked on this as part of a five-person Carlson Analytics Lab team in Summer 2026. I was the Visuals / Deliverable Lead and owned the evaluation and QA of the churn models; I also worked on the data pipeline.</p>
 <h2 id="data">Data</h2>
-<p>The National Injury Resource Database (NIRD): 635 trauma-capable hospitals described by 23 fields, including trauma level, bed counts, adult and pediatric burn capability, American Burn Association (ABA) verification, and location. The dataset is public and contains no patient records; all analysis was at the hospital level.</p>
+<p>33 raw extracts from the two systems: facility visits (about 20.8M rows) and program and membership enrollments (about 4.9M rows), 2022–2025, de-identified before analysis (birth dates reduced to year, ZIP codes to five digits). Quality issues included an ID crosswalk that at first matched only about half of members across systems, a 2025 migration that left branch IDs null and had to be backfilled from branch names, ethnicity unknown for roughly 50% of records, and open-ended enrollments where a missing end date meant &ldquo;active&rdquo;. No raw client data or personal data appears in this write-up.</p>
 <h2 id="method">Method</h2>
-<p>In Python (pandas for the profiling, Plotly, Matplotlib and Seaborn for the maps and charts) I classified every hospital by its burn capability and rolled the counts up to the state level to find states with no dedicated burn beds. I then compared adult and pediatric capability side by side, and sized the hospitals that had trauma capacity but no burn program, because those were the candidates for a middle tier that could handle moderate burns with telemedicine support from a verified center.</p>
-<figure>
-  <img src="../assets/figures/healthcare-burn-care-network/pediatric_burn_crisis.png" alt="Bar chart of hospitals with adult versus pediatric burn and trauma capability, and a pie chart showing that only 14% of the 635 hospitals have pediatric burn capability" loading="lazy">
-  <figcaption>Adult versus pediatric capability across the 635 hospitals: 120 have adult burn capability and 89 pediatric, against 565 and 146 with trauma capability. Only 14% of hospitals can treat pediatric burns.</figcaption>
-</figure>
-
+<p>We consolidated the extracts into a five-phase DuckDB pipeline: ingest, crosswalk, visit aggregation, churn logic, and assembly. The crosswalk used a two-key matching strategy, which raised the cross-system ID match rate from 50% to 79%. The assembled layer covers 539K members and 9.4M monthly engagement records; the monthly table is queried in DuckDB only, because it is too large to load into pandas comfortably.</p>
+<p>Churn was defined per membership instance with a 40-day grace period, and retention as one minus churn. For segmentation the team ran KMeans with k=4 on four lifetime features (visits per active month, unique branches visited, program categories, active months), with k chosen for interpretability; churn was used only afterwards to describe each segment.</p>
+<p>I owned the evaluation and QA of the churn MVP. That meant time-based, member-grouped splits, a leakage audit that caught a member-level &ldquo;returned after first visit&rdquo; flag and replaced it with a clean 60-day proxy, and a rule that a validation cohort with zero churn positives gets no reported AUC. I also worked on the Power BI dashboard and built the client-facing deliverables.</p>
 <h2 id="results">Results</h2>
 <ul>
-<li>Of 635 trauma-capable hospitals, 120 have adult burn capability, 74 are ABA-verified burn centers, and 89 can treat pediatric burns, which is 25.8% fewer than the adult count.</li>
-<li>The country has about 2,080 dedicated burn beds, 0.72% of total beds, and eight states have none at all: the &ldquo;burn deserts&rdquo;.</li>
-<li>The proposed network has three tiers: 74 ABA-verified centers as hubs for severe and complex cases; 413 &ldquo;sweet spot&rdquo; trauma centers across 47 states (about 470 beds on average) as spokes that manage moderate burns with telemedicine guidance; and 148 community hospitals as access points for initial stabilization and transfer.</li>
+<li>539K members and 9.4M engagement records consolidated; the ID match rate improved from 50% to 79%.</li>
+<li>Four behavior-based segments across 336K members; annual retention ranged from 60% in the minimal-engagement group to 89% among loyal regulars.</li>
+<li>The minimal-engagement group was the largest segment, so it was flagged for early intervention.</li>
+<li>The first-60-day membership churn model reached a validation ROC-AUC of about 0.64. Early visits were a real but weak signal once leakage was removed, and age at signup was the strongest clean predictor.</li>
 </ul>
 <h2 id="what-it-changed">What it changed</h2>
-<p>The recommendation was deliberately infrastructure-light. Rather than proposing new burn units, it routes patients through hospitals that already exist and connects them to specialists through a telemedicine layer that scales at low marginal cost. For a moderate burn, keeping the patient at a spoke hospital instead of flying them to a hub avoids a projected $12K–$25K per helicopter transfer, and it shortens the time to first specialist contact in the states with no burn beds of their own.</p>
+<p>At midterm the client told us they wanted operational decisions, not a higher AUC. The final deliverable followed one thread: risk signal, member segment, program pathway, outreach action. It included an outreach framework that maps risk tier and segment to a recommended contact action, a Power BI dashboard with an annual membership overview and program pathways, a final presentation, and a knowledge-transfer document for YMCA staff.</p>
 <h2 id="limitations-and-next-steps">Limitations and next steps</h2>
-<p>This was a hackathon analysis on hospital-level capacity data, not outcomes data, so it says where capacity is missing rather than how patients fare. Travel times were approximated by state rather than road distance, and the sweet-spot tier was defined by bed count and trauma level, not by staffing or burn-specific training. A next step would be to overlay drive-time isochrones and burn-incidence rates to prioritize which spokes to equip first.</p>
+<p>Segmentation uses lifetime features, so it describes members rather than warning about them early. Cross-year comparisons into 2025 are distorted by the system migration, because returning members reappear under new IDs. Retention differences between segments are associations, not effects of any intervention. Next steps the team proposed: a next-60-day reactive model, one settled population definition for segmentation, and a program-category dataset for pathway analysis.</p>
     <section class="article-code">
       <p class="kicker">Code &amp; materials</p>
-      <p>This work was delivered inside a client engagement; no public code is available. Happy to walk through the approach on a call.</p>
+      <p>The code lives in a private GitHub repository (HuiguoLiu911/ymca-member-retention-analytics). Access on request — <a href="mailto:liu01959@umn.edu?subject=Find%20the%20members%20who%20will%20stay">send me a note</a>.</p>
     </section>
   </article>
   <aside class="article-aside">
@@ -121,7 +119,7 @@
 </div>
 
 <nav class="project-nav" aria-label="More projects">
-<a class="project-nav-link prev" href="../projects/driver-nudge-system.html"><span>← Previous</span><strong>Tell drivers where demand is, and why</strong></a><a class="project-nav-link next" href="../projects/analytics-for-good-hackathon.html"><span>Next →</span><strong>What does off-policy travel cost?</strong></a></nav>
+<span></span><a class="project-nav-link next" href="../projects/4mativ-gps-route-validation.html"><span>Next →</span><strong>Can you trust the GPS trail?</strong></a></nav>
 </main>
 
 <footer class="site-footer">

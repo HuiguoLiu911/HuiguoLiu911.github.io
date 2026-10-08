@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cutting photo calorie error from 27% to 19% – Huiguo Liu</title>
-<meta name="description" content="SnapCal&#39;s estimates had never met a scale, so I built a 120-meal weighed eval, tested four prompt variants and ran a 196-user beta; illustrative error fell 27% → 19%.">
-<meta property="og:title" content="Cutting photo calorie error from 27% to 19% – Huiguo Liu">
-<meta property="og:description" content="SnapCal&#39;s estimates had never met a scale, so I built a 120-meal weighed eval, tested four prompt variants and ran a 196-user beta; illustrative error fell 27% → 19%.">
+<title>Snap a plate, see the calories – Huiguo Liu</title>
+<meta name="description" content="A mobile web app: photograph a meal, get an itemized calorie and macro estimate you can correct by the gram, and track the day against a goal computed from your own numbers.">
+<meta property="og:title" content="Snap a plate, see the calories – Huiguo Liu">
+<meta property="og:description" content="A mobile web app: photograph a meal, get an itemized calorie and macro estimate you can correct by the gram, and track the day against a goal computed from your own numbers.">
 <meta property="og:type" content="website">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/styles.css?v=e769ee09">
+<link rel="stylesheet" href="../assets/styles.css?v=ba389f89">
 <script>
   // Apply the saved theme before first paint to avoid a flash.
   (function () {
@@ -66,237 +66,71 @@
 <header class="project-header reveal">
   <div class="project-header-copy">
     <p class="kicker"><a href="../ai-projects.html">AI Projects</a> · 02</p>
-    <h1>Cutting photo calorie error from 27% to 19%</h1>
-    <p class="project-subtitle">SnapCal · Weighed-meal eval, closed beta and unit economics for an AI calorie tracker</p>
-    <ul class="tag-chips" aria-label="Topics"><li>LLM eval</li><li>A/B testing</li><li>unit economics</li></ul>
-    <p class="project-lede">SnapCal&#39;s estimates had never met a scale, so I built a 120-meal weighed eval, tested four prompt variants and ran a 196-user beta; illustrative error fell 27% → 19%.</p>
+    <h1>Snap a plate, see the calories</h1>
+    <p class="project-subtitle">SnapCal · A Cal AI–style photo calorie tracker built on Claude vision</p>
+    <ul class="tag-chips" aria-label="Topics"><li>Claude vision</li><li>structured output</li><li>web app</li></ul>
+    <p class="project-lede">A mobile web app: photograph a meal, get an itemized calorie and macro estimate you can correct by the gram, and track the day against a goal computed from your own numbers.</p>
     <dl class="project-meta">
-<div><dt>Role</dt><dd>Solo: product, prompt and eval design, front end, analysis</dd></div><div><dt>Context</dt><dd>Concept extension of a real side project (live prototype)</dd></div>      <div><dt>When</dt><dd>8-week concept plan after the Oct 2026 prototype</dd></div>
-<div><dt>Stack</dt><dd>JavaScript · Claude Opus 5.5 vision · JSON schema output · Cloudflare Workers · USDA FoodData Central · Python · pandas</dd></div>    </dl>
+<div><dt>Role</dt><dd>Solo project, built with Claude Code</dd></div><div><dt>Context</dt><dd>Personal project inspired by Cal AI</dd></div>      <div><dt>When</dt><dd>Oct 2026</dd></div>
+<div><dt>Stack</dt><dd>JavaScript · Anthropic SDK · Claude Opus 5.5 · JSON schema output · localStorage · SVG</dd></div>    </dl>
   </div>
   <div class="project-header-art tone-coral">
     <img src="../assets/art/snapcal-calorie-tracker.svg" alt="" width="640" height="400">
   </div>
 </header>
 
-<section class="sim-box" aria-label="What is real and what is simulated">
-  <div><span class="sim-tag real">Real</span><p>In Oct 2026 I built SnapCal, a browser-only Cal AI–style tracker (live at huiguoliu911.github.io/snapcal/) where Claude vision returns schema-constrained per-item grams, calories, macros and confidence, edited grams rescale the numbers, goals use Mifflin–St Jeor, a 50-food list works offline, data stays in localStorage, and accuracy and usage were never measured.</p></div>
-  <div><span class="sim-tag sim">Simulated</span><p>The weighed-meal eval set, prompt variant comparison, key proxy deployment, 4-week closed beta, A/B test, and every accuracy, retention, cost and latency number are hypothetical.</p></div>
-</section>
 <section class="result-strip" aria-label="Headline results">
-<div><span>per-meal calorie MAPE, 80 held-out weighed meals</span><strong>27% → 19%</strong><em class="illus">Illustrative</em></div><div><span>model cost per scan at low effort</span><strong>1.7¢</strong><em class="illus">Illustrative</em></div><div><span>meals reviewed and edited, confidence UI vs plain (A/B)</span><strong>+11.8 pp</strong><em class="illus">Illustrative</em></div><div><span>D28 retention, 196-user closed beta</span><strong>27%</strong><em class="illus">Illustrative</em></div></section>
+<div><span>ways to log: photo, plain-English description, food search</span><strong>3</strong></div><div><span>common foods searchable offline</span><strong>50</strong></div><div><span>servers: runs entirely in the browser</span><strong>0</strong></div></section>
 
 <div class="article-layout">
   <article class="article-body">
-    <h2 id="business-context">Business context</h2>
-<p>Photo calorie trackers sell one promise: point the camera at the plate and skip the weighing. SnapCal already returns schema-constrained items with grams, calories, macros and a confidence level that the user can rescale.</p>
-<p>The users are people trying to lose or hold weight who quit manual logging around week two. A subscription of about $5 a month only works if they trust the estimate enough to keep logging and their scans cost well under the net price.</p>
-<h2 id="the-problem">The problem</h2>
-<p>Nobody, including me, knew how wrong SnapCal is. Systematic under-counting is worse than noise: a 500 kcal deficit on paper may be maintenance in reality, and the user blames themselves when the scale doesn&rsquo;t move.</p>
-<p>The north-star KPI is <strong>weekly logging users</strong>: the share of activated users who log at least one meal on 4 or more days in a calendar week. Guardrails, each with a threshold set before any testing:</p>
+    <p><strong><a href="../snapcal/">Open the live app →</a></strong> It works without a key through the sample meal and the food search. Photo analysis needs your own Anthropic API key, entered in Settings.</p>
+<h2 id="the-question">The question</h2>
+<p>Apps like Cal AI made calorie tracking feel effortless: point the camera at a plate and the numbers appear. I wanted to see how much of that experience I could rebuild myself, and where it breaks. Three questions shaped the design. How do you keep an AI estimate honest when portions are guesswork? How do you let people fix it in seconds? And can the whole thing run without a backend that stores anyone&rsquo;s photos?</p>
+<h2 id="data">Data</h2>
+<p>There is no training data. The app has three inputs:</p>
 <ul>
-<li><strong>Per-meal kcal MAPE</strong> on held-out weighed meals: mean |estimate − truth| / truth. Release bar 20% or lower.</li>
-<li><strong>Signed bias</strong>: mean (estimate − truth) / truth, within ±8%.</li>
-<li><strong>p95 scan latency</strong>, upload to items on screen: under 9 s.</li>
-<li><strong>Mean model cost per active user-month</strong>: under $1.50.</li>
+<li>A meal photo, downscaled in the browser to at most 1,024 pixels before it is sent.</li>
+<li>A plain-English description such as &ldquo;two scrambled eggs and a latte&rdquo;.</li>
+<li>A small offline list of 50 common foods with approximate nutrition per serving, for manual logging.</li>
 </ul>
-<p>The prototype could answer none of these: no ground truth, no event logging, and an API key stored in each user&rsquo;s browser.</p>
-<h2 id="what-i-built">What I built</h2>
-<p><strong>A weighed-meal eval set.</strong> 120 phone-photographed meals, each shot plain and with a hand beside the plate: 84 home-cooked, 36 restaurant or takeout. For home meals I weighed every raw ingredient, oil included, on a 1 g scale, mapped it to USDA FoodData Central, then weighed the finished dish to get the plated share. Restaurant meals were weighed per component, so their truth is noisier (about ±10%) and reported separately. 40 meals formed a dev split; the other 80 stayed locked until the final comparison.</p>
-<p><strong>Prompt and capture variants.</strong> V0 is the shipped single prompt. V1 makes the model first list items, likely fats and sauces, and the visual cue behind each portion, then estimate, in one call with the same schema. V2 is V1 on the hand-in-frame photo; V3 is V2 at medium effort.</p>
-<p>I rejected a fine-tuned food classifier plus nutrition lookup: it names foods well, but portion size is the bigger error source, and it needs thousands of labeled plates I don&rsquo;t have. Multi-angle capture adds friction exactly where the product promises to remove it; a hand in frame is the cheaper scale reference.</p>
-<p><strong>A key proxy.</strong> A Cloudflare Worker now holds the API key. It accepts only JPEGs under 400 KB with a signed invite token, enforces per-user limits (3 scans a minute, 150 a month) and a global daily spend cap with a kill switch, and forwards a fixed server-side prompt. The schema allows only food items, so the endpoint is useless as a free vision API. Photos are never stored; the event log keeps tokens, latency, confidence and edits against an anonymous ID.</p>
-<figure class="fig">
-<svg viewBox="0 0 900 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SnapCal production and evaluation loop">
-<defs><marker id="arrow-snapcal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10z" class="d-arrowhead"/></marker></defs>
-<text x="20" y="24" class="d-title">SnapCal loop (concept)</text>
-<rect x="20" y="44" width="176" height="84" rx="10" class="d-box"/>
-<text x="34" y="72" class="d-text">Phone browser</text>
-<text x="34" y="94" class="d-text-sm">photo ≤1024 px</text>
-<text x="34" y="112" class="d-text-sm">or meal text</text>
-<rect x="248" y="44" width="176" height="84" rx="10" class="d-box"/>
-<text x="262" y="72" class="d-text">Key proxy</text>
-<text x="262" y="94" class="d-text-sm">token · rate limit</text>
-<text x="262" y="112" class="d-text-sm">spend cap · no photos</text>
-<rect x="476" y="44" width="176" height="84" rx="10" class="d-box-accent"/>
-<text x="490" y="72" class="d-text">Claude vision</text>
-<text x="490" y="94" class="d-text-sm">itemize → estimate</text>
-<text x="490" y="112" class="d-text-sm">low effort · schema</text>
-<rect x="704" y="44" width="176" height="84" rx="10" class="d-box"/>
-<text x="718" y="72" class="d-text">Review sheet</text>
-<text x="718" y="94" class="d-text-sm">confidence chips</text>
-<text x="718" y="112" class="d-text-sm">gram slider rescales</text>
-<rect x="704" y="246" width="176" height="84" rx="10" class="d-box"/>
-<text x="718" y="274" class="d-text">Day log</text>
-<text x="718" y="296" class="d-text-sm">localStorage</text>
-<text x="718" y="314" class="d-text-sm">Mifflin–St Jeor goal</text>
-<rect x="476" y="246" width="176" height="84" rx="10" class="d-box-soft"/>
-<text x="490" y="274" class="d-text">Event log</text>
-<text x="490" y="296" class="d-text-sm">edits · latency · cost</text>
-<text x="490" y="314" class="d-text-sm">anonymous ID only</text>
-<rect x="248" y="246" width="176" height="84" rx="10" class="d-box"/>
-<text x="262" y="274" class="d-text">Eval harness</text>
-<text x="262" y="296" class="d-text-sm">120 weighed meals</text>
-<text x="262" y="314" class="d-text-sm">FDC truth · MAPE</text>
-<rect x="20" y="246" width="176" height="84" rx="10" class="d-box-accent"/>
-<text x="34" y="274" class="d-text">Prompt release</text>
-<text x="34" y="296" class="d-text-sm">variant + hint</text>
-<text x="34" y="314" class="d-text-sm">gate: MAPE ≤ 20%</text>
-<path d="M196,86 L246,86" class="d-arrow" marker-end="url(#arrow-snapcal)"/>
-<path d="M424,86 L474,86" class="d-arrow" marker-end="url(#arrow-snapcal)"/>
-<path d="M652,86 L702,86" class="d-arrow" marker-end="url(#arrow-snapcal)"/>
-<path d="M792,128 L792,244" class="d-arrow" marker-end="url(#arrow-snapcal)"/>
-<text x="800" y="192" class="d-text-sm">save</text>
-<path d="M704,288 L654,288" class="d-arrow" marker-end="url(#arrow-snapcal)"/>
-<path d="M476,288 L426,288" class="d-arrow" marker-end="url(#arrow-snapcal)"/>
-<path d="M248,288 L198,288" class="d-arrow" marker-end="url(#arrow-snapcal)"/>
-<path d="M564,128 L564,244" class="d-line-muted"/>
-<text x="572" y="192" class="d-text-sm">tokens, latency</text>
-<path d="M108,246 L108,186 L336,186 L336,130" class="d-arrow" marker-end="url(#arrow-snapcal)"/>
-<text x="124" y="178" class="d-text-sm">deploy prompt version</text>
-</svg>
-<figcaption>Production path along the top, feedback loop along the bottom. Logged edits and the weighed-meal harness decide which prompt version the proxy serves.</figcaption>
-</figure>
-
+<p>Meals, weights and the goal live in the browser&rsquo;s local storage. Photos are never stored; the app keeps only a 96-pixel thumbnail.</p>
+<h2 id="method">Method</h2>
+<p><strong>The estimate.</strong> The photo or description goes to Claude (Opus 5.5 at low effort) with a JSON schema that constrains the answer to a list of items. Each item has a name, a portion description, grams, calories, protein, carbohydrate, fat and a confidence level, plus one note about the biggest uncertainty. A schema-constrained answer means the app never has to scrape numbers out of prose. The prompt asks the model to list cooking oil, sauces and dressings as separate items, because those are where most estimates go wrong. It also asks for an empty list when the image doesn&rsquo;t show food.</p>
+<p><strong>The correction loop.</strong> Every item stores its original per-gram values, so editing the grams rescales calories and macros instantly. Items can be renamed, removed, or added from the food list before the meal is saved. Low-confidence items are flagged in color, so the user knows which number to check.</p>
+<p><strong>The goal.</strong> Daily targets come from the Mifflin–St Jeor equation, multiplied by an activity factor and adjusted for the chosen weekly change (7,700 kcal per kilogram). The target never drops below a conservative floor. Protein is set from body weight, fat from a share of calories, and carbohydrate fills the rest.</p>
+<p><strong>Tracking.</strong> A ring shows calories left, bars show the three macros, a weight log draws a trend line, and a seven-day bar chart compares intake with the goal. Everything can be exported to CSV.</p>
 <h2 id="results">Results</h2>
-<p>All numbers below are simulated.</p>
-<p><strong>Accuracy, 80 held-out meals, 95% bootstrap intervals.</strong></p>
-<table>
-<thead>
-<tr>
-<th>Variant</th>
-<th>MAPE</th>
-<th>Signed bias</th>
-<th>Item recall</th>
-<th>Cost / scan</th>
-<th>p50 / p95 latency</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>V0 single prompt</td>
-<td>27.4% (23.1–32.0)</td>
-<td>−13.8%</td>
-<td>0.76</td>
-<td>1.3¢</td>
-<td>3.4 / 6.6 s</td>
-</tr>
-<tr>
-<td>V1 itemize → estimate</td>
-<td>21.6% (18.2–25.3)</td>
-<td>−8.9%</td>
-<td>0.88</td>
-<td>1.7¢</td>
-<td>4.2 / 7.9 s</td>
-</tr>
-<tr>
-<td>V2 V1 + hand in frame</td>
-<td>18.6% (15.4–22.1)</td>
-<td>−6.1%</td>
-<td>0.89</td>
-<td>1.7¢</td>
-<td>4.3 / 8.1 s</td>
-</tr>
-<tr>
-<td>V3 V2 at medium effort</td>
-<td>17.9% (14.8–21.3)</td>
-<td>−5.7%</td>
-<td>0.90</td>
-<td>3.1¢</td>
-<td>8.6 / 15.2 s</td>
-</tr>
-</tbody>
-</table>
-<p>V1 against V0 is a paired difference of −5.8 pp (CI −8.9 to −2.6), mostly from fats: oil, butter or sauce was in 52 of 80 meals, and V1 listed it in 37 against V0&rsquo;s 21. The hand took off another 3.0 pp (CI −5.3 to −0.8). V2 clears the 20% bar on its point estimate, not its upper bound of 22.1%. Medium effort disappointed: 0.7 pp better than V2 (CI −2.6 to +1.3) at 1.8× the cost, with p95 over the latency guardrail.</p>
-<figure class="fig">
-<svg viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Per-meal calorie MAPE by prompt variant with 95% intervals">
-<text x="80" y="28" class="c-label">Per-meal kcal MAPE, 80 held-out meals (95% bootstrap CI)</text>
-<line x1="80" y1="242.9" x2="860" y2="242.9" class="c-grid"/>
-<line x1="80" y1="88.6" x2="860" y2="88.6" class="c-grid"/>
-<line x1="80" y1="320" x2="860" y2="320" class="c-axis"/>
-<text x="70" y="324" text-anchor="end" class="c-label">0%</text>
-<text x="70" y="246.9" text-anchor="end" class="c-label">10%</text>
-<text x="70" y="169.7" text-anchor="end" class="c-label">20%</text>
-<text x="70" y="92.6" text-anchor="end" class="c-label">30%</text>
-<rect x="132.5" y="108.6" width="90" height="211.4" rx="4" class="c-bar-muted"/>
-<rect x="327.5" y="153.4" width="90" height="166.6" rx="4" class="c-bar"/>
-<rect x="522.5" y="176.5" width="90" height="143.5" rx="4" class="c-bar-accent"/>
-<rect x="717.5" y="181.9" width="90" height="138.1" rx="4" class="c-bar-muted"/>
-<line x1="80" y1="165.7" x2="860" y2="165.7" class="d-line-muted"/>
-<text x="470" y="159" text-anchor="middle" class="c-label">release bar 20%</text>
-<line x1="177.5" y1="73.2" x2="177.5" y2="141.8" class="d-line"/>
-<line x1="169.5" y1="73.2" x2="185.5" y2="73.2" class="d-line"/>
-<line x1="169.5" y1="141.8" x2="185.5" y2="141.8" class="d-line"/>
-<line x1="372.5" y1="124.8" x2="372.5" y2="179.6" class="d-line"/>
-<line x1="364.5" y1="124.8" x2="380.5" y2="124.8" class="d-line"/>
-<line x1="364.5" y1="179.6" x2="380.5" y2="179.6" class="d-line"/>
-<line x1="567.5" y1="149.5" x2="567.5" y2="201.2" class="d-line"/>
-<line x1="559.5" y1="149.5" x2="575.5" y2="149.5" class="d-line"/>
-<line x1="559.5" y1="201.2" x2="575.5" y2="201.2" class="d-line"/>
-<line x1="762.5" y1="155.7" x2="762.5" y2="205.8" class="d-line"/>
-<line x1="754.5" y1="155.7" x2="770.5" y2="155.7" class="d-line"/>
-<line x1="754.5" y1="205.8" x2="770.5" y2="205.8" class="d-line"/>
-<text x="177.5" y="64" text-anchor="middle" class="c-value">27.4%</text>
-<text x="372.5" y="116" text-anchor="middle" class="c-value">21.6%</text>
-<text x="567.5" y="141" text-anchor="middle" class="c-value">18.6%</text>
-<text x="762.5" y="147" text-anchor="middle" class="c-value">17.9%</text>
-<text x="177.5" y="344" text-anchor="middle" class="c-label">V0 single prompt</text>
-<text x="177.5" y="360" text-anchor="middle" class="c-label">low effort</text>
-<text x="372.5" y="344" text-anchor="middle" class="c-label">V1 itemize → estimate</text>
-<text x="372.5" y="360" text-anchor="middle" class="c-label">low effort</text>
-<text x="567.5" y="344" text-anchor="middle" class="c-label">V2 V1 + hand in frame</text>
-<text x="567.5" y="360" text-anchor="middle" class="c-label">low effort · chosen</text>
-<text x="762.5" y="344" text-anchor="middle" class="c-label">V3 V2, medium effort</text>
-<text x="762.5" y="360" text-anchor="middle" class="c-label">1.8× cost</text>
-</svg>
-<figcaption>Illustrative. Most of the gain comes from itemizing before estimating; medium effort buys cost and latency, not accuracy.</figcaption>
-</figure>
-
-<p>By meal type, V2 scored 11.5% on home plated meals (n=34), 19.8% on restaurant (n=24), 26.9% on mixed dishes (n=14) and 30.2% on drinks (n=8). The confidence field tracked error: item-level MAPE was 41% on the 58 items flagged low, 14% on the 151 flagged high.</p>
-<p><strong>Closed beta, 4 weeks.</strong> In the simulated beta I invited 220 people from a waitlist of about 1,100 on one day; the 196 who set a goal are the analysis population. Activation (3 meals logged within 48 hours) was 63% (124/196), D7 retention (a meal on days 5–7) 46% (90/196) and D28 27% (53/196). Weekly logging users fell from 58% of activated users in week 1 (72/124) to 39% in week 4 (48/124). Everyone ran V1; the hand hint shipped in week 3 but appeared in only 34% of later photos, which puts compliance-weighted field MAPE near 20.6%, over the bar. The 18.6% is what the prompt can do, not what a typical user gets.</p>
-<p><strong>A/B test.</strong> Users were randomized 50/50 at signup. Arm A kept the shipped sheet: confidence as plain text, typed grams. Arm B showed colored confidence chips, low-confidence items first, and a portion slider. The primary metric was the share of AI-logged meals edited before saving, a process metric chosen because 196 users cannot power retention; a weighed audit would check whether editing improved accuracy. Guardrails: median time to save (limit +5 s) and net logged kcal versus the model&rsquo;s estimate (limit ±3%). With about 24 meals per user and an assumed intra-user correlation of 0.15, the MDE was near 7 pp (α=0.05, power 0.8). Fixed horizon, one analysis at day 28.</p>
-<p>B raised the edit rate from 17.6% (2,310 meals, 98 users) to 29.4% (2,452 meals, 98 users): +11.8 pp, cluster-bootstrap CI +6.0 to +17.4, wider than planned because the observed correlation was 0.21. Novelty explains part of it; the gap shrank from +15 pp in week 1 to +9 pp in weeks 3–4.</p>
-<p>Both guardrails broke. Median time to save rose from 14 s to 20 s, and slider edits skewed downward, leaving B&rsquo;s logged calories 4% below the model&rsquo;s estimate and deepening the under-count. A 66-meal audit (22 volunteers, three weighed meals each) favored B (post-edit MAPE 20% → 16%, against 20% → 19% in A), but not significantly (about −3 pp, CI −7.1 to +1.4), and volunteers who weigh food are likely the careful editors. D28 was 28.6% (28/98) in B and 25.5% (25/98) in A, an interval of −9.3 to +15.5 pp that rules nothing in or out.</p>
-<h2 id="business-impact">Business impact</h2>
-<p><strong>Unit economics.</strong> The 53 users still logging at D28 averaged 38 scans that month (median 31, p90 92). At 1.7¢ a scan plus 4% retries and about 4¢ of proxy overhead, that is roughly $0.71 per active user-month, $1.67 at the p90. A $4.99 subscription nets about $4.24 after a 15% store fee, so model cost is about 17% of revenue and the 150-scan cap bounds the worst case near $2.70. Contribution is about $3.50 per paying user-month; if payers stayed four months, an untested assumption, acquisition must cost under about $14 per payer. Willingness to pay is the largest unknown.</p>
-<p><strong>Decisions.</strong> Ship V2 at low effort and move the hand hint from a tooltip into the camera overlay, since at 34% compliance most users still get V1 accuracy. Medium effort stays off. Keep the chips, which got people checking, but add a one-tap &ldquo;add oil&rdquo; chip so the easiest edit pushes against the under-count, and alert if net edits drift past −3%. A slower save is acceptable; edits that deepen the bias are not.</p>
-<p>Weekly logging users is the number that has to hold, and nothing here shows the chips move it. Powering +5 pp on week-4 weekly logging (39% baseline) takes about 1,500 activated users per arm, roughly 4,800 signups, over four times the waitlist. So the next step is a fake-door price page for the ~880 uninvited waitlist users: enough intent funds paid acquisition for that test, too little keeps SnapCal a free tool.</p>
-<h2 id="technical-deep-dive">Technical deep dive</h2>
-<p><strong>Data and pipeline.</strong> Eval rows hold the photo pair, items with grams and FDC IDs, and computed truth. A Python harness calls the app&rsquo;s own proxy endpoint, so the tested prompt is the shipping one, and stores raw JSON for re-scoring.</p>
-<p><strong>Model and rules design.</strong> One schema-constrained call, so there is no prose to parse. Drinks trigger a size and milk question, because the photo cannot answer either. A malformed or timed-out response is retried once; a second failure drops the user into text entry against the 50-food offline list.</p>
-<p><strong>Metric definitions.</strong> MAPE is per meal, because users act on the meal total, and bias sits beside it because MAPE hides direction. Item recall counts ground-truth items worth at least 5% of meal kcal that the model named, matched by hand.</p>
-<p><strong>Evaluation.</strong> Splits are by meal, both photos of a meal stay together, and the 80 test meals were not opened during iteration. Relabeling 20 meals two weeks later moved truth kcal by a median 4%, a floor on what counts as a real difference. The baseline is the shipped prompt. Meal types are imbalanced, so I report by type, not just pooled.</p>
-<p><strong>Failure cases.</strong></p>
 <ul>
-<li><em>Mixed dishes</em> (curries, chili, casseroles): 26.9% MAPE. Dissolved fat is invisible, so the model assumes a typical recipe.</li>
-<li><em>Drinks</em>: 30.2%. A whole-milk latte with syrup looks identical to a skim one without.</li>
-<li><em>Oversized restaurant plates</em>: estimates regress toward a typical portion, leaving −11% bias on restaurant meals even with a hand in frame.</li>
+<li>The full logging flow works end to end in a phone-sized browser: set a goal, log a meal by photo, description or search, adjust the grams, save, and see the day update.</li>
+<li>Calling the API with an invalid key returns the error to the screen as a plain message, which shows the browser-to-API path is wired up. A sample meal lets anyone try the review-and-correct flow without a key.</li>
+<li>I have not yet measured accuracy against weighed meals, so I make no claim about how close the estimates are.</li>
 </ul>
-<p><strong>What I&rsquo;d optimize next.</strong> Barcode lookup for packaged food, a &ldquo;how was this cooked?&rdquo; chip for mixed dishes, and per-user calibration once someone has weighed a few meals.</p>
-<h2 id="if-i-made-this-real">If I made this real</h2>
+<h2 id="what-it-changed">What it changed</h2>
+<p>Building it made the hard part obvious. The model call is a few lines of code. The product work is in the correction step: showing uncertainty, making the portion editable, and keeping the numbers consistent when the user changes them. A tracker that is fast to correct beats one that is occasionally more accurate but painful to fix.</p>
+<h2 id="next-steps">Next steps</h2>
 <ul>
-<li>Weigh and photograph the 120 meals for real, with a second labeler on a subset.</li>
-<li>Run V0–V3 on the held-out set and publish the real MAPE, bias and cost.</li>
-<li>Deploy the proxy with rate limits, a spend cap and anonymous event logging.</li>
-<li>Get 30 outside testers for two weeks to measure activation, edit rate and hand-hint compliance.</li>
-<li>Show the waitlist a price page for a first willingness-to-pay signal.</li>
+<li>Test accuracy against weighed home meals.</li>
+<li>Add a barcode scanner for packaged food.</li>
+<li>Make the app installable and usable offline.</li>
+<li>Move the API key to a small server with rate limits for a public release.</li>
 </ul>
     <section class="article-code">
       <p class="kicker">Code &amp; materials</p>
-      <p>Concept case study built on a real project. The real scope is summarized in the box at the top; numbers on this page are illustrative.</p>
+      <p>This work was delivered inside a client engagement; no public code is available. Happy to walk through the approach on a call.</p>
     </section>
   </article>
   <aside class="article-aside">
     <nav class="toc" aria-label="On this page">
       <p class="toc-title">On this page</p>
       <ol>
-<li><a href="#business-context">Business context</a></li><li><a href="#the-problem">The problem</a></li><li><a href="#what-i-built">What I built</a></li><li><a href="#results">Results</a></li><li><a href="#business-impact">Business impact</a></li><li><a href="#technical-deep-dive">Technical deep dive</a></li><li><a href="#if-i-made-this-real">If I made this real</a></li>      </ol>
+<li><a href="#the-question">The question</a></li><li><a href="#data">Data</a></li><li><a href="#method">Method</a></li><li><a href="#results">Results</a></li><li><a href="#what-it-changed">What it changed</a></li><li><a href="#next-steps">Next steps</a></li>      </ol>
     </nav>
   </aside>
 </div>
 
 <nav class="project-nav" aria-label="More projects">
-<a class="project-nav-link prev" href="../projects/creator-growth-engine.html"><span>← Previous</span><strong>Find creators who bring retained users, not just views</strong></a><a class="project-nav-link next" href="../projects/grounded-document-copilot.html"><span>Next →</span><strong>Charter drafts in 1.3h instead of 3.2h, every item cited</strong></a></nav>
+<a class="project-nav-link prev" href="../projects/crypto-ai-radar.html"><span>← Previous</span><strong>Do the signals actually predict anything?</strong></a><a class="project-nav-link next" href="../projects/resume-jd-copilot.html"><span>Next →</span><strong>Tailor a résumé without inventing anything</strong></a></nav>
 </main>
 
 <footer class="site-footer">

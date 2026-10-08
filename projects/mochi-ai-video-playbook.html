@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Three agents, one client brief – Huiguo Liu</title>
-<meta name="description" content="A one-day experiment where a project-manager agent, a technical agent and a business agent turned a client brief into labelled evidence, a dashboard and a deck.">
-<meta property="og:title" content="Three agents, one client brief – Huiguo Liu">
-<meta property="og:description" content="A one-day experiment where a project-manager agent, a technical agent and a business agent turned a client brief into labelled evidence, a dashboard and a deck.">
+<title>An AI cat that clocks in every day – Huiguo Liu</title>
+<meta name="description" content="Built a locked character, style blocks, a slot-based prompt engine and 20 ready prompts for an AI short-video series about an orange cat with a new job each day.">
+<meta property="og:title" content="An AI cat that clocks in every day – Huiguo Liu">
+<meta property="og:description" content="Built a locked character, style blocks, a slot-based prompt engine and 20 ready prompts for an AI short-video series about an orange cat with a new job each day.">
 <meta property="og:type" content="website">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,7 +25,7 @@
   })();
 </script>
 </head>
-<body class="page-project tone-page-blue">
+<body class="page-project tone-page-sand">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="topbar" id="topbar">
   <nav class="nav-inner" aria-label="Primary">
@@ -65,52 +65,39 @@
 <main id="main" class="canvas article-canvas">
 <header class="project-header reveal">
   <div class="project-header-copy">
-    <p class="kicker"><a href="../ai-projects.html">AI Projects</a> · 07</p>
-    <h1>Three agents, one client brief</h1>
-    <p class="project-subtitle">Re-running a YMCA retention engagement as a Claude Code multi-agent team</p>
-    <ul class="tag-chips" aria-label="Topics"><li>multi-agent</li><li>Claude Code</li><li>evidence tracking</li></ul>
-    <p class="project-lede">A one-day experiment where a project-manager agent, a technical agent and a business agent turned a client brief into labelled evidence, a dashboard and a deck.</p>
+    <p class="kicker"><a href="../ai-projects.html">AI Projects</a> · 11</p>
+    <h1>An AI cat that clocks in every day</h1>
+    <p class="project-subtitle">Personal project · a prompt system for one consistent AI-video character</p>
+    <ul class="tag-chips" aria-label="Topics"><li>prompt engineering</li><li>AI video</li><li>content strategy</li></ul>
+    <p class="project-lede">Built a locked character, style blocks, a slot-based prompt engine and 20 ready prompts for an AI short-video series about an orange cat with a new job each day.</p>
     <dl class="project-meta">
-<div><dt>Role</dt><dd>Designed the agent system and played the client</dd></div><div><dt>Context</dt><dd>Personal experiment on a Carlson Analytics Lab engagement</dd></div>      <div><dt>When</dt><dd>Jul 2026 (one working day)</dd></div>
-<div><dt>Stack</dt><dd>Claude Code · Claude Opus · Claude Sonnet · Python · pandas · HTML/CSS · PowerPoint</dd></div>    </dl>
+<div><dt>Role</dt><dd>Solo creator</dd></div><div><dt>Context</dt><dd>Personal content project, 打工橘 / Mochi on Shift</dd></div>      <div><dt>When</dt><dd>Aug 2026</dd></div>
+<div><dt>Stack</dt><dd>Seedance · AI image model · LLM assistants · Markdown</dd></div>    </dl>
   </div>
-  <div class="project-header-art tone-blue">
-    <img src="../assets/art/ymca-multiagent-delivery.svg" alt="" width="640" height="400">
+  <div class="project-header-art tone-sand">
+    <img src="../assets/art/mochi-ai-video-playbook.svg" alt="" width="640" height="400">
   </div>
 </header>
 
 <section class="result-strip" aria-label="Headline results">
-<div><span>client-approved decisions in the decision log</span><strong>22</strong></div><div><span>numbered claims in the evidence register, each labelled</span><strong>23</strong></div><div><span>category-level program churn, replacing a misleading 80%</span><strong>35.5%</strong></div><div><span>slides in the leadership deck</span><strong>8</strong></div></section>
+<div><span>production-ready prompts in Batch 02 v4</span><strong>20</strong></div><div><span>compressed 150-word prompts that failed to generate</span><strong>20/20</strong></div><div><span>reference-strength band set in the character lock</span><strong>70–80%</strong></div><div><span>clip target for the 7-day sprint</span><strong>120</strong></div></section>
 
 <div class="article-layout">
   <article class="article-body">
     <h2 id="the-question">The question</h2>
-<p>In summer 2026 my Carlson Analytics Lab team worked on member retention for a YMCA client. Afterwards I wanted to test a narrow question: if I split a consulting engagement into roles, can agents carry a client request from raw idea to a leadership recommendation without the story drifting away from the numbers?</p>
-<p>I gave myself one day, played the client, and re-ran it in Claude Code.</p>
+<p>AI-cat videos were everywhere in August 2026, and most leaned into exaggerated, obviously fake clips. I wanted to know whether a prompt system could keep one character consistent across many 10-second clips while looking like ordinary phone footage.</p>
 <h2 id="data">Data</h2>
-<p>The agents worked from the de-identified extracts and the analytic tables my team had already built: facility visits and program/membership records for 2022–2025, rolled up to 403,337 members with a membership flag. Raw files with personal data were never read by any agent. The only data that ships with the project is six small aggregate CSVs (about 1 KB) that feed the dashboard.</p>
+<p>No dataset. My inputs were market research notes, a generated character sheet, and the Seedance production spec: 720p, 9:16, fixed 10 seconds, batches of 20.</p>
 <h2 id="method">Method</h2>
-<p>I designed three subagents and wrote their prompts and a shared project memory:</p>
-<ul>
-<li><strong>project-manager</strong> (Opus) runs as the main session and is the only agent allowed to delegate. It writes the brief, asks only questions that would change the deliverable, and reviews every return.</li>
-<li><strong>technical-agent</strong> (Opus) does the data work and may not say something &ldquo;works&rdquo; unless it ran the check. Every verified claim cites a file, command or output.</li>
-<li><strong>business-agent</strong> (Sonnet) translates only verified findings into impact, options, risks and decisions. It may not add technical claims or turn an estimate into a promise.</li>
-</ul>
-<p>Because subagents have isolated context, the project manager is the memory between them. It maintains three files: a client brief (scope and 6 open questions), a decision log (only decisions I approved as client), and an evidence register. Every load-bearing statement gets one label: VERIFIED, CLIENT-CONFIRMED, INFERENCE, ASSUMPTION or UNKNOWN. I seeded the first 18 decisions from the real client meetings so settled points were not re-argued.</p>
+<p>I wrote a character lock (one orange-and-white cat, only the right front paw white, a faded red collar with a blank tag) and pasted it word for word into every prompt. A style lock added realism and negative blocks. A prompt engine combines job, payoff and camera slots into a nine-section template. A 7-day sprint plan sets out the order of work.</p>
 <h2 id="results">Results</h2>
-<ul>
-<li>First-year membership churn re-verified at 71.38% (287,908 of 403,337 members).</li>
-<li>The &ldquo;about 80% program churn&rdquo; turned out to be a granularity artifact: 80.35% at the exact-program level versus 35.53% at the category level for the same 172,892 participants. This closed an open question.</li>
-<li>Early visits are protective and monotonic: churn falls from 81.4% with zero visits in the first 60 days to 67.9% with six or more.</li>
-<li>The lower 2025 churn (59.6%) was flagged as right-censoring, not improvement.</li>
-<li>Outputs: a decision log with 22 decisions, an evidence register with 23 labelled claims, a self-contained HTML dashboard, and an 8-slide leadership deck.</li>
-</ul>
+<p>Batch 02 v4 holds 20 ready prompts. An earlier compressed 150-word format failed on all 20 prompts. The cause was that it dropped the character-motion, background and physics sections.</p>
 <h2 id="what-it-changed">What it changed</h2>
-<p>The reconciliation step earned its place. The business agent wanted a 90-day headline because it separated best (14.8 points versus 13.6 for 60 days). The project manager logged that as drift, since the edge was marginal and 60 days was the client&rsquo;s standard, and escalated it. As client I kept 60 days, recorded as decision #20. Without the role split, that choice would have been made quietly inside a slide. One rule also proved useful: the churn flag&rsquo;s exact definition stayed labelled UNKNOWN on every deliverable instead of being guessed.</p>
+<p>The rule became &ldquo;prompts can be long, but no section can be skipped.&rdquo;</p>
 <h2 id="next-steps">Next steps</h2>
 <ul>
-<li>Make the technical agent save every script in the project folder.</li>
-<li>Add a check that every number in a deliverable maps to an evidence-register row.</li>
+<li>Validate the style on three low-risk scenes.</li>
+<li>Record per-clip results to see which prompt patterns hold up.</li>
 </ul>
     <section class="article-code">
       <p class="kicker">Code &amp; materials</p>
@@ -127,7 +114,7 @@
 </div>
 
 <nav class="project-nav" aria-label="More projects">
-<a class="project-nav-link prev" href="../projects/rag-document-chatbot.html"><span>← Previous</span><strong>Ask questions of a document, not the model</strong></a><a class="project-nav-link next" href="../projects/autogen-newsroom.html"><span>Next →</span><strong>Run a newsroom with five agents and one human</strong></a></nav>
+<a class="project-nav-link prev" href="../projects/tiktok-creator-scanner.html"><span>← Previous</span><strong>Scan TikTok for creators without an API</strong></a><a class="project-nav-link next" href="../projects/ai-job-search-workflow.html"><span>Next →</span><strong>An AI copilot for my own job search</strong></a></nav>
 </main>
 
 <footer class="site-footer">
