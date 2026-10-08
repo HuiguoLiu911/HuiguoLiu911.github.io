@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turning a one-off GPS audit into a daily trust score – Huiguo Liu</title>
+<meta name="description" content="A third of school-bus trips couldn&#39;t be verified; I turned a GPS audit into a daily trust score and alerts, cutting unverifiable trips 36% to 22% in a simulated pilot.">
+<meta property="og:title" content="Turning a one-off GPS audit into a daily trust score – Huiguo Liu">
+<meta property="og:description" content="A third of school-bus trips couldn&#39;t be verified; I turned a GPS audit into a daily trust score and alerts, cutting unverifiable trips 36% to 22% in a simulated pilot.">
+<meta property="og:type" content="website">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css?v=e769ee09">
+<script>
+  // Apply the saved theme before first paint to avoid a flash.
+  (function () {
+    try {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body class="page-project tone-page-blue">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="topbar" id="topbar">
+  <nav class="nav-inner" aria-label="Primary">
+    <a class="brand" href="../index.html">Huiguo Liu</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">
+      <span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span>
+      <span class="visually-hidden">Menu</span>
+    </button>
+    <ul id="nav-links" class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../resume.html">Resume</a></li>
+      <li><a href="../data-analysis.html" class="active" aria-current="page">Data Analysis</a></li>
+      <li><a href="../ai-projects.html">AI Projects</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-tools">
+      <a class="tool" href="https://www.linkedin.com/in/huiguo-liu" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.73V1.73C24 .77 23.21 0 22.23 0z"/></svg>
+      </a>
+      <a class="tool" href="https://github.com/HuiguoLiu911" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
+        <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2.17c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.05.78 2.12v3.14c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+      </a>
+      <a class="tool" href="https://www.instagram.com/liuhuiguo.02/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+        <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a class="tool" href="mailto:liu01959@umn.edu" aria-label="Email" title="Email">
+        <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+      </a>
+      <button class="tool theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main id="main" class="canvas article-canvas">
+<header class="project-header reveal">
+  <div class="project-header-copy">
+    <p class="kicker"><a href="../data-analysis.html">Data Analysis</a> · 02</p>
+    <h1>Turning a one-off GPS audit into a daily trust score</h1>
+    <p class="project-subtitle">School transportation ops · Trip trust score, vendor scorecard and alerting</p>
+    <ul class="tag-chips" aria-label="Topics"><li>data quality</li><li>scoring design</li><li>operations analytics</li></ul>
+    <p class="project-lede">A third of school-bus trips couldn&#39;t be verified; I turned a GPS audit into a daily trust score and alerts, cutting unverifiable trips 36% to 22% in a simulated pilot.</p>
+    <dl class="project-meta">
+<div><dt>Role</dt><dd>Data-quality framework, scoring design, root-cause analysis and vendor scorecard</dd></div><div><dt>Context</dt><dd>Concept extension of a Carlson Analytics Lab client engagement</dd></div>      <div><dt>When</dt><dd>Concept · 6-week simulated pilot</dd></div>
+<div><dt>Stack</dt><dd>Python · pandas · DuckDB · PostgreSQL export · scikit-learn · folium · cron</dd></div>    </dl>
+  </div>
+  <div class="project-header-art tone-blue">
+    <img src="../assets/art/fleet-telemetry-trust-score.svg" alt="" width="640" height="400">
+  </div>
+</header>
+
+<section class="sim-box" aria-label="What is real and what is simulated">
+  <div><span class="sim-tag real">Real</span><p>In a Spring 2026 Carlson Analytics Lab live case for 4MATIV Technologies, a student team scored 14,859 school-bus trips and 2.35M GPS points on GPS health, stop coverage, compliance and timing, finding 27.3% of trips with no GPS, 35% unverifiable and five routes with severe data issues.</p></div>
+  <div><span class="sim-tag sim">Simulated</span><p>The productized daily pipeline, the 312-trip labeled sample, the six-week four-vendor pilot, the device fixes, the alert log and every result number below are hypothetical.</p></div>
+</section>
+<section class="result-strip" aria-label="Headline results">
+<div><span>unverifiable trips at 4 pilot vendors, n = 1,160 / 580 (simulated)</span><strong>36% → 22%</strong><em class="illus">Illustrative</em></div><div><span>net of 12 shadow vendors, 95% CI −19.8 to −5.1 (simulated)</span><strong>−12.6 pp</strong><em class="illus">Illustrative</em></div><div><span>median time to flag a dead tracker, was 4 school days (simulated)</span><strong>Same day</strong><em class="illus">Illustrative</em></div><div><span>alerts after dedup, 81% actionable, cap 12 (simulated)</span><strong>9 / day</strong><em class="illus">Illustrative</em></div></section>
+
+<div class="article-layout">
+  <article class="article-body">
+    <h2 id="business-context">Business context</h2>
+<p>A school transportation operator runs bus, van and cab vendors on one routing platform. The GPS trail is the only objective record that a route ran. Parents watch buses on it, and vendors bill per trip, so a trip without a usable trail is paid on the vendor&rsquo;s word.</p>
+<p>The dataset covers two schools, 16 vendors, 433 vehicles and 14,859 trips over about 120 school days, with 2.35M GPS points. A one-time audit found that more than a quarter of trips had no GPS and about 35% could not be verified either way. This concept runs that logic daily for the coordinator who handles vendor issues.</p>
+<h2 id="the-problem">The problem</h2>
+<p>Late buses get reported. Nobody, though, could say on the day which trips the data could vouch for, and a dead tracker surfaced days later through a parent complaint.</p>
+<p><strong>North-star KPI:</strong> share of scheduled trips that are <em>unverifiable</em>: zero pings, observed pings below 40% of the count the provider&rsquo;s polling interval implies, or fewer than half of planned stops <em>decidable</em>. A stop is decidable when a ping lands inside its 80 m geofence or the trace never comes within 500 m of it.</p>
+<p><strong>Guardrails:</strong>
+- <em>Alert precision:</em> share of alerts the coordinator marks actionable in the resolution log. Floor 0.70.
+- <em>Alert load:</em> alerts per coordinator per school day. Cap 12; beyond that, review turns into skimming.
+- <em>Mis-attributed penalties:</em> share of scorecard REDs later traced to platform configuration. Target under 10%.</p>
+<p>The audit graded each trip once. Nobody owned the follow-up, and it could not tell a broken device from a misconfigured route.</p>
+<h2 id="what-i-built">What I built</h2>
+<p>I designed a batch that runs at 09:30 and 17:30. It pulls the platform&rsquo;s Postgres export into DuckDB, runs six checks per trip and scores two axes: data trust H (can we tell?) and execution E (did it run as planned?). Scores feed a coordinator alert queue and a weekly vendor scorecard. A typical alert reads <code>Veh 214 · NO_LINK · AM · 0 pings, device online · owner: vendor B</code>. The coordinator checks the map replay, calls the vendor or files a platform ticket, and logs cause, fix and time to close; that log recalibrates the weights.</p>
+<p>The score keeps the audit&rsquo;s formula: trust = (0.4 + 0.6·H) × E, with E a weighted mean of stop coverage, order, timing and path proximity. Trips with H below 0.4 get no execution grade and become <em>data alerts</em> for the vendor&rsquo;s device owner, so a dead tracker never reads as bad driving.</p>
+<p>I rejected two alternatives. An <strong>isolation forest</strong> on per-trip features would mostly learn that 60-second providers differ from 20-second ones, and when a third of trips are broken, missing GPS is not an anomaly. A contract scorecard also has to survive a vendor meeting: &ldquo;four pings in 38 minutes against an expected 114&rdquo; can be checked, an anomaly score of 0.83 cannot. <strong>Per-ping streaming</strong> would add infrastructure to gain a few hours; the batch already detects failures the same day and runs in under a minute on a small VM.</p>
+<p>No rider data is read, stop coordinates stay in the database, and the coordinator reviews every alert before a vendor sees it.</p>
+<figure class="fig">
+<svg viewBox="0 0 900 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Data flow from the platform export through feature checks and the trust score to alerts, scorecard and resolution log, with calibration feedback">
+<defs><marker id="arrow-fleet-telemetry-trust-score" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10z" class="d-arrowhead"/></marker></defs>
+<rect x="20" y="40" width="170" height="70" rx="10" class="d-box"/>
+<text x="105" y="70" text-anchor="middle" class="d-text">Platform export</text>
+<text x="105" y="92" text-anchor="middle" class="d-text-sm">trips · pings · stops</text>
+<rect x="235" y="40" width="180" height="70" rx="10" class="d-box"/>
+<text x="325" y="70" text-anchor="middle" class="d-text">Twice-daily batch</text>
+<text x="325" y="92" text-anchor="middle" class="d-text-sm">09:30 + 17:30 · DuckDB</text>
+<rect x="235" y="150" width="180" height="150" rx="10" class="d-box"/>
+<text x="325" y="174" text-anchor="middle" class="d-text">Feature checks</text>
+<text x="325" y="198" text-anchor="middle" class="d-text-sm">ping gaps · frozen</text>
+<text x="325" y="217" text-anchor="middle" class="d-text-sm">impossible jumps</text>
+<text x="325" y="236" text-anchor="middle" class="d-text-sm">stop geofence hits</text>
+<text x="325" y="255" text-anchor="middle" class="d-text-sm">stop-order check</text>
+<text x="325" y="274" text-anchor="middle" class="d-text-sm">arrival vs bell</text>
+<rect x="460" y="175" width="180" height="90" rx="10" class="d-box-accent"/>
+<text x="550" y="203" text-anchor="middle" class="d-title">Trip trust score</text>
+<text x="550" y="226" text-anchor="middle" class="d-text-sm">H gate × execution E</text>
+<text x="550" y="246" text-anchor="middle" class="d-text-sm">GREEN / YELLOW / RED</text>
+<rect x="690" y="40" width="190" height="70" rx="10" class="d-box"/>
+<text x="785" y="70" text-anchor="middle" class="d-text">Vendor scorecard</text>
+<text x="785" y="92" text-anchor="middle" class="d-text-sm">weekly · SLA thresholds</text>
+<rect x="690" y="175" width="190" height="90" rx="10" class="d-box"/>
+<text x="785" y="203" text-anchor="middle" class="d-text">Coordinator alerts</text>
+<text x="785" y="226" text-anchor="middle" class="d-text-sm">owner · reason code</text>
+<text x="785" y="246" text-anchor="middle" class="d-text-sm">cap 12 per day</text>
+<rect x="690" y="310" width="190" height="70" rx="10" class="d-box"/>
+<text x="785" y="338" text-anchor="middle" class="d-text">Resolution log</text>
+<text x="785" y="360" text-anchor="middle" class="d-text-sm">cause · fix · time</text>
+<rect x="460" y="310" width="180" height="70" rx="10" class="d-box-soft"/>
+<text x="550" y="338" text-anchor="middle" class="d-text">Calibration</text>
+<text x="550" y="360" text-anchor="middle" class="d-text-sm">weights · thresholds</text>
+<rect x="20" y="310" width="170" height="70" rx="10" class="d-box-soft"/>
+<text x="105" y="338" text-anchor="middle" class="d-text">Map-replay labels</text>
+<text x="105" y="360" text-anchor="middle" class="d-text-sm">312 trips · 2 raters</text>
+<line x1="190" y1="75" x2="233" y2="75" class="d-arrow" marker-end="url(#arrow-fleet-telemetry-trust-score)"/>
+<line x1="325" y1="110" x2="325" y2="148" class="d-arrow" marker-end="url(#arrow-fleet-telemetry-trust-score)"/>
+<line x1="415" y1="220" x2="458" y2="220" class="d-arrow" marker-end="url(#arrow-fleet-telemetry-trust-score)"/>
+<line x1="640" y1="195" x2="688" y2="90" class="d-arrow" marker-end="url(#arrow-fleet-telemetry-trust-score)"/>
+<line x1="640" y1="220" x2="688" y2="220" class="d-arrow" marker-end="url(#arrow-fleet-telemetry-trust-score)"/>
+<line x1="785" y1="265" x2="785" y2="308" class="d-arrow" marker-end="url(#arrow-fleet-telemetry-trust-score)"/>
+<line x1="690" y1="345" x2="642" y2="345" class="d-line-muted" marker-end="url(#arrow-fleet-telemetry-trust-score)"/>
+<line x1="190" y1="345" x2="458" y2="345" class="d-line-muted" marker-end="url(#arrow-fleet-telemetry-trust-score)"/>
+<line x1="550" y1="310" x2="550" y2="267" class="d-arrow" marker-end="url(#arrow-fleet-telemetry-trust-score)"/>
+</svg>
+<figcaption>Concept architecture. The resolution log and map-replay labels close the loop: they set the weights and thresholds that the next scoring run uses.</figcaption>
+</figure>
+
+<h2 id="results">Results</h2>
+<p><em>All numbers in this section come from a simulated pilot and are illustrative.</em></p>
+<p><strong>Setup.</strong> Six school weeks, four volunteer vendors (A–D), one coordinator, about 290 trips a week on 70 vehicles, many of them part-time vans and cabs. The other twelve vendors were scored silently as a concurrent comparison group. Vendors could not be randomized and volunteers are likely the keener ones, so this is pre/post with a shadow comparison; both groups were flat (±2 pp) over the four baseline weeks. One dead tracker spoils every trip on its vehicle, so CIs come from a cluster bootstrap over vehicles. They describe these four vendors only. Sizing: 1,160 baseline vs 580 pilot trips give a naive MDE of about 7 pp (α = 0.05, power 0.8), nearer 10 pp after clustering.</p>
+<p><strong>North star.</strong> Unverifiable share at pilot vendors fell from 36.2% (420/1,160, four baseline weeks) to 22.1% (128/580, weeks 5–6): −14.1 pp, 95% CI [−20.6, −7.4]. The shadow group went from 34.6% to 33.1% (n = 1,420 / 710). Difference-in-differences: −12.6 pp [−19.8, −5.1].</p>
+<p>About 9 of the 14 points came from seven vehicles at vendors A and C, fixed in week 2: four trackers installed but never linked to the vehicle record, two stuck in a power-save mode pinging every five minutes, one mapped to the wrong bus after a swap.</p>
+<p><strong>Detection.</strong> In the eight pre-pilot weeks, 19 dead-tracker episodes at pilot vendors took a median of 4 school days to reach anyone (IQR 2–8). In the pilot, 17 of 23 were flagged the same day (74%, Wilson 95% CI 54–87%); the rest died after the 17:30 run or hit substitute vehicles. Median time to <em>repair</em> barely moved (2.5 → 2 days); repairs still wait for a vendor technician.</p>
+<p><strong>Where it didn&rsquo;t work.</strong> Vendor D stayed near 30%. Its provider polls every 60 seconds, so a bus at 30 km/h moves about 500 m between pings and often leaves none inside an 80 m geofence. Those stops are undecidable; only faster polling helps. Mis-attributed penalties also missed target: 7 of 58 scorecard REDs (12%) traced to stop sequences misconfigured in the platform.</p>
+<p><strong>Alert guardrails.</strong> Weeks 1–2 broke the cap at 19 alerts a day with 64% precision (122/190), mostly repeats on issues already open. After deduplicating to one alert per vehicle-day and muting open issues, weeks 3–6 averaged 9 a day at 81% precision (146/180); pooled, 72% (268/370). At about four minutes per alert, that is 35 coordinator-minutes a day instead of about 75.</p>
+<figure class="fig">
+<svg viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Line chart of weekly unverifiable-trip share for four pilot vendors from baseline through week 6">
+<line x1="70" y1="320" x2="760" y2="320" class="c-axis"/>
+<line x1="70" y1="30" x2="70" y2="320" class="c-axis"/>
+<line x1="70" y1="262" x2="760" y2="262" class="c-grid"/>
+<line x1="70" y1="204" x2="760" y2="204" class="c-grid"/>
+<line x1="70" y1="146" x2="760" y2="146" class="c-grid"/>
+<line x1="70" y1="88" x2="760" y2="88" class="c-grid"/>
+<line x1="70" y1="30" x2="760" y2="30" class="c-grid"/>
+<text x="60" y="324" text-anchor="end" class="c-label">0%</text>
+<text x="60" y="266" text-anchor="end" class="c-label">10%</text>
+<text x="60" y="208" text-anchor="end" class="c-label">20%</text>
+<text x="60" y="150" text-anchor="end" class="c-label">30%</text>
+<text x="60" y="92" text-anchor="end" class="c-label">40%</text>
+<text x="60" y="34" text-anchor="end" class="c-label">50%</text>
+<line x1="70" y1="233" x2="760" y2="233" class="d-line-muted"/>
+<text x="76" y="228" class="c-label">target 15%</text>
+<line x1="307" y1="30" x2="307" y2="320" class="d-line-muted"/>
+<text x="313" y="44" class="c-label">device fixes</text>
+<text x="90" y="342" text-anchor="middle" class="c-label">Base</text>
+<text x="198" y="342" text-anchor="middle" class="c-label">W1</text>
+<text x="307" y="342" text-anchor="middle" class="c-label">W2</text>
+<text x="415" y="342" text-anchor="middle" class="c-label">W3</text>
+<text x="523" y="342" text-anchor="middle" class="c-label">W4</text>
+<text x="632" y="342" text-anchor="middle" class="c-label">W5</text>
+<text x="740" y="342" text-anchor="middle" class="c-label">W6</text>
+<text x="415" y="368" text-anchor="middle" class="c-label">pilot week (weekly share of trips unverifiable)</text>
+<polyline points="90,82.2 198,93.8 307,140.2 415,180.8 523,204 632,209.8 740,215.6" class="c-line" fill="none"/>
+<polyline points="90,128.6 198,134.4 307,146 415,163.4 523,186.6 632,198.2 740,204" class="c-line" fill="none" stroke-dasharray="7 5"/>
+<polyline points="90,99.6 198,111.2 307,122.8 415,163.4 523,169.2 632,192.4 740,186.6" class="c-line" fill="none" stroke-dasharray="2 4"/>
+<polyline points="90,140.2 198,134.4 307,146 415,140.2 523,151.8 632,146 740,151.8" class="c-line-accent" fill="none"/>
+<circle cx="740" cy="151.8" r="4" class="c-dot"/>
+<text x="752" y="155" class="c-value">D 29%</text>
+<text x="752" y="186" class="c-value">C 23%</text>
+<text x="752" y="203" class="c-value">B 20%</text>
+<text x="752" y="221" class="c-value">A 18%</text>
+</svg>
+<figcaption>Simulated pilot. Weekly unverifiable-trip share for vendors A (solid), B (long dash), C (dotted) and D (accent, 60-second polling). Baseline is the four-week pre-pilot average. Each weekly point rests on 45–90 trips, so single-week moves of ±10 pp are within noise.</figcaption>
+</figure>
+
+<h2 id="business-impact">Business impact</h2>
+<p>The results support one contract decision and defer another.</p>
+<p>Verifiability goes into vendor contracts: vendors control it, and pilot vendors fixed device faults within days of being told. None reached 85% verifiable by week 6 (A came closest at 82%), so the SLA would phase in at 80% for the first term and 85% after, with dead trackers re-paired within one school day and polling of 30 seconds or faster in renewals. That clause is the only lever for vendor D.</p>
+<p>The <em>execution</em> score stays advisory: at 12% mis-attributed REDs, vendors would be penalized for the platform&rsquo;s own sequencing errors.</p>
+<p>Verifiability is the north star because execution grades mean nothing on trips the data cannot vouch for; each point removed is about three more invoiced trips a week, per 290, that can be checked against a trace. The other twelve vendors would join in two waves of six, each after two weeks of silent scoring to size alert volume; a second coordinator joins only if deduplicated load stays above 12 a day. Cadence: queue after each batch, scorecards on Mondays, monthly re-fit from the resolution log.</p>
+<h2 id="technical-deep-dive">Technical deep dive</h2>
+<p><strong>Data &amp; pipeline.</strong> Trips, pings, stops, bell times and the vehicle-device mapping come from the Postgres export, about 20K pings a day. Checks are DuckDB SQL with Haversine distances to geofences (80 m; schools 300 m). Late pings are re-scored next batch; a failed batch retries twice, then shows a &ldquo;scores stale&rdquo; banner.</p>
+<p><strong>Rules design.</strong> H = observed/expected pings × share of trip time outside gaps, capped at 0.3 when frozen or jump flags fire.
+- Gap: interval over 3× polling and over 5 minutes.
+- Frozen: five or more identical fixes outside a stop dwell.
+- Impossible jump: implied speed over 130 km/h.
+- Geofence: a ping inside the radius during the stop window; no ping inside but a trace within 500 m is undecidable, not missed.
+- Order: Spearman correlation of planned vs observed rank, direction-aware so the school is last on morning trips (the audit once had this reversed).
+- Arrival: minutes before the bell.</p>
+<p><strong>Calibration.</strong> Two raters labeled 312 trips from map replays, blind to the score (Cohen&rsquo;s κ = 0.71; 49 disagreements adjudicated, mostly &ldquo;deviation vs unverifiable&rdquo; on 60-second trips). A 0.05-step grid search on the 200 baseline-week trips, maximizing RED precision at recall ≥ 0.65, set coverage 0.35, timing 0.25, order 0.20, proximity 0.20 and RED below 0.42.</p>
+<p><strong>Evaluation.</strong> The 112 test trips come from pilot weeks 1–2, labeled after the weights were frozen. RED precision was 0.78 (32/41, 95% CI 0.63–0.88) and recall 0.70 (32/46), against 0.58 (34/59) and 0.74 (34/46) for the audit&rsquo;s grade-D rule: two more misses, but false alarms fall from 25 to 9. The sample over-represents RED candidates; reweighting by inverse sampling probability puts production precision near 0.71, in line with the 72% alert log. The score is a ranking, not a probability, so I report band rates: GREEN 2/32, YELLOW 12/39, RED 32/41.</p>
+<p><strong>Failure cases.</strong>
+1. <em>Substitute vehicles:</em> the spare bus has no tracker, so the alert blamed a device instead of the assignment. It now has its own reason code.
+2. <em>Wrong device mapping:</em> pings from another route produce a confident RED. Impossible jumps at trip start now force a data alert.
+3. <em>Misconfigured stop sequences:</em> a route failing the order check identically every day would spam REDs. When 80% of a route&rsquo;s trips fail alike, one route-audit ticket replaces the vendor alerts.</p>
+<p><strong>Next.</strong> Polling-aware geofence radii, then a gradient-boosted model tested against the rules on the same time split, once full rollout yields about 1,500 labeled outcomes a semester.</p>
+<h2 id="if-i-made-this-real">If I made this real</h2>
+<ul>
+<li>Rebuild the checks on the real export and backtest a semester of weekly scorecards.</li>
+<li>Label 300 real trips from map replays with two reviewers; report κ and RED precision/recall against the audit&rsquo;s score.</li>
+<li>Run two weeks of silent scoring with real coordinators to measure alert load and precision.</li>
+<li>Confirm root causes against vendor maintenance records instead of inferring them from ping patterns.</li>
+</ul>
+    <section class="article-code">
+      <p class="kicker">Code &amp; materials</p>
+      <p>Concept case study built on a real project. The real scope is summarized in the box at the top; numbers on this page are illustrative.</p>
+    </section>
+  </article>
+  <aside class="article-aside">
+    <nav class="toc" aria-label="On this page">
+      <p class="toc-title">On this page</p>
+      <ol>
+<li><a href="#business-context">Business context</a></li><li><a href="#the-problem">The problem</a></li><li><a href="#what-i-built">What I built</a></li><li><a href="#results">Results</a></li><li><a href="#business-impact">Business impact</a></li><li><a href="#technical-deep-dive">Technical deep dive</a></li><li><a href="#if-i-made-this-real">If I made this real</a></li>      </ol>
+    </nav>
+  </aside>
+</div>
+
+<nav class="project-nav" aria-label="More projects">
+<a class="project-nav-link prev" href="../projects/retention-early-warning.html"><span>← Previous</span><strong>Call the members who can still be won back</strong></a><a class="project-nav-link next" href="../projects/marketplace-supply-nudges.html"><span>Next →</span><strong>Fewer idle minutes from nudges drivers can verify</strong></a></nav>
+</main>
+
+<footer class="site-footer">
+  <span>Huiguo Liu</span>
+  <span class="footer-tagline">Data Analytics | Business Analytics | GenAI</span>
+  <span><a href="https://www.linkedin.com/in/huiguo-liu" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://github.com/HuiguoLiu911" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.instagram.com/liuhuiguo.02/" target="_blank" rel="noopener">Instagram</a> · <a href="mailto:liu01959@umn.edu">Email</a></span>
+</footer>
+<script src="../assets/site.js?v=2edad336" defer></script>
+</body>
+</html>

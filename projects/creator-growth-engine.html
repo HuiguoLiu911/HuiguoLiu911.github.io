@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Find creators who bring retained users, not just views – Huiguo Liu</title>
+<meta name="description" content="Creator outreach was judged on replies; I tied scanning, LLM fit scoring and outreach tests to attributed D7 retention, and a simulated pilot pointed budget from KOL to KOC/UGC.">
+<meta property="og:title" content="Find creators who bring retained users, not just views – Huiguo Liu">
+<meta property="og:description" content="Creator outreach was judged on replies; I tied scanning, LLM fit scoring and outreach tests to attributed D7 retention, and a simulated pilot pointed budget from KOL to KOC/UGC.">
+<meta property="og:type" content="website">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css?v=e769ee09">
+<script>
+  // Apply the saved theme before first paint to avoid a flash.
+  (function () {
+    try {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body class="page-project tone-page-mint">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="topbar" id="topbar">
+  <nav class="nav-inner" aria-label="Primary">
+    <a class="brand" href="../index.html">Huiguo Liu</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">
+      <span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span>
+      <span class="visually-hidden">Menu</span>
+    </button>
+    <ul id="nav-links" class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../resume.html">Resume</a></li>
+      <li><a href="../data-analysis.html">Data Analysis</a></li>
+      <li><a href="../ai-projects.html" class="active" aria-current="page">AI Projects</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-tools">
+      <a class="tool" href="https://www.linkedin.com/in/huiguo-liu" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.73V1.73C24 .77 23.21 0 22.23 0z"/></svg>
+      </a>
+      <a class="tool" href="https://github.com/HuiguoLiu911" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
+        <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2.17c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.05.78 2.12v3.14c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+      </a>
+      <a class="tool" href="https://www.instagram.com/liuhuiguo.02/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+        <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a class="tool" href="mailto:liu01959@umn.edu" aria-label="Email" title="Email">
+        <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+      </a>
+      <button class="tool theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main id="main" class="canvas article-canvas">
+<header class="project-header reveal">
+  <div class="project-header-copy">
+    <p class="kicker"><a href="../ai-projects.html">AI Projects</a> · 01</p>
+    <h1>Find creators who bring retained users, not just views</h1>
+    <p class="project-subtitle">AI camera app (yes&amp;) · end-to-end creator growth loop, sourcing to D7 retention</p>
+    <ul class="tag-chips" aria-label="Topics"><li>Growth analytics</li><li>LLM eval</li><li>Outreach A/B testing</li></ul>
+    <p class="project-lede">Creator outreach was judged on replies; I tied scanning, LLM fit scoring and outreach tests to attributed D7 retention, and a simulated pilot pointed budget from KOL to KOC/UGC.</p>
+    <dl class="project-meta">
+<div><dt>Role</dt><dd>Designed and built the pipeline, the LLM fit classifier and the experiment analysis</dd></div><div><dt>Context</dt><dd>Concept extension of growth work for an AI camera startup (yes&amp;)</dd></div>      <div><dt>When</dt><dd>Aug 2026 build · simulated 8-week pilot</dd></div>
+<div><dt>Stack</dt><dd>Python · pandas · Apify · Chrome MV3 · Claude API · Streamlit · scipy · YAML config</dd></div>    </dl>
+  </div>
+  <div class="project-header-art tone-mint">
+    <img src="../assets/art/creator-growth-engine.svg" alt="" width="640" height="400">
+  </div>
+</header>
+
+<section class="sim-box" aria-label="What is real and what is simulated">
+  <div><span class="sim-tag real">Real</span><p>In Aug 2026 I built yes&amp;&#39;s TikTok creator sourcing: a Chrome MV3 scanner, an Apify pipeline (2,791 profiles, 49,197 videos, an 8,562-creator long list, 96/25/240 KOL/KOC/UGC passed), a Claude classifier checked against a 259-creator expert set, and a UGC outreach round (509 contacted, 23 replies).</p></div>
+  <div><span class="sim-tag sim">Simulated</span><p>The integrated loop, the relabeled 480-creator eval set and its scores, the outreach A/B test, the UGC cohort, all attribution, CPAU and retention figures, and the budget decision are hypothetical.</p></div>
+</section>
+<section class="result-strip" aria-label="Headline results">
+<div><span>positive-reply lift from personalized hooks (95% CI −0.9 to +5.6)</span><strong>+2.4 pp</strong><em class="illus">Illustrative</em></div><div><span>LLM fit precision / recall on a 320-creator held-out set</span><strong>0.78 / 0.71</strong><em class="illus">Illustrative</em></div><div><span>UGC vs KOL cost per activated user, before leakage adjustment</span><strong>$14.5 vs $20.5</strong><em class="illus">Illustrative</em></div><div><span>D7 retention, UGC-referred users vs paid social</span><strong>19% vs 15%</strong><em class="illus">Illustrative</em></div></section>
+
+<div class="article-layout">
+  <article class="article-body">
+    <h2 id="business-context">Business context</h2>
+<p>yes&amp; is an AI camera and creative app that grows through TikTok creators in three tiers. KOLs are paid per post for reach, KOCs who already make AI content promote for credits, and small UGC creators run dedicated accounts on trial-then-per-video pay. The growth lead splits a fixed creator budget across them each cycle ($18,550 over the eight-week simulated pilot).</p>
+<p>The real sourcing work stopped at a creator list and a reply count, which shows who answers email, not who brings users that stay. This concept links the two ends, so a creator dollar can be compared with a paid-social one.</p>
+<h2 id="the-problem">The problem</h2>
+<p>The north-star metric is <strong>creator-attributed activated users per week</strong>. An activated user installs through a creator link or code and exports at least one creation within 72 hours. Three guardrails sit beside it:</p>
+<ul>
+<li><strong>Cost per activated user (CPAU):</strong> tier spend (fees, credits at cost, reviewer time at $30/h) ÷ activated users, benchmarked against same-week paid social.</li>
+<li><strong>D7 retention of referred users:</strong> the share of attributed installs that open the app on calendar day 7.</li>
+<li><strong>Outreach opt-out rate:</strong> creators who reply &ldquo;stop&rdquo; or use the unsubscribe link ÷ delivered first emails, with a ceiling of 2%.</li>
+</ul>
+<p>The old process ranked creators on follower band, view floor and public email, then sent everyone one template. A previous round got 23 replies from 509 creators (4.5%), and nothing after a reply was linked back to the creator.</p>
+<h2 id="what-i-built">What I built</h2>
+<p>I wrote the scanner, the pipeline, the prompt and the eval harness for a loop that runs from discovery to attribution and feeds outcomes back into the ranking. Two reviewers labeled creators and edited drafts.</p>
+<p>Discovery combines the Chrome scanner with Apify actors that pull each profile and its 30 recent videos. The store holds 2,791 profiles and 49,197 videos, and tiering runs on an 8,562-creator long list. Any paid step prints a cost estimate and waits for confirmation.</p>
+<p>Fit scoring is a Claude call that returns fixed JSON: content fit, aesthetic fit, commercial saturation, risk flags and a short reason. At about $0.017 per creator the whole long list would cost roughly $146, so only creators passing the free numeric filters are scored: about 3,600 over the pilot, or $61. The ranker multiplies fit, reply probability and the tier&rsquo;s expected activated users per dollar.</p>
+<p>I rejected two alternatives. A supervised classifier trained on the expert&rsquo;s 259 approved creators would have learned their noise, since an earlier audit had flagged about a third as off-target. A creator-marketplace database would have helped recall, but its categories are too coarse to judge a collage-and-scrapbook look, and it produces no outcome data.</p>
+<p>The LLM never accepts or rejects anyone; a reviewer approves the top slice in a Streamlit queue. A failed call retries once and is stored as null, not zero, so a timeout cannot sink a creator. Emails and handles stay in git-ignored local files; attribution sees only creator IDs.</p>
+<figure class="fig">
+<svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Creator growth loop: discovery, store, tiering, LLM fit score and ranker on top; review queue, outreach test, UGC onboarding, attribution and cohort ROI on the bottom; outcomes feed back into the ranker">
+<defs><marker id="arrow-creator-growth-engine" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10z" class="d-arrowhead"/></marker></defs>
+<text x="10" y="26" class="d-text-sm">SOURCE → SCORE → RANK</text>
+<rect x="10" y="40" width="150" height="80" rx="10" class="d-box"/>
+<text x="22" y="68" class="d-title">Discovery</text>
+<text x="22" y="90" class="d-text-sm">MV3 scan + Apify</text>
+<text x="22" y="106" class="d-text-sm">keywords → videos</text>
+<rect x="186" y="40" width="150" height="80" rx="10" class="d-box"/>
+<text x="198" y="68" class="d-title">Store &amp; enrich</text>
+<text x="198" y="90" class="d-text-sm">2,791 profiles</text>
+<text x="198" y="106" class="d-text-sm">49,197 videos</text>
+<rect x="362" y="40" width="150" height="80" rx="10" class="d-box"/>
+<text x="374" y="68" class="d-title">Tier</text>
+<text x="374" y="90" class="d-text-sm">KOL / KOC / UGC</text>
+<text x="374" y="106" class="d-text-sm">floor-5 views</text>
+<rect x="538" y="40" width="150" height="80" rx="10" class="d-box-accent"/>
+<text x="550" y="68" class="d-title">LLM fit score</text>
+<text x="550" y="90" class="d-text-sm">Claude, JSON out</text>
+<text x="550" y="106" class="d-text-sm">$0.017 / creator</text>
+<rect x="714" y="40" width="150" height="80" rx="10" class="d-box-accent"/>
+<text x="726" y="68" class="d-title">Ranker</text>
+<text x="726" y="90" class="d-text-sm">P(fit)×P(reply)</text>
+<text x="726" y="106" class="d-text-sm">×E[act] ÷ cost</text>
+<path d="M160 80 L184 80" class="d-arrow" marker-end="url(#arrow-creator-growth-engine)"/>
+<path d="M336 80 L360 80" class="d-arrow" marker-end="url(#arrow-creator-growth-engine)"/>
+<path d="M512 80 L536 80" class="d-arrow" marker-end="url(#arrow-creator-growth-engine)"/>
+<path d="M688 80 L712 80" class="d-arrow" marker-end="url(#arrow-creator-growth-engine)"/>
+<rect x="538" y="150" width="150" height="56" rx="8" class="d-box-soft"/>
+<text x="550" y="173" class="d-text">Eval set · 480</text>
+<text x="550" y="193" class="d-text-sm">dev 160 / test 320</text>
+<path d="M613 150 L613 122" class="d-line-muted"/>
+<rect x="10" y="150" width="150" height="56" rx="8" class="d-box-soft"/>
+<text x="22" y="173" class="d-text">Paid social</text>
+<text x="22" y="193" class="d-text-sm">same-week CPAU</text>
+<path d="M85 206 L85 248" class="d-line-muted"/>
+<path d="M789 120 L789 248" class="d-arrow" marker-end="url(#arrow-creator-growth-engine)"/>
+<rect x="714" y="250" width="150" height="80" rx="10" class="d-box"/>
+<text x="726" y="278" class="d-title">Review queue</text>
+<text x="726" y="300" class="d-text-sm">Streamlit, human</text>
+<text x="726" y="316" class="d-text-sm">approves top-N</text>
+<rect x="538" y="250" width="150" height="80" rx="10" class="d-box"/>
+<text x="550" y="278" class="d-title">Outreach A/B</text>
+<text x="550" y="300" class="d-text-sm">hook vs template</text>
+<text x="550" y="316" class="d-text-sm">random by creator</text>
+<rect x="362" y="250" width="150" height="80" rx="10" class="d-box"/>
+<text x="374" y="278" class="d-title">UGC onboarding</text>
+<text x="374" y="300" class="d-text-sm">7-day trial</text>
+<text x="374" y="316" class="d-text-sm">14 videos, review</text>
+<rect x="186" y="250" width="150" height="80" rx="10" class="d-box"/>
+<text x="198" y="278" class="d-title">Attribution</text>
+<text x="198" y="300" class="d-text-sm">UTM + promo code</text>
+<text x="198" y="316" class="d-text-sm">install→act→D7</text>
+<rect x="10" y="250" width="150" height="80" rx="10" class="d-box-accent"/>
+<text x="22" y="278" class="d-title">Cohort ROI</text>
+<text x="22" y="300" class="d-text-sm">CPAU by tier</text>
+<text x="22" y="316" class="d-text-sm">budget split</text>
+<path d="M714 290 L690 290" class="d-arrow" marker-end="url(#arrow-creator-growth-engine)"/>
+<path d="M538 290 L514 290" class="d-arrow" marker-end="url(#arrow-creator-growth-engine)"/>
+<path d="M362 290 L338 290" class="d-arrow" marker-end="url(#arrow-creator-growth-engine)"/>
+<path d="M186 290 L162 290" class="d-arrow" marker-end="url(#arrow-creator-growth-engine)"/>
+<path d="M85 330 L85 380 L886 380 L886 80 L866 80" class="d-line-muted" marker-end="url(#arrow-creator-growth-engine)"/>
+<text x="250" y="402" class="d-text-sm">weekly feedback: replies, signings, activated users per creator → ranker labels</text>
+</svg>
+<figcaption>The loop as designed. Free filters run before paid enrichment and the LLM. Every outcome (reply, signing, activated users) is joined back to the creator ID and refits the ranker weekly.</figcaption>
+</figure>
+
+<h2 id="results">Results</h2>
+<p>All results below are from a simulated 8-week pilot and are illustrative.</p>
+<p><strong>Fit classifier.</strong> Two reviewers relabeled the 259 expert-approved creators against the written brief and moved 72 (28%) to negatives, fewer than the audit, since the brief allows adjacent themes. Adding 221 hard negatives gave 480 labeled creators (187 positive), split by creator into 160 dev and 320 test. At a fit cutoff of 60, chosen on dev, the LLM reached precision 0.78 and recall 0.71 on test (89 of 125 positives, 25 false positives). At equal recall, TF-IDF similarity to the gold set reached precision 0.58 and a hashtag-plus-engagement heuristic 0.52.</p>
+<p><strong>Outreach test.</strong> I randomized the 840 creators reviewers approved (of about 1,070 flagged) by creator, stratified by tier, into two arms of 420. That was all the pool allowed; at a 5% baseline it detects lifts of about 4.2 pp (α = 0.05, power 0.8). Treatment replaced the template&rsquo;s opening with an LLM-drafted line naming one of the creator&rsquo;s own videos, edited by a reviewer. Sends ran over three weeks with a single readout on day 28.</p>
+<table>
+<thead>
+<tr>
+<th>Arm</th>
+<th>n</th>
+<th>Positive replies</th>
+<th>Rate</th>
+<th>Signed</th>
+<th>Opt-outs</th>
+<th>Outreach cost per signed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Template</td>
+<td>420</td>
+<td>21</td>
+<td>5.0%</td>
+<td>7</td>
+<td>4 (1.0%)</td>
+<td>$15</td>
+</tr>
+<tr>
+<td>Personalized hook</td>
+<td>420</td>
+<td>31</td>
+<td>7.4%</td>
+<td>10</td>
+<td>7 (1.7%)</td>
+<td>$43</td>
+</tr>
+</tbody>
+</table>
+<p>The hook arm replied 2.4 pp more often (95% CI −0.9 to +5.6, p ≈ 0.15), below the detectable effect, so I treat it as a lead to retest. Both guardrails moved the wrong way: opt-outs rose (still under 2%), and cost per signing nearly tripled because the hook adds about 90 seconds of editing plus an LLM call ($1.02 per creator, against $0.25 of approval time for a template). The lift sat in KOC and UGC (17 vs 26 of 330 per arm). KOL barely moved, 4 vs 5 of 90.</p>
+<p><strong>Cohort.</strong> The 44 creators are the 17 test signings plus 27 from the UGC job post and existing KOC relationships. Of 24 UGC creators who started the 7-day trial ($100 for 14 videos, $140 more for a video past 10,000 views), 17 finished, 9 passed 10,000 views and 8 did both, moving to per-video pay.</p>
+<figure class="fig">
+<svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cost per activated user by tier with 95 percent bootstrap intervals, leakage-adjusted estimates and the paid social benchmark">
+<line x1="150" y1="40" x2="150" y2="215" class="c-grid"/>
+<line x1="276.7" y1="40" x2="276.7" y2="215" class="c-grid"/>
+<line x1="403.3" y1="40" x2="403.3" y2="215" class="c-grid"/>
+<line x1="530" y1="40" x2="530" y2="215" class="c-grid"/>
+<line x1="656.7" y1="40" x2="656.7" y2="215" class="c-grid"/>
+<line x1="150" y1="215" x2="720" y2="215" class="c-axis"/>
+<text x="150" y="232" text-anchor="middle" class="c-label">$0</text>
+<text x="276.7" y="232" text-anchor="middle" class="c-label">$10</text>
+<text x="403.3" y="232" text-anchor="middle" class="c-label">$20</text>
+<text x="530" y="232" text-anchor="middle" class="c-label">$30</text>
+<text x="656.7" y="232" text-anchor="middle" class="c-label">$40</text>
+<rect x="150" y="50" width="259.7" height="26" class="c-bar-muted"/>
+<rect x="150" y="105" width="143.1" height="26" class="c-bar-accent"/>
+<rect x="150" y="160" width="183.7" height="26" class="c-bar-accent"/>
+<path d="M309.6 63 L669.3 63 M309.6 56 L309.6 70 M669.3 56 L669.3 70" class="d-line"/>
+<path d="M238.7 118 L428.7 118 M238.7 111 L238.7 125 M428.7 111 L428.7 125" class="d-line"/>
+<path d="M276.7 173 L441.3 173 M276.7 166 L276.7 180 M441.3 166 L441.3 180" class="d-line"/>
+<circle cx="317.2" cy="63" r="5" class="c-dot"/>
+<circle cx="269.1" cy="118" r="5" class="c-dot"/>
+<circle cx="296.9" cy="173" r="5" class="c-dot"/>
+<line x1="302" y1="40" x2="302" y2="215" class="d-line-muted"/>
+<text x="302" y="32" text-anchor="middle" class="c-label">paid social $12.0</text>
+<text x="140" y="60" text-anchor="end" class="c-value">KOL $20.5</text>
+<text x="140" y="74" text-anchor="end" class="c-label">n=6 creators</text>
+<text x="140" y="115" text-anchor="end" class="c-value">KOC $11.3</text>
+<text x="140" y="129" text-anchor="end" class="c-label">n=14</text>
+<text x="140" y="170" text-anchor="end" class="c-value">UGC $14.5</text>
+<text x="140" y="184" text-anchor="end" class="c-label">n=24</text>
+<rect x="150" y="256" width="16" height="10" class="c-bar-accent"/>
+<text x="172" y="265" class="c-label">tracked CPAU</text>
+<path d="M280 261 L310 261" class="d-line"/>
+<text x="316" y="265" class="c-label">95% bootstrap by creator</text>
+<circle cx="510" cy="261" r="5" class="c-dot"/>
+<text x="520" y="265" class="c-label">leakage-adjusted</text>
+</svg>
+<figcaption>Simulated cost per activated user over 8 weeks, by tier. Intervals resample creators rather than users, because a few videos drive most installs; with six KOL creators that interval is especially rough. Dots divide tracked CPAU by rough leakage multipliers (KOL 1.55, UGC 1.25, KOC 1.2).</figcaption>
+</figure>
+
+<p>On tracked attribution, CPAU was $20.5 for KOL ($7,800 / 380), $11.3 for KOC ($1,450 / 128) and $14.5 for UGC ($9,300 / 640: $2,960 trial payouts, $5,460 for 280 paid videos, $880 review time). UGC cost about $24 per activated user during trial weeks ($3,840 / 160) and $11.4 once accounts warmed up. Paid social cost $12.0 (n = 2,450 activated users). D7 retention was 13% for KOL installs (n = 1,120), 21% for KOC (n = 290), 19% for UGC (n = 1,480) and 15% for paid (n = 6,400). Clustering by creator widens UGC&rsquo;s +4 pp edge over paid to roughly −0.5 to +8.5 pp.</p>
+<p>Across tiers that is 1,148 attributed activated users, about 144 a week, and the first baseline the team has.</p>
+<h2 id="business-impact">Business impact</h2>
+<p>I&rsquo;d recommend a narrow change: move 30% of next cycle&rsquo;s KOL budget ($2,340), with about $700 to KOC credits for the seven unused KOC creators in the approved pool and the rest to UGC. Two KOL slots stay as a comparison arm. At average CPAU this adds about 60 activated users per cycle on tracked numbers and 40 after leakage adjustment, 3–5% of the north-star, while shifting installs toward tiers with better D7. Marginal creators tend to be weaker than average, so both figures are upper bounds.</p>
+<p>Codes and UTMs miss viewers who just search the app store, most likely after wide-reach KOL posts. Rough multipliers from excess organic installs in the 48 hours after each post (KOL 1.55, UGC 1.25, KOC 1.2) shrink KOL&rsquo;s cost gap from $6–9 to $1.6–3.8 and put UGC near paid social ($11.6 vs $12.0). With only 44 creators behind them, next cycle would run KOL posts on randomized weeks (a switchback) to measure the halo, and send hooks only to the top-scoring third of KOC and UGC creators.</p>
+<h2 id="technical-deep-dive">Technical deep dive</h2>
+<p><strong>Data and pipeline.</strong> Scanner exports and Apify pulls land in one Parquet store keyed by creator ID. Average views exclude videos above Q3 + 3×IQR; floor-5 is the mean of the five lowest. Apify charges $0.30 per 1,000 videos, so refreshing 100 creators costs under $1.</p>
+<p><strong>Model design.</strong> The reply model is an L2 logistic regression on six features plus the outreach arm. Trained on weeks 1–2 (560 sends, 35 positive) and tested on week 3 (280 sends, 17 positive), it reached AUC 0.63 against 0.56 for tier alone (95% interval roughly 0.48–0.78 with 17 positives), so I shrink its predictions toward tier averages.</p>
+<p><strong>Metric definitions.</strong> A positive reply is an interested response within 7 days of the first email, excluding auto-replies and opt-outs. An install is credited to a creator on a UTM click in the 7 days before it, or else on a promo-code redemption within 14 days after; the UTM click wins ties.</p>
+<p><strong>Evaluation.</strong> Splits are by creator, and one person&rsquo;s multiple accounts share an ID. Few-shot examples come only from dev, and the prompt was frozen before test was scored. Both reviewers labeled 120 creators (κ = 0.71). The eval set is 39% positive, but a random audit of 200 filtered creators found 29% fit; at that base rate the same cutoff gives precision near 0.69, probably a floor because the test negatives were picked to be hard. Calibration is Platt scaling fit on dev, since isotonic would overfit 160 points, with the intercept shifted to the 29% prior (test ECE 0.06 before the shift). Of 100 audited reasons, 7 cited content absent from the input (95% CI about 2–12%). Batched calls take a median of about 5 seconds.</p>
+<p><strong>Failure cases.</strong>
+- Agency emails in KOL bios: hooks reached managers, who replied with rate cards whatever the email said.
+- Repost accounts scored high on content fit for on-theme videos they had not made. A reused-images risk flag now caps the score.
+- One UGC code leaked to a coupon site: 140 installs, 2% D7 retention. I excluded them from the cohort and now flag code installs with no matching spike in video views.</p>
+<p><strong>Next to optimize.</strong> Expand discovery from approved creators&rsquo; hashtags and sounds, since keyword search found few of the missing ones; then replace the single reply model with per-tier uplift models once replies accumulate.</p>
+<h2 id="if-i-made-this-real">If I made this real</h2>
+<ul>
+<li>Pre-register a rerun of the outreach test, pooling two cycles to about 1,500 creators per arm (MDE about 2.2 pp).</li>
+<li>Join real attribution-platform installs to creator IDs and measure code and UTM capture against a holdout week without creator posts.</li>
+<li>Relabel the full eval set with two blind reviewers; publish the confusion matrix and calibration plot.</li>
+<li>Run the KOL switchback for at least four weeks before any permanent budget shift.</li>
+<li>Get legal sign-off on creator disclosure and data storage before scaling outreach.</li>
+</ul>
+    <section class="article-code">
+      <p class="kicker">Code &amp; materials</p>
+      <p>Concept case study built on a real project. The real scope is summarized in the box at the top; numbers on this page are illustrative.</p>
+    </section>
+  </article>
+  <aside class="article-aside">
+    <nav class="toc" aria-label="On this page">
+      <p class="toc-title">On this page</p>
+      <ol>
+<li><a href="#business-context">Business context</a></li><li><a href="#the-problem">The problem</a></li><li><a href="#what-i-built">What I built</a></li><li><a href="#results">Results</a></li><li><a href="#business-impact">Business impact</a></li><li><a href="#technical-deep-dive">Technical deep dive</a></li><li><a href="#if-i-made-this-real">If I made this real</a></li>      </ol>
+    </nav>
+  </aside>
+</div>
+
+<nav class="project-nav" aria-label="More projects">
+<span></span><a class="project-nav-link next" href="../projects/snapcal-calorie-tracker.html"><span>Next →</span><strong>Cutting photo calorie error from 27% to 19%</strong></a></nav>
+</main>
+
+<footer class="site-footer">
+  <span>Huiguo Liu</span>
+  <span class="footer-tagline">Data Analytics | Business Analytics | GenAI</span>
+  <span><a href="https://www.linkedin.com/in/huiguo-liu" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://github.com/HuiguoLiu911" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.instagram.com/liuhuiguo.02/" target="_blank" rel="noopener">Instagram</a> · <a href="mailto:liu01959@umn.edu">Email</a></span>
+</footer>
+<script src="../assets/site.js?v=2edad336" defer></script>
+</body>
+</html>

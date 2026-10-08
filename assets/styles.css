@@ -602,3 +602,37 @@ a.contact-detail:hover { color: var(--accent); }
 .article-body figure { margin: 2.2rem 0; padding: 0; }
 .article-body figure img { display: block; width: 100%; border-radius: 8px; border: 1px solid var(--line); background: #fff; }
 .article-body figcaption { padding-top: 0.7rem; color: var(--muted); font-size: 0.82rem; line-height: 1.5; }
+
+/* ---------- concept case studies (Real / Simulated labelling + inline figures) ---------- */
+.concept-flag { font-style: normal; color: var(--coral); }
+.sim-box { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 0 1.6rem; }
+.sim-box > div { padding: 1rem 1.1rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.sim-box p { margin: 0.5rem 0 0; font-size: 0.9rem; line-height: 1.55; }
+.sim-tag { display: inline-block; padding: 0.2rem 0.55rem; border-radius: 999px; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); }
+.sim-tag.real { background: color-mix(in srgb, var(--mint) 25%, transparent); }
+.sim-tag.sim { background: color-mix(in srgb, var(--coral) 28%, transparent); }
+.illus { display: block; margin-top: 0.45rem; font-style: normal; font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--coral); }
+.article-body figure.fig { margin: 2.4rem 0; padding: 1.2rem; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.article-body figure.fig svg { display: block; width: 100%; height: auto; }
+.article-body figure.fig figcaption { padding-top: .8rem; }
+.d-box { fill: var(--surface-raised); stroke: var(--ink); stroke-width: 1.5; }
+.d-box-accent { fill: color-mix(in srgb, var(--accent) 22%, var(--surface-raised)); stroke: var(--ink); stroke-width: 1.5; }
+.d-box-soft { fill: color-mix(in srgb, var(--ink) 6%, transparent); stroke: none; }
+.d-line { stroke: var(--ink); stroke-width: 1.5; fill: none; }
+.d-line-muted { stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 4 4; fill: none; }
+.d-arrow { stroke: var(--ink); stroke-width: 1.5; fill: none; }
+.d-arrowhead { fill: var(--ink); }
+.d-text { fill: var(--ink); font-family: var(--sans); font-size: 13px; }
+.d-text-sm { fill: var(--muted); font-family: var(--mono); font-size: 11px; }
+.d-title { fill: var(--ink); font-family: var(--sans); font-size: 15px; font-weight: 600; }
+.c-axis { stroke: var(--muted); stroke-width: 1; fill: none; }
+.c-grid { stroke: var(--line); stroke-width: 1; fill: none; }
+.c-bar { fill: var(--ink); } .c-bar-accent { fill: var(--accent); } .c-bar-muted { fill: color-mix(in srgb, var(--muted) 45%, transparent); }
+.c-line { stroke: var(--ink); stroke-width: 2.5; fill: none; } .c-line-accent { stroke: var(--accent); stroke-width: 2.5; fill: none; }
+.c-dot { fill: var(--ink); } .c-band { fill: var(--accent); fill-opacity: .18; stroke: none; }
+.c-label { fill: var(--muted); font-family: var(--mono); font-size: 11px; } .c-value { fill: var(--ink); font-family: var(--sans); font-size: 12px; font-weight: 600; }
+.article-layout > * { min-width: 0; }
+@media (max-width: 900px) { .sim-box { grid-template-columns: 1fr; } }
+@media (max-width: 640px) {
+  .article-body figure.fig { padding: 0.8rem; margin: 1.8rem 0; }
+}
